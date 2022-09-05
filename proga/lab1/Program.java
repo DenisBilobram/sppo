@@ -1,4 +1,5 @@
-public class program {
+import java.util.Arrays;
+public class Program {
         public static void main(String[] args) {
                 int[] h;
                 h = new int[16];
@@ -8,8 +9,8 @@ public class program {
                 float[] x;
                 x = new float[19];
                 for (int i = 0; i < 19; i++) {
-                        double d = Math.random()*9-6;
-                        x[i] = (float)d;
+                        double randomNum = Math.random()*9-6;
+                        x[i] = (float)randomNum;
                 }
                 double[][] a;
                 a = new double[16][19];
@@ -21,17 +22,21 @@ public class program {
                                                 h[i] == 13 || h[i] == 16) {
                                         a[i][j] = Math.cos((Math.pow(Math.PI*Math.sin(x[j]), 2)));
                                 } else {
-                                        double tmp = (Math.asin((x[j]-1.5)/9)-1)*x[j];
-                                        double res = (Math.pow(Math.exp(tmp)/4, 2)-1)/3;
-                                        a[i][j] = res;
+                                        double powNum = (Math.asin((x[j]-1.5)/9)-1)*x[j];
+                                        float result = (float)(Math.pow(Math.exp(powNum)/4, 2)-1)/3;
+                                        a[i][j] = result;
                                 }
                         }
                 }
+		System.out.print("[");
                 for (int i = 0; i < 16; i++) {
-                        for (int j = 0; j < 19; j++) {
-                                System.out.printf("%.4f", a[i][j]);
-                                System.out.print(" ");
-                        }
-                }
+			System.out.print("[");
+			for (int j = 0; j < 19; j++) {
+				System.out.printf(" %.4f,", a[i][j]);
+			}
+			System.out.print("], ");
+		}
+		System.out.print("]");
         }
 }
+
