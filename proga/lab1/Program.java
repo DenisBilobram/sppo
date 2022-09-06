@@ -1,5 +1,10 @@
-import java.util.Arrays;
+import java.util.Random;
 public class Program {
+	public static double getRandomNum(int a, int b) {
+		Random random = new Random();
+		double result = a + random.nextDouble()*(b-a);
+		return result;
+	}
         public static void main(String[] args) {
                 int[] h;
                 h = new int[16];
@@ -8,10 +13,10 @@ public class Program {
                 }
                 float[] x;
                 x = new float[19];
-                for (int i = 0; i < 19; i++) {
-                        double randomNum = Math.random()*9-6;
-                        x[i] = (float)randomNum;
-                }
+		for (int i = 0; i < 19; i++) {
+			float randomDouble = (float)getRandomNum(-6,3);
+			x[i] = randomDouble;
+		}
                 double[][] a;
                 a = new double[16][19];
                 for (int i = 0; i < 16; i++) {
