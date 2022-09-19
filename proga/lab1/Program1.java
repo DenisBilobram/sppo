@@ -1,5 +1,5 @@
 import java.util.Random;
-public class Program {
+public class Program1 {
 	public static double getRandomNum(int a, int b) {
 		Random random = new Random();
 		double result = a + random.nextDouble()*(b-a);
@@ -31,16 +31,9 @@ public class Program {
                                         float result = (float)(Math.pow(Math.exp(powNum)/4, 2)-1)/3;
                                         a[i][j] = result;
                                 }
-                        }
-                }
-		System.out.print("[");
-                for (int i = 0; i < 16; i++) {
-			System.out.print("[");
-			for (int j = 0; j < 19; j++) {
 				System.out.printf(" %10.4f,", a[i][j]);
-			}
-			System.out.print("], ");
-		}
-		System.out.print("]");
-        }
+                        }
+			System.out.printf("\n");
+                }
+	}
 }
