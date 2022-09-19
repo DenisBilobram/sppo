@@ -1,9 +1,14 @@
-import java.util.Random;
 public class Program1 {
 	public static double getRandomNum(int a, int b) {
-		Random random = new Random();
-		double result = a + random.nextDouble()*(b-a);
-		return result;
+		double RandomNum = (Math.random()*9)-6;
+		if (RandomNum > 0.0001) {
+			RandomNum += 0.0001;
+			if (RandomNum > b) {
+				RandomNum = b;
+			}
+		}
+
+		return RandomNum;
 	}
         public static void main(String[] args) {
                 int[] h;
