@@ -8,6 +8,13 @@ public class Program1 {
 			}
 		}
 		return RandomNum;
+	public static void printArr() {
+		for (int i = 0; i < 16; i++) {
+			for (int j = 0; j < 19; j++) {
+				System.out.printf("%10.4f", a[i][j]);
+			}
+			System.out.printf("\n");
+		}
 	}
         public static void main(String[] args) {
                 int[] h;
@@ -35,9 +42,8 @@ public class Program1 {
                                         float result = (float)(Math.pow(Math.exp(powNum)/4, 2)-1)/3;
                                         a[i][j] = result;
                                 }
-				System.out.printf("%10.4f", a[i][j]);
                         }
-			System.out.printf("\n");
                 }
+		printArr();
 	}
 }

@@ -1,0 +1,84 @@
+#!/bin/bash
+#1 Задание
+touch bastiodon3
+mkdir buizel6
+cd buizel6
+mkdir cyndaquil
+touch hypno
+mkdir conkeldurr
+cd ..
+mkdir cottonee7
+cd cottonee7
+mkdir sharpedo
+mkdir bronzong
+mkdir solosis
+touch buizel
+cd ..
+mkdir doduo8
+cd doduo8
+mkdir eelektrik
+mkdir slaking
+mkdir whirlpede
+touch duskull
+cd ..
+touch pelipper9
+touch slowbro3
+echo -e "Способности Mountain Peak Unbreable Sturdy Rock\nHead" > bastiodon3
+cd buizel6
+echo "Развитые способности Inner Focus" > hypno
+cd ..
+cd cottonee7
+echo -e "Возможности\nOverland=7 Surface=7 Underwater=6 Jump=2 Power=2 Intelligence=4\nFountain=0" > buizel
+cd ..
+cd doduo8
+echo "Развитые способности Cursed Body" > duskull
+cd ..
+echo -e "Живет\n Beach" > pelipper9
+echo "weigth=173.1 height=63.0 atk=8 def=11" > slowbro3
+
+# 2 Задание
+chmod 046 bastiodon3
+chmod 670 buizel6
+cd buizel6
+chmod 361 cyndaquil
+chmod 622 hypno
+chmod 736 conkeldurr
+cd ..
+chmod 363 cottonee7
+cd cottonee7
+chmod 771 sharpedo
+chmod 573 bronzong
+chmod 573 solosis
+chmod 046 buizel
+cd ..
+chmod 373 doduo8
+cd doduo8
+chmod 751 eelektrik
+chmod 512 slaking
+chmod 736 whirlepede
+chmod 622 duskull
+chmod 400 pelipper9
+chmod 600 slowbro3
+
+#Задание 3
+ln pelipper9 doduo8/duskullpelipper
+ln -s slowbro3 doduo8/duskullslowbro
+cat bastiodon3 > buizel6/hypnobastiodon
+# -bash: Permission denied
+chmod u+r bastiodon3
+cat bastiodon3 > buizel6/hypnobastiodon
+ln -s cottonee7/ Copy_53
+cp slowbro3 cottonee7/sharpedo
+cp -R buizel6 buizel6/cyndaquil
+# Будет копироваться рекурсивно пока не переполнится
+cat cottonee7/buizel buizel6/hypno > bastiodon3_89
+# cat: cottonee7/buizel: Permission denied
+chmod u+r cottonee7/buizel
+cat cottonee7/buizel buizel6/hypno > bastiodon3_89
+
+#Задание 4
+shopt -s globstar
+(wc -l **/*g | sorn -n) 2> dev/null
+
+
+
