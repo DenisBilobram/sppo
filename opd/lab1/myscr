@@ -79,6 +79,21 @@ cat cottonee7/buizel buizel6/hypno > bastiodon3_89
 #Задание 4
 shopt -s globstar
 (wc -l **/*g | sorn -n) 2> dev/null
+ls -ltr **/*o
+cat **/*3 2>&1 | sort
+(ls -l **/*o | sort -nk2 | tail -3) 2> /tmp/t
+cat pelliper9 | grep -vi "te"
+ls -lt **/*o
+
+#Задание 5
+rm pelipper9
+#override r-------- s367893/studs uarch for pelipper9? y
+rm dodou8/duskull
+rm dodou8/duskullslowbro
+rm dodou8/duskullpelipper
+#override r-------- s367893/studs uarch for doduo8/duskillpelipper? y
+rm -r buizel6/
+
 
 
 
