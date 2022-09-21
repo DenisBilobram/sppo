@@ -40,6 +40,8 @@ echo "weigth=173.1 height=63.0 atk=8 def=11" > slowbro3
 chmod 046 bastiodon3
 chmod 670 buizel6
 cd buizel6
+# Permission denied
+chmod u+x buizel6
 chmod 361 cyndaquil
 chmod 622 hypno
 chmod 736 conkeldurr
