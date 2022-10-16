@@ -1,6 +1,7 @@
 package pokemons;
 
 import attacks.Bite;
+import attacks.PoisonJab;
 import attacks.SludgeBomb;
 import attacks.Swagger;
 import ru.ifmo.se.pokemon.Pokemon;
