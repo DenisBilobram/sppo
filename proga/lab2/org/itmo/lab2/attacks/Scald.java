@@ -1,20 +1,21 @@
-package attacks;
+package org.itmo.lab2.attacks;
+
 import ru.ifmo.se.pokemon.Effect;
-import ru.ifmo.se.pokemon.PhysicalMove;
 import ru.ifmo.se.pokemon.Pokemon;
+import ru.ifmo.se.pokemon.SpecialMove;
 import ru.ifmo.se.pokemon.Type;
 
-public class RockSlide extends PhysicalMove {
-    public RockSlide() {
-        super(Type.ROCK, 75, 90);
+public class Scald extends SpecialMove {
+    public Scald() {
+        super(Type.WATER, 80, 100);
     }
     @Override
     protected void applyOppEffects(Pokemon p) {
         Effect e = new Effect().chance(0.3);
-        e.flinch(p);
+        e.burn(p);
     }
     @Override
     protected String describe() {
-        return "использует Rock Slide";
+        return "использует Scald";
     }
 }

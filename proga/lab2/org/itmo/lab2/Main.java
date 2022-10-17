@@ -1,4 +1,5 @@
-import pokemons.*;
+package org.itmo.lab2;
+import org.itmo.lab2.pokemons.*;
 import ru.ifmo.se.pokemon.Battle;
 
 public class Main {

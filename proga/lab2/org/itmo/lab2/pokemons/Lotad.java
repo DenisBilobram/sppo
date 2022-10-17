@@ -1,7 +1,8 @@
-package pokemons;
+package org.itmo.lab2.pokemons;
 
-import attacks.DoubleTeam;
-import attacks.Scald;
+
+import org.itmo.lab2.attacks.DoubleTeam;
+import org.itmo.lab2.attacks.Scald;
 import ru.ifmo.se.pokemon.Pokemon;
 import ru.ifmo.se.pokemon.Type;
 

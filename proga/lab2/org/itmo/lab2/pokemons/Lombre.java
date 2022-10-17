@@ -1,6 +1,6 @@
-package pokemons;
+package org.itmo.lab2.pokemons;
 
-import attacks.Absorb;
+import org.itmo.lab2.attacks.Absorb;
 
 public class Lombre extends Lotad {
     public Lombre(String name, int level) {

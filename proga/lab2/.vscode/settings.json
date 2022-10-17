@@ -1,6 +1,7 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "Pokemon.jar"
+        "Pokemon.jar",
+        "org/itmo/lab2/Pokemon.jar"
     ]
 }

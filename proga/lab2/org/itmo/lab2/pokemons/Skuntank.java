@@ -1,6 +1,7 @@
-package pokemons;
+package org.itmo.lab2.pokemons;
 
-import attacks.PoisonJab;
+
+import org.itmo.lab2.attacks.PoisonJab;
 
 public class Skuntank extends Stunky {
     public Skuntank(String name, int level) {

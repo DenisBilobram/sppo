@@ -1,9 +1,8 @@
-package pokemons;
+package org.itmo.lab2.pokemons;
 
-import attacks.Bite;
-import attacks.PoisonJab;
-import attacks.SludgeBomb;
-import attacks.Swagger;
+import org.itmo.lab2.attacks.Bite;
+import org.itmo.lab2.attacks.SludgeBomb;
+import org.itmo.lab2.attacks.Swagger;
 import ru.ifmo.se.pokemon.Pokemon;
 import ru.ifmo.se.pokemon.Type;
 

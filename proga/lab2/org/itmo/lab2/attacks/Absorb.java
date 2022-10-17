@@ -1,4 +1,4 @@
-package attacks;
+package org.itmo.lab2.attacks;
 
 import ru.ifmo.se.pokemon.Pokemon;
 import ru.ifmo.se.pokemon.SpecialMove;

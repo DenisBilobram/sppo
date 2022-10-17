@@ -1,6 +1,7 @@
-package pokemons;
+package org.itmo.lab2.pokemons;
 
-import attacks.Swagger;
+
+import org.itmo.lab2.attacks.Swagger;
 
 public class Ludicolo extends Lombre {
     public Ludicolo(String name, int level) {

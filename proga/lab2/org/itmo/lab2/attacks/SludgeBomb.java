@@ -1,15 +1,14 @@
-package attacks;
+package org.itmo.lab2.attacks;
 
 import ru.ifmo.se.pokemon.Effect;
-import ru.ifmo.se.pokemon.PhysicalMove;
 import ru.ifmo.se.pokemon.Pokemon;
+import ru.ifmo.se.pokemon.SpecialMove;
 import ru.ifmo.se.pokemon.Type;
 
-public class PoisonJab extends PhysicalMove {
-    public PoisonJab() {
-        super(Type.POISON, 80, 100);
+public class SludgeBomb extends SpecialMove {
+    public SludgeBomb() {
+        super(Type.POISON, 90, 100);
     }
-
     @Override
     protected void applyOppEffects(Pokemon p) {
         Effect e = new Effect().chance(0.3);
@@ -18,7 +17,6 @@ public class PoisonJab extends PhysicalMove {
 
     @Override
     protected String describe() {
-        return "использует Poison Jab";
+        return "использует Sludge Bomb";
     }
 }
-

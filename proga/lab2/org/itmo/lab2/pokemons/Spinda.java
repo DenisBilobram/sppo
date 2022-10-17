@@ -1,9 +1,10 @@
-package pokemons;
+package org.itmo.lab2.pokemons;
 
-import attacks.Facade;
-import attacks.RockSlide;
-import attacks.ShadowBall;
-import attacks.TeeterDance;
+
+import org.itmo.lab2.attacks.Facade;
+import org.itmo.lab2.attacks.RockSlide;
+import org.itmo.lab2.attacks.ShadowBall;
+import org.itmo.lab2.attacks.TeeterDance;
 import ru.ifmo.se.pokemon.Pokemon;
 import ru.ifmo.se.pokemon.Type;
 
