@@ -6,9 +6,8 @@ import java.util.List;
 import org.itmo.lab3.inmaterials.Smell;
 import org.itmo.lab3.inmaterials.emotions.Emotion;
 import org.itmo.lab3.places.Location;
-import org.itmo.lab3.places.Smelling;
 
-public class Human extends Animal implements Inventory, Smelling{
+public class Human extends Animal implements Inventory{
 
     public List<Thing> inventory;
 
