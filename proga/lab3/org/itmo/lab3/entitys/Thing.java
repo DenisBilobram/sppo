@@ -7,14 +7,15 @@ import org.itmo.lab3.places.Smelling;
 
 public abstract class Thing extends Entity implements Smelling{
 
-    public ThingSizes size;
+    protected ThingSizes size;
 
-    public Location location;
+    protected Location location;
 
-    public Smell smell;
+    protected Smell smell;
 
-    public String description;
+    protected String description;
 
+    @Override
     public String toString() {
         return this.description;
     }
@@ -25,5 +26,12 @@ public abstract class Thing extends Entity implements Smelling{
             return this.description == ((Thing)thing).description;
         }
         return super.equals(thing);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = this.getClass().hashCode();
+        result = result + 31 * (this.description != null ? this.description.hashCode() : 0);
+        return result;
     }
 }

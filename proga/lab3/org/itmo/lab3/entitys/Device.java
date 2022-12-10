@@ -5,9 +5,9 @@ import org.itmo.lab3.places.Location;
 
 public class Device extends Thing implements Turnable {
 
-    public boolean turnState = false;
+    protected boolean turnState = false;
 
-    public Human owner;
+    protected Human owner;
 
     public Device(String description, Human owner) {
         this.description = description;

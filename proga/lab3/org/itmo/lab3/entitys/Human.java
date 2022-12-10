@@ -3,24 +3,53 @@ package org.itmo.lab3.entitys;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.itmo.lab3.inmaterials.Action;
+
 import org.itmo.lab3.inmaterials.Smell;
 import org.itmo.lab3.inmaterials.emotions.Emotion;
 import org.itmo.lab3.places.Location;
 
 public class Human extends Animal implements Inventory{
 
-    public List<Thing> inventory;
+    protected String name;
 
-    public Smell smell;
+    protected List<Thing> inventory;
 
-    public Human(Location loca) {
+    protected Smell smell;
+
+    public Human(String name, Location loca) {
+        this.name = name;
         this.location = loca;
         this.inventory = new ArrayList<Thing>();
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void doAction(Action action) {
+        if (this.isAble(action)) {
+            this.energyRate -= action.energyLoss;
+            action.describe();
+        }
+    }
+
+    public boolean isAble(Action action) {
+        if (this.energyRate < action.energyLoss) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
     @Override
     public void setEmotion(Emotion emotion) {
-        this.emotionRate += emotion.emotionRateChange;
+        this.emotionRate += emotion.getEmotionRateChange();
         emotion.emotionEffect();
     }
 
@@ -72,5 +101,25 @@ public class Human extends Animal implements Inventory{
     public void setSmell(Smell smell) {
         this.smell = smell;
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
     
+    @Override
+    public boolean equals(Object thing) {
+        if (thing instanceof Human) {
+            return this.name == ((Human)thing).name;
+        }
+        return super.equals(thing);
+    }
+    
+    @Override
+    public int hashCode() {
+        int result = this.getClass().hashCode();
+        result = result + 31 * (this.name != null ? this.name.hashCode() : 0);
+        return result;
+    }
+
 }

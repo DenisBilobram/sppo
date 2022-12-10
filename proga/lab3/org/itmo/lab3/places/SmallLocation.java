@@ -4,7 +4,7 @@ import org.itmo.lab3.inmaterials.Smell;
 
 public class SmallLocation extends Location implements Smelling{
 
-    public Smell smell;
+    protected Smell smell;
 
     public SmallLocation(String desc) {
         super(desc);
