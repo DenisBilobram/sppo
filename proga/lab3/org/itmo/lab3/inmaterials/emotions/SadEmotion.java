@@ -4,7 +4,7 @@ public class SadEmotion extends Emotion {
     public int emotionRateChange = -10;
 
     @Override
-    public void emotionEffect() {
+    public void describe() {
         System.out.println("So sad(\n");
     }
     

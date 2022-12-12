@@ -8,6 +8,4 @@ public abstract class Emotion extends Inmaterial {
     public int getEmotionRateChange() {
         return this.emotionRateChange;
     }
-
-    public abstract void emotionEffect();
 }

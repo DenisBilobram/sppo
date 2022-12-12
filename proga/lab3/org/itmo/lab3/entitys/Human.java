@@ -50,7 +50,7 @@ public class Human extends Animal implements Inventory{
     @Override
     public void setEmotion(Emotion emotion) {
         this.emotionRate += emotion.getEmotionRateChange();
-        emotion.emotionEffect();
+        emotion.describe();
     }
 
     @Override
