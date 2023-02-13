@@ -20,4 +20,6 @@ def ham_code(st):
     if n != 0 and n not in (1,2,4):
         st[n-1] = (st[n-1]+1)%2
 
-    return f'{st[2]}{st[4]}{st[5]}{st[6]}, ошибка в {n}-ом бите'    
+    return f'{st[2]}{st[4]}{st[5]}{st[6]}, ошибка в {n}-ом бите'
+
+print(ham_code('1110001'))

@@ -1,0 +1,93 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{geometry}
+\usepackage[usenames]{color}
+\geometry{papersize={13.5 cm, 24.5 cm}, top=0mm, left=0mm, right=0mm, bottom=0mm}
+\usepackage{indentfirst}
+\setlength{\parindent}{0.2cm}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{mathtools}
+
+
+
+\begin{document}
+\pagecolor[rgb]{1, 1, 0.95}
+\noindent
+\sffamily 
+
+\begin{minipage}{0.5\textwidth}
+  \begin{flushleft}
+    \includegraphics[width=1\textwidth]{image.png} 
+    \textbf{Рис. 9} \\
+    \vspace{5mm}
+    \includegraphics[width=0.94\textwidth]{image1.png}
+    \textbf{Рис. 10} \\
+    \vspace{5mm}
+        \leftskip=0.6cm
+        Итак, мы свели работу о нахож-\\
+        \leftskip=0cm
+        дении пифагоровых троек к вопросу\\о том, каким образом квадрат $b^2$ мо-\\
+        жет быть преобразован в прямоуголь-\\
+        ник со сторонами длины $m, n$ одина-\\ковой четности $(m\not =n)$. Эта задача легко решается. Пусть $r\not = b$ - дели-\\тель чилса $b^2$ (но не обязательно -\\ делитель числа b), для которого $\frac{b^2}{r}$\\ имеет ту же четность, что и $r$. При\\этом $r$ дллжно быть той же четнсоти,\\что и $b$, хотя это условаие и недоста-\\точно (почему?). Тогда прямоугольн-\\ик со сторонами длины $m=r$ и $n=\frac{b^2}{r}$\\может быть преобразован в <<толстый\\гномон>>, являющийся разностью квад-\\ратов\\
+        \centering $c^2=[\frac{b^2/r+r}{2}]^2$ и $a^2=[\frac{b^2/r-r}{2}]^2$.\\
+        \raggedright
+        Отметим, что $r$ может равняться 1\\и что можно ограничиться делите-\\лями $r<b$ (почему?).\\
+        \leftskip=0.6cm
+        Итак, все пифагоровы тройки име-\\
+        \leftskip=0cm
+        ют вид\\
+        \centering $a=\frac{b^2-r^2}{2r}, b, c=\frac{b^2+r^2}{2r}$\\
+        \raggedright где $1<=r<b$ - такой делитель чис-\\ла $b^2$, что $r$ и $b^2/r$ имеют одинаковую\\четность (воспадающую с четностью $b$).
+        Пользуясь этим правилом, можно\\выписывать пифагоровы тройки ав-\\томатически. Попробуйте проедалть\\это; для контроля мы приводим таб-\\
+  \end{flushleft}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+  \begin{flushleft}
+    \includegraphics[width=0.94\textwidth]{image2.png}
+    \textbf{Рис. 11} \\
+    \vspace{5mm}
+    лицу пифагоровых троек с b из пер-\\вого десятка:
+    \vspace{5mm}\\
+    \vspace{5mm}
+    \begin{tabular}{| p{1.15cm}|p{1.15cm}|p{1.15cm}|p{1.15cm}|}
+        \hline
+        $b$ & $r$ &  $a$ & $c$\\[2.2mm]
+        \hline
+        3 & 1 & 4 & 5\\[2.2mm]
+        \hline
+        4 & 2 & 3 & 5\\[2.2mm]
+        \hline
+        5 & 1 & 12 & 13\\[2.2mm]
+        \hline
+        6 & 2 & 8 & 10 \\[2.2mm]
+        \hline
+        7 & 1 & 24 & 25\\[2.2mm]
+        \hline
+        8 & 2 & 15 & 17 \\[2.2mm]
+        \hline
+        8 & 4 & 6 & 10 \\[2.2mm]
+        \hline
+        9 & 1 & 40 & 41 \\[2.2mm]
+        \hline
+        9 & 3 & 12 & 15 \\[2.2mm]
+        \hline
+        10 & 2 & 24 & 26 \\[2.2mm]
+        \hline
+        
+    \end{tabular}\\
+    \vspace{5mm}
+    \vspace{5mm}
+    \leftskip=0.6cm В таблице встречаются тройки \\
+    \leftskip=0cm
+    $a, b, c,$ отличающиеся только пере-\\становкой чисел $a$ и $b$; это объясня\\-ется тем, что в пифагоровой тройке\\$a$ и $b$ можно переставлять. Кроме\\того, мы видим, что не существует\\пифагоровой тройки с $b=2:$ в этом\\случае нет подходящего делителя $r$\\
+    
+  \end{flushleft}
+\end{minipage}
+\begin{flushright}
+    \textbf{41} \hspace{}
+\end{flushright}
+\end{document}
