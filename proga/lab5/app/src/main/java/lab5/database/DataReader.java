@@ -55,6 +55,6 @@ public class DataReader {
             System.out.println("Ошибка чтения из файла.");
             System.out.println(e.getMessage());
         }
-        return stack.size() != 0 ? stack : null;
+        return stack;
     } 
 }

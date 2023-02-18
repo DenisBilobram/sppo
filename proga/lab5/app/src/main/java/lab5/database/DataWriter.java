@@ -25,7 +25,7 @@ public class DataWriter {
                 coll += String.format("\t\t<name>%s</name>\n", labWork.getName());
                 coll += "\t\t<coordinates>\n";
                 coll += String.format("\t\t\t<x>%d</x>\n", labWork.getCoordinates().getX());
-                coll += String.format("\t\t\t<y>%f</y>\n", labWork.getCoordinates().getY());
+                coll += String.format("\t\t\t<y>%.2f</y>\n", labWork.getCoordinates().getY());
                 coll += "\t\t</coordinates>\n";
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
                 String strDate = dateFormat.format(labWork.getCreationDate());
@@ -35,7 +35,7 @@ public class DataWriter {
                 coll += String.format("\t\t<difficulty>%s</difficulty>\n", labWork.getDifficulty().toString());
                 coll += "\t\t<author>\n";
                 coll += String.format("\t\t\t<name>%s</name>\n", labWork.getAuthor().getName());
-                coll += String.format("\t\t\t<weight>%f</weight>\n", labWork.getAuthor().getWeight());
+                coll += String.format("\t\t\t<weight>%.2f</weight>\n", labWork.getAuthor().getWeight());
                 coll += String.format("\t\t\t<eyecolor>%s</eyecolor>\n", labWork.getAuthor().getEyeColor().toString());
                 coll += String.format("\t\t\t<haircolor>%s</haircolor>\n", labWork.getAuthor().getHairColor().toString());
                 coll += "\t\t</author>\n";

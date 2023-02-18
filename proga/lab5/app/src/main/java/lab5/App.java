@@ -25,6 +25,7 @@ public class App {
                 max_id = lab.getId();
             }
         }
+        
         Reciever rc = new Reciever(max_id, db);
         Command command = rc.commandRecive(null);
 
