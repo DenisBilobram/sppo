@@ -204,12 +204,12 @@ public class Reciever {
                 creationDate = dateFormat.parse(attrsLi.get(4));
             }
             String name = attrsLi.get(1);
-            Coordinates coordinates = new Coordinates(Integer.parseInt(attrsLi.get(2)), Double.parseDouble(attrsLi.get(3)));
+            Coordinates coordinates = new Coordinates(Integer.parseInt(attrsLi.get(2)), Double.parseDouble(attrsLi.get(3).replace(',', '.')));
             Long minimalPoint = Long.parseLong(attrsLi.get(5));
             Long tunedInWorks = Long.parseLong(attrsLi.get(6));
             Difficulty difficulty = Difficulty.valueOf(attrsLi.get(7));
             String authName = attrsLi.get(8);
-            Float weight = Float.parseFloat(attrsLi.get(9));
+            Float weight = Float.parseFloat(attrsLi.get(9).replace(',', '.'));
             Color eyeColor = Color.valueOf(attrsLi.get(10));
             Color hairColor = Color.valueOf(attrsLi.get(11));
 
