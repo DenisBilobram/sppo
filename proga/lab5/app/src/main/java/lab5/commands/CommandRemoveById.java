@@ -21,7 +21,8 @@ public class CommandRemoveById implements Command {
             lab = iter.next();
             if (lab.getId().equals(this.id)) {
                 break;
-            } 
+            }
+            lab = null;
         }
         if (lab == null) {
             System.out.println("Элемента с таким id не найдено.");
