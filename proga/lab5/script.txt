@@ -1,0 +1,13 @@
+remove 1
+show
+add
+opd
+1
+2
+3
+4
+NORMAL
+denis
+70
+BLACK
+BLACK
