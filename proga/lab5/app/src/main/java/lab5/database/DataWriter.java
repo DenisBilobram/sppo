@@ -1,54 +1,36 @@
 package lab5.database;
 
-import lab5.LabWork;
-
 import java.io.FileWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.io.IOException;
 import java.util.PriorityQueue;
 
+import com.google.gson.Gson;
+
+import lab5.labwork.LabWork;
+
+
+/** Класс реализующий запись данных в базу данных.
+ * 
+ */
 public class DataWriter {
-    Database database;
+    private Database database;
 
     public DataWriter(Database db) {
         this.database = db;
     }
 
-    public void write(PriorityQueue<LabWork> collecStack) {
+    public void write(PriorityQueue<LabWork> priorityQueue) {
+        Gson gson = new Gson();
+        String jsoString = gson.toJson(priorityQueue);
         try {
-            FileWriter writer = new FileWriter(this.database.storage);
-            String coll = new String();
-            coll += "<stack>\n";
-            for (LabWork labWork : collecStack) {
-                coll += "\t<labwork>\n";
-                coll += String.format("\t\t<id>%d</id>\n", labWork.getId());
-                coll += String.format("\t\t<name>%s</name>\n", labWork.getName());
-                coll += "\t\t<coordinates>\n";
-                coll += String.format("\t\t\t<x>%d</x>\n", labWork.getCoordinates().getX());
-                coll += String.format("\t\t\t<y>%.2f</y>\n", labWork.getCoordinates().getY());
-                coll += "\t\t</coordinates>\n";
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-                String strDate = dateFormat.format(labWork.getCreationDate());
-                coll += String.format("\t\t<creationdate>%s</creationdate>\n", strDate);
-                coll += String.format("\t\t<minimalpoint>%d</minimalpoint>\n", labWork.getMinimalPoint());
-                coll += String.format("\t\t<tunedinworks>%d</tunedinworks>\n", labWork.getTunedInWorks());
-                coll += String.format("\t\t<difficulty>%s</difficulty>\n", labWork.getDifficulty().toString());
-                coll += "\t\t<author>\n";
-                coll += String.format("\t\t\t<name>%s</name>\n", labWork.getAuthor().getName());
-                coll += String.format("\t\t\t<weight>%.2f</weight>\n", labWork.getAuthor().getWeight());
-                coll += String.format("\t\t\t<eyecolor>%s</eyecolor>\n", labWork.getAuthor().getEyeColor().toString());
-                coll += String.format("\t\t\t<haircolor>%s</haircolor>\n", labWork.getAuthor().getHairColor().toString());
-                coll += "\t\t</author>\n";
-                coll += "\t</labwork>\n";
-            }
-            coll += "</stack>\n";
-            
-            writer.write(coll);
-            writer.flush();
-            writer.close();
+            FileWriter fileWriter = new FileWriter(this.database.getStorage());
+            fileWriter.write(jsoString);
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException exp) {
+            System.out.println("Не получилось записать данные в базу данных.");
+        } 
+        
 
-        } catch (java.io.IOException e) {
-            System.out.println("Ошибка записи в файл.");
-        }
     }
 }

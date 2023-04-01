@@ -2,15 +2,17 @@ package lab5.commands;
 
 import java.util.PriorityQueue;
 
-import lab5.LabWork;
+import lab5.labwork.LabWork;
 
+/** Класс команды реализующей отображение элемента в начале коллекции. 
+ * 
+ */
 public class CommandHead implements Command{
 
     @Override
-    public boolean execute(PriorityQueue<LabWork> colleStack) {
-        LabWork lab = colleStack.peek();
-        System.out.println(lab);
-        return false;
+    public void execute(PriorityQueue<LabWork> priorityQueue, Object operand) {
+        LabWork labWork = priorityQueue.peek();
+        System.out.println(labWork);
     }
     
 }

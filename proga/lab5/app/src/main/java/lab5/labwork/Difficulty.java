@@ -1,4 +1,4 @@
-package lab5;
+package lab5.labwork;
 
 public enum Difficulty {
     NORMAL,

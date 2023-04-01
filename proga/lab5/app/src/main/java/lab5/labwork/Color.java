@@ -1,8 +1,9 @@
-package lab5;
+package lab5.labwork;
+
 
 public enum Color {
+    RED,
     BLACK,
-    ORANGE,
-    WHITE,
+    YELLOW,
     BROWN;
 }

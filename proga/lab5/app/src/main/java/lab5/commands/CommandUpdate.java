@@ -2,39 +2,47 @@ package lab5.commands;
 
 import java.util.Iterator;
 import java.util.PriorityQueue;
-import lab5.LabWork;
+import java.util.Scanner;
 
+import lab5.labwork.LabWork;
+import lab5.labwork.LabWorkInput;
+
+/** Класс команды реализующей изменение элемента по его id.
+ * 
+ */
 public class CommandUpdate implements Command {
 
-    LabWork operand;
-
-    Long changId;
-    
-
-    public CommandUpdate(LabWork operand, Long changId) {
-        this.operand = operand;
-        this.changId = changId;
+    @Override
+    public void execute(PriorityQueue<LabWork> priorityQueue, Object operand) {
     }
 
-
-    @Override
-    public boolean execute(PriorityQueue<LabWork> colleStack) {
-        Iterator<LabWork> iter = colleStack.iterator();
+    public void execute(PriorityQueue<LabWork> priorityQueue, Object operand, Scanner scanner) {
+        
+        Iterator<LabWork> iter = priorityQueue.iterator();
         while(iter.hasNext()) {
-            LabWork lab = iter.next();
-            if (lab.getId().equals(changId)) {
-                lab.setName(this.operand.getName());
-                lab.setCoordinates(this.operand.getCoordinates());
-                lab.setDifficulty(this.operand.getDifficulty());
-                lab.setMinimalPoint(this.operand.getMinimalPoint());
-                lab.setTunedInWorks(this.operand.getTunedInWorks());
-                lab.setAuthor(this.operand.getAuthor());
-                lab.setCreationDate(this.operand.getCreationDate());
-                return true;
+            LabWork labWork = iter.next();
+            try {
+                if (labWork.getId().equals(Long.parseLong((String)operand))) {
+                    LabWork labWorkNew = LabWorkInput.getLabWork(scanner);
+                    if (labWorkNew == null) {
+                        System.out.println("Элемент не был изменён.");
+                        return;
+                    }
+                    labWork.setName(labWorkNew.getName());
+                    labWork.setCoordinates(labWorkNew.getCoordinates());
+                    labWork.setDifficulty(labWorkNew.getDifficulty());
+                    labWork.setMinimalPoint(labWorkNew.getMinimalPoint());
+                    labWork.setTunedInWorks(labWorkNew.getTunedInWorks());
+                    labWork.setAuthor(labWorkNew.getAuthor());
+                    System.out.println("Элемент был изменём.");
+                    return;
+                } 
+            } catch (NumberFormatException exp) {
+                System.out.println("Неверный формат аргумента id.");
+                return;
             }
         }
         System.out.println("Элемент с таким id не найден.");
-        return false;
     }
     
 }

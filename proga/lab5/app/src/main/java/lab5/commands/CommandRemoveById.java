@@ -3,34 +3,31 @@ package lab5.commands;
 import java.util.Iterator;
 import java.util.PriorityQueue;
 
-import lab5.LabWork;
+import lab5.labwork.LabWork;
 
+
+/** Класс команды реализующей удаление элемента из коллекции по его id.
+ * 
+ */
 public class CommandRemoveById implements Command {
 
-    Long id;
-
-    public CommandRemoveById(Long id) {
-        this.id = id;
-    }
-
     @Override
-    public boolean execute(PriorityQueue<LabWork> colleStack) {
-        Iterator<LabWork> iter = colleStack.iterator();
-        LabWork lab = null;
+    public void execute(PriorityQueue<LabWork> priorityQueue, Object operand) {
+        Iterator<LabWork> iter = priorityQueue.iterator();
+        LabWork labWork = null;
         while (iter.hasNext()) {
-            lab = iter.next();
-            if (lab.getId().equals(this.id)) {
+            labWork = iter.next();
+            if (labWork.getId().equals(Long.parseLong((String)operand))) {
                 break;
             }
-            lab = null;
+            labWork = null;
         }
-        if (lab == null) {
+        if (labWork == null) {
             System.out.println("Элемента с таким id не найдено.");
         } else {
-            colleStack.remove(lab);
+            priorityQueue.remove(labWork);
+            System.out.println("Элемента удалён.");
         }
-        
-        return true;
     }
     
 }

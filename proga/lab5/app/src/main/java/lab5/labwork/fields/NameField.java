@@ -1,0 +1,29 @@
+package lab5.labwork.fields;
+
+public class NameField extends Field {
+
+    private String value;
+
+    @Override
+    public boolean validate() {
+        if (this.value == null || this.value.equals("")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+    public String toType(String input) {
+        return input;
+    }
+
+    public void putValue(String value) {
+        this.value = value;
+    }
+
+
+    public String getValue() {
+        return this.value;
+    }
+}

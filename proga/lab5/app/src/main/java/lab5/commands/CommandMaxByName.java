@@ -2,19 +2,21 @@ package lab5.commands;
 
 import java.util.PriorityQueue;
 
-import lab5.LabWork;
+import lab5.labwork.LabWork;
 
+/** Класс команды реализующей отображение элемента с максимальным именем.
+ * 
+ */
 public class CommandMaxByName implements Command {
 
     @Override
-    public boolean execute(PriorityQueue<LabWork> colleStack) {
+    public void execute(PriorityQueue<LabWork> priorityQueue, Object operand) {
         // TODO Auto-generated method stub
-        PriorityQueue<LabWork> qu = new PriorityQueue<>((s1,s2) -> s2.getName().length() - s1.getName().length());
-        for (LabWork lab : colleStack) {
-            qu.add(lab);
+        PriorityQueue<LabWork> priorityQueueSorted = new PriorityQueue<>((s1,s2) -> s2.getName().length() - s1.getName().length());
+        for (LabWork lab : priorityQueue) {
+            priorityQueueSorted.add(lab);
         }
-        System.out.println(qu.peek());
-        return false;
+        System.out.println(priorityQueueSorted.peek());
     }
     
 }

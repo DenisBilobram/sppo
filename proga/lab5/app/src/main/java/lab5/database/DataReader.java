@@ -1,60 +1,67 @@
 package lab5.database;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
-import lab5.LabWork;
-import lab5.commands.Reciever;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
+import lab5.labwork.LabWork;
 
 
-
+/** Класс реализующий чтение данных из базы данных.
+ * 
+ */
 public class DataReader {
-    Database database;
+    private Database database;
 
     public DataReader(Database db) {
         this.database = db;
     }
 
     public PriorityQueue<LabWork> read() {
-        PriorityQueue<LabWork> stack = new PriorityQueue<>();
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        Gson gson = new Gson();
         try {
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(this.database.storage);
-            document.getDocumentElement().normalize();
-
-            NodeList nodeList = document.getElementsByTagName("labwork");
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                Node node = nodeList.item(i);
-                String tx = node.getTextContent();
-                String[] li = tx.split("\n");
-                List<String> attrsLi = new ArrayList<>();
-
-                for (int j = 0; j < li.length; j++) {
-                    if (!li[j].replace("\t", "").equals("")) {
-                        attrsLi.add(li[j].replace("\t", ""));
+            BufferedReader stream = new BufferedReader(new FileReader(this.database.getStorage()));
+            if (stream.read() == -1) {
+                stream.close();
+                return new PriorityQueue<LabWork>();
+            }
+            stream.close();
+            stream = new BufferedReader(new FileReader(this.database.getStorage()));
+            Type priorityQueue = new TypeToken<PriorityQueue<LabWork>>() {}.getType();
+            PriorityQueue<LabWork> outpuPriorityQueue = gson.fromJson(stream, priorityQueue);
+            if (outpuPriorityQueue != null) {
+                List<Long> idList = new ArrayList<>();
+                List<Long> uniqeId = new ArrayList<>();
+                for (LabWork labWrok : outpuPriorityQueue) {
+                    idList.add(labWrok.getId());
+                }
+                for (Long id : idList) {
+                    if (uniqeId.contains(id)) {
+                        System.out.println("Неуникальное поле ID в базе данных.");
+                        System.exit(0);
+                    } else {
+                        uniqeId.add(id);
                     }
                 }
+            }
+            return outpuPriorityQueue;
 
-                LabWork lab = Reciever.labWorkConstruct(attrsLi, false);
-
-                stack.add(lab);
-            };
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            System.out.println("Ошибка чтения из файла.");
-            System.out.println(e.getMessage());
+        } catch (IOException exp) {
+            System.out.println("База данных недоступна.");
+            
+            return new PriorityQueue<LabWork>();
+        } catch (JsonSyntaxException exp) {
+            System.out.println("Ошибка во время чтения из базы данных.");
+            return new PriorityQueue<LabWork>();
         }
-        return stack;
+        
     } 
 }

@@ -1,0 +1,29 @@
+package lab5.labwork.fields;
+
+import lab5.labwork.Difficulty;
+
+public class DifficultyField extends Field {
+
+    private Difficulty value;
+
+    public boolean validate() {
+        if (this.value == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public Difficulty toType(String input) {
+        // TODO Auto-generated method stub
+        return Difficulty.valueOf(input);
+    }
+
+    public void putValue(Difficulty value) {
+        this.value = value;
+    }
+
+    public Difficulty getValue() {
+        return this.value;
+    }
+}

@@ -1,32 +1,42 @@
 package lab5.commands;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
-import lab5.LabWork;
-import lab5.database.Database;
+import lab5.labwork.LabWork;
 
+
+/** Класс команды реализующей выполнение комманд из файла-скрипта. 
+ * 
+ */
 public class CommandExecute implements Command {
 
-    private File file;
-    private Scanner scanner;
-    private Database database;
+    private static List<File> filesList = new ArrayList<>();
 
-    public CommandExecute(File f, Scanner scann, Database db) {
-        this.file = f;
-        this.scanner = scann;
-        this.database = db;
-    }
+    public void execute(PriorityQueue<LabWork> PriorityQueue, Object operand) {
+        try {
+            File file = new File((String)operand);
 
-    @Override
-    public boolean execute(PriorityQueue<LabWork> colleStack) {
-        Reciever rc = new Reciever(Reciever.max_id, this.file, this.database);
-        Command command = rc.commandRecive(this.scanner);
-        while (!(command instanceof CommandExite) && !(command instanceof RepeatCommand)) {
-            command.execute(colleStack);
-            command = rc.commandRecive(this.scanner);
+            if (filesList.contains(file)) {
+                System.out.println("В скрипте найдена рекурсия, завершаю выполнение.");
+                return;
+            }
+            filesList.add(file);
+
+            Scanner scanner = new Scanner(file);
+            Receiver receiver = new Receiver(PriorityQueue);
+            while (scanner.hasNextLine()) {
+                receiver.recieveCommand(scanner);
+            }
+            System.out.println("Скрипт выполнен.");
+            scanner.close();
+            filesList.remove(file);
+        } catch (FileNotFoundException exp) {
+            System.out.println("Файл скрипта не найден.");
         }
-        return true;
     }
 }

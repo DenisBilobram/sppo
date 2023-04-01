@@ -1,0 +1,3 @@
+- if file in env wrong -> create default || fail on start +
+- long overflow +
+- unique id validation +

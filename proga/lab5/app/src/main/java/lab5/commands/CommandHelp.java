@@ -2,16 +2,18 @@ package lab5.commands;
 
 import java.util.PriorityQueue;
 
-import lab5.LabWork;
+import lab5.labwork.LabWork;
 
+/** Класс команды реализующей отображение всех доступных комманд.
+ * 
+ */
 public class CommandHelp implements Command {
 
     @Override
-    public boolean execute(PriorityQueue<LabWork> colleStack) {
-        System.out.println("Команды: add {element}, clear, execute script {file name}, exite, count less than {author}, " + 
-                           "info, head, remove {id}, maxbyname, save, show, remove head, remove lower, " +
-                           "TunedIdWorks fields, update {id} {element}");
-        return true;
+    public void execute(PriorityQueue<LabWork> PriorityQueue, Object operand) {
+        System.out.println("Команды: add {element}, clear, execute_script {file name}, exite, count_less_than_author {author}, " + 
+                           "info, head, remove_by_id {id},\nmax_by_name, save, show, remove_head, remove_lower, " +
+                           "print_field_descending_tuned_in_works, update {id} {element}");
     }
     
 }
