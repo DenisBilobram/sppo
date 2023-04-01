@@ -16,6 +16,9 @@ public class CoordinatesField extends Field {
     }
 
     public Coordinates toType(String input) {
+        if (input == null) {
+            return null;
+        }
         String[] xy = input.split(" ");
         return new Coordinates(Long.parseLong(xy[0]), Long.parseLong(xy[1]));
 

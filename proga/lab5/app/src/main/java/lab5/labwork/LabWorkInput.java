@@ -11,6 +11,8 @@ import lab5.labwork.fields.DifficultyField;
 import lab5.labwork.fields.MinimalPointField;
 import lab5.labwork.fields.NameField;
 import lab5.labwork.fields.TunedInWorksField;
+import lab5.labwork.fields.author.EyeColorField;
+import lab5.labwork.fields.author.HeightField;
 
 public class LabWorkInput {
 
@@ -71,40 +73,42 @@ public class LabWorkInput {
                 if (line == "") {
                     line = null;
                 }
+                
+                int oldCounter = counter;
 
-                if (counter == 1) {
+                if (counter == 0) {
                     nameField.putValue(nameField.toType(line));
                     if (nameField.validate()) {
                         counter += 1;
-                        continue;
                     }
-                } else if (counter == 2) {
+                } else if (counter == 1) {
                     coordinatesField.putValue(coordinatesField.toType(line));
                     if (coordinatesField.validate()) {
                         counter += 1;
-                        continue;
                     }
-                } else if (counter == 3) {
+                } else if (counter == 2) {
                     minimalPointField.putValue(minimalPointField.toType(line));
                     if (minimalPointField.validate()) {
                         counter += 1;
-                        continue;
                     }
-                } else if (counter == 4) {
+                } else if (counter == 3) {
                     tunedInWorksField.putValue(tunedInWorksField.toType(line));
                     if (tunedInWorksField.validate()) {
                         counter += 1;
-                        continue;
                     }
-                } else if (counter == 5) {
+                } else if (counter == 4) {
                     difficultyField.putValue(difficultyField.toType(line));
                     if (difficultyField.validate()) {
                         counter += 1;
-                        continue;
                     }
                 }
 
-                misstakeCounter += 1;
+                if (oldCounter == counter) {
+                    misstakeCounter += 1;
+                } else {
+                    misstakeCounter = 0;
+                }
+
 
             } catch (NoSuchElementException exp) {
                 return null;
@@ -132,11 +136,13 @@ public class LabWorkInput {
 
     public static Person getPerson(Scanner scanner) {
         String[] fields = {"author name", "author height", "author eye color(RED, BLACK, YELLOW, BROWN)"};
-        String name = null;
-        Float height = null;
-        Color eyeColor = null;
+        NameField nameField = new NameField();
+        HeightField heightField = new HeightField();
+        EyeColorField eyeColorField = new EyeColorField();
+        
         int counter = 0;
         int misstakeCounter = 0;
+
         while (counter < 3) {
             try {
                 if (misstakeCounter == 0) {
@@ -151,33 +157,40 @@ public class LabWorkInput {
 
                 if (line == "") {
                     line = null;
-                    misstakeCounter += 1;
-                    continue;
                 }
 
+                int oldCounter = counter;
+
                 if (counter == 0) {
-                    name = line;
+                   nameField.putValue(nameField.toType(line));
+                   if (nameField.validate()) {
                     counter += 1;
+                   }
                 } else if (counter == 1) {
-                    height = Float.parseFloat(line);
-                    if (height > 0 && height < Float.MAX_VALUE) {
-                        counter += 1;
-                    } else {
-                        misstakeCounter += 1;
-                        continue;
-                    }
-                } else if (counter == 2) {
-                    eyeColor = Color.valueOf(line);
+                    heightField.putValue(heightField.toType(line));
+                   if (heightField.validate()) {
                     counter += 1;
+                   }
+                } else if (counter == 2) {
+                    eyeColorField.putValue(eyeColorField.toType(line));
+                    if (eyeColorField.validate()) {
+                     counter += 1;
+                    }
                 }
-                misstakeCounter = 0;
+
+                if (oldCounter == counter) {
+                    misstakeCounter += 1;
+                } else {
+                    misstakeCounter = 0;
+                }
+                
             } catch (NoSuchElementException exp) {
                 return null;
             } catch (Exception e) {
                 misstakeCounter += 1;
             } 
         }
-        return new Person(name, height, eyeColor);
+        return new Person(nameField.getValue(), heightField.getValue(), eyeColorField.getValue());
     }
 
 

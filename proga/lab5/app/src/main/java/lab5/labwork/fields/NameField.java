@@ -15,6 +15,9 @@ public class NameField extends Field {
 
 
     public String toType(String input) {
+        if (input == null) {
+            return null;
+        }
         return input;
     }
 

@@ -17,6 +17,9 @@ public class EyeColorField extends Field {
     }
 
     public Color toType(String input) {
+        if (input == null) {
+            return null;
+        }
         return Color.valueOf(input);
     }
 

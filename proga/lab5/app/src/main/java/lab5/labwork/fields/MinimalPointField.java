@@ -6,6 +6,9 @@ public class MinimalPointField extends Field {
 
     @Override
     public boolean validate() {
+        if (this.value == null) {
+            return true;
+        }
         if (this.value <= 0 || this.value < Long.MIN_VALUE || this.value > Long.MAX_VALUE) {
             return false;
         } else {
@@ -14,7 +17,9 @@ public class MinimalPointField extends Field {
     }
 
     public Long toType(String input) {
-        // TODO Auto-generated method stub
+        if (input == null) {
+            return null;
+        }
         return Long.parseLong(input);
     }
 

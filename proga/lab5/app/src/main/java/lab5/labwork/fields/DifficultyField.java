@@ -15,7 +15,9 @@ public class DifficultyField extends Field {
     }
 
     public Difficulty toType(String input) {
-        // TODO Auto-generated method stub
+        if (input == null) {
+            return null;
+        }
         return Difficulty.valueOf(input);
     }
 

@@ -5,6 +5,9 @@ public class TunedInWorksField extends Field {
     private Long value;
     
     public boolean validate() {
+        if (this.value == null) {
+            return true;
+        }
         if (this.value < Long.MIN_VALUE || this.value > Long.MAX_VALUE) {
             return false;
         } else {
@@ -13,6 +16,9 @@ public class TunedInWorksField extends Field {
     }
 
     public Long toType(String input) {
+        if (input == null) {
+            return null;
+        }
         return Long.parseLong(input);
     }
 
