@@ -3,10 +3,10 @@ package lab5;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
-import lab5.commands.Receiver;
 import lab5.database.DataReader;
 import lab5.database.Database;
 import lab5.labwork.LabWork;
+import lab5.recivers.Reciever;
 
 public class App {
 
@@ -24,8 +24,8 @@ public class App {
             }
         }
 
-        Receiver rc = new Receiver(priorityQueue);
-        Receiver.maxId = maxId;
+        Reciever rc = new Reciever(priorityQueue);
+        Reciever.maxId = maxId;
         System.out.print("Для просмотра доступных команд введите help.");
         Scanner scanner = new Scanner(System.in);
         while (true) {

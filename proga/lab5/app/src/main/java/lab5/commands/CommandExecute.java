@@ -8,6 +8,7 @@ import java.util.PriorityQueue;
 import java.util.Scanner;
 
 import lab5.labwork.LabWork;
+import lab5.recivers.Reciever;
 
 
 /** Класс команды реализующей выполнение комманд из файла-скрипта. 
@@ -28,7 +29,7 @@ public class CommandExecute implements Command {
             filesList.add(file);
 
             Scanner scanner = new Scanner(file);
-            Receiver receiver = new Receiver(PriorityQueue);
+            Reciever receiver = new Reciever(PriorityQueue);
             while (scanner.hasNextLine()) {
                 receiver.recieveCommand(scanner);
             }

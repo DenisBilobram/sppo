@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import lab5.commands.Receiver;
+import lab5.recivers.Reciever;
 
 
 
@@ -24,7 +24,7 @@ public class LabWork implements Comparable<LabWork>{
     
     public LabWork(String name, Coordinates coordinates, Date creationDate, Long minimalPoint,
             Long tunedInWorks, Difficulty difficulty, Person author) {
-        this.id = Receiver.maxId += 1;
+        this.id = Reciever.maxId += 1;
         this.name = name;
         this.coordinates = coordinates;
         this.creationDate = creationDate;

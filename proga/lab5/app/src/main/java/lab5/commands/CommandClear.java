@@ -3,6 +3,7 @@ package lab5.commands;
 import java.util.PriorityQueue;
 
 import lab5.labwork.LabWork;
+import lab5.recivers.Reciever;
 
 /** Класс команды реализующей удаление всех элементов из коллекции.
  * 
@@ -13,7 +14,7 @@ public class CommandClear implements Command{
     public void execute(PriorityQueue<LabWork> priorityQueue, Object operand) {
         priorityQueue.clear();
         System.out.println("Коллекция была очищена.");
-        Receiver.maxId = 0l;
+        Reciever.maxId = 0l;
     }
 
 }

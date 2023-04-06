@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import lab5.commands.Receiver;
 import lab5.labwork.fields.CoordinatesField;
 import lab5.labwork.fields.CreationDateField;
 import lab5.labwork.fields.DifficultyField;
@@ -13,6 +12,7 @@ import lab5.labwork.fields.NameField;
 import lab5.labwork.fields.TunedInWorksField;
 import lab5.labwork.fields.author.EyeColorField;
 import lab5.labwork.fields.author.HeightField;
+import lab5.recivers.Reciever;
 
 public class LabWorkInput {
 
@@ -26,7 +26,7 @@ public class LabWorkInput {
                 return null;
             }
             String[] parsedLine = line.split(" ");
-            if (Receiver.commands.keySet().contains(parsedLine[0])) {
+            if (Reciever.commands.keySet().contains(parsedLine[0])) {
                 if (parsedLine.length == 1) {
                     String[] returnValue = {parsedLine[0], ""};
                     return returnValue;

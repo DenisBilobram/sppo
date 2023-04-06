@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import lab5.labwork.LabWork;
 import lab5.labwork.LabWorkInput;
+import lab5.recivers.Reciever;
 
 /** Класс команды реализующей добавление элемента в коллекцию.
  * 
@@ -21,6 +22,6 @@ public class CommandAdd implements Command {
         }
         PriorityQueue.add(labWork);
         System.out.println("Элемент был добавлен в коллекцию.");
-        Receiver.maxId += 1l;
+        Reciever.maxId += 1l;
     }
 }

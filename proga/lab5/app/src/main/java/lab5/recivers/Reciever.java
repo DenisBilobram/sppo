@@ -1,23 +1,40 @@
-package lab5.commands;
+package lab5.recivers;
 
 import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
+import lab5.commands.Command;
+import lab5.commands.CommandAdd;
+import lab5.commands.CommandClear;
+import lab5.commands.CommandCountLessAuthor;
+import lab5.commands.CommandExecute;
+import lab5.commands.CommandExit;
+import lab5.commands.CommandHead;
+import lab5.commands.CommandHelp;
+import lab5.commands.CommandInfo;
+import lab5.commands.CommandMaxByName;
+import lab5.commands.CommandPrintTunedInWorks;
+import lab5.commands.CommandRemoveById;
+import lab5.commands.CommandRemoveHead;
+import lab5.commands.CommandRemoveLower;
+import lab5.commands.CommandSave;
+import lab5.commands.CommandShow;
+import lab5.commands.CommandUpdate;
 import lab5.labwork.LabWork;
 import lab5.labwork.LabWorkInput;
 
 /** Класс отвечающий за парсинг строковой комманды в объект.
  * 
  */
-public class Receiver {
+public class Reciever {
 
     public static HashMap<String, Command> commands = new HashMap<>();
     private PriorityQueue<LabWork> priorityQueue;
     public static Long maxId = 0l;
     
 
-    public Receiver(PriorityQueue<LabWork> priorityQueue) {
+    public Reciever(PriorityQueue<LabWork> priorityQueue) {
         this.priorityQueue = priorityQueue;
         commands.put("add", new CommandAdd());
         commands.put("info", new CommandInfo());
