@@ -44,7 +44,7 @@ public class Database {
                 resultSignal.setMessage("\nПодключился к базе данных.");
                 resultSignal.setSucces(true);
 
-            } else if (!this.storage.createNewFile() || this.storage.isDirectory()) {
+            } else if (!this.storage.createNewFile()) {
 
                 this.storage = new File("./db.json");
                 
@@ -54,6 +54,9 @@ public class Database {
                 } else {
                     throw new IOException();
                 }
+            } else {
+                resultSignal.setMessage(String.format("\nСоздал базу данных по адресу %s и подключился.", this.storage.getAbsolutePath()));
+                resultSignal.setSucces(true);
             }
         } catch (IOException e) {
             resultSignal.setMessage("\nОтсутсвует файл с базой данных и не получается его создать.");
