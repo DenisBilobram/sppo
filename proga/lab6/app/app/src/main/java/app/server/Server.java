@@ -14,7 +14,7 @@ import app.signals.Signal;
 
 
 public class Server {
-    public static void startServer() {
+    public static void startServer(int host) {
 
         Database dataBase = new Database();
         Signal dbSignal = dataBase.connect();
@@ -37,7 +37,8 @@ public class Server {
 
         Receiver.maxId = maxId;
 
-        ServerSocketChannel serverChannel = ClientConnection.openChannel();
+        ServerSocketChannel serverChannel = ClientConnection.openChannel(host);
+
         if (serverChannel == null) {
             System.out.println("Не могу открыть сокет.");
             System.exit(0);

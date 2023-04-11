@@ -12,13 +12,13 @@ import app.signals.Signal;
 import app.signals.SignalManager;
 
 public class Client {
-    public static void startClient() {
+    public static void startClient(String host, int port) {
 
         ServerConnection server = new ServerConnection();
         CommandParser commandParser = new CommandParser();
         Scanner scanner = new Scanner(System.in);
 
-        boolean connected = server.coonectToServer();
+        boolean connected = server.coonectToServer(host, port);
 
         if (connected) {
 

@@ -30,11 +30,11 @@ public class ClientConnection {
         this.channel = channel;
     }
 
-    public static ServerSocketChannel openChannel() {
+    public static ServerSocketChannel openChannel(int host) {
         try {
             ServerSocketChannel serverChannel = ServerSocketChannel.open();
             ServerSocket serverSocket = serverChannel.socket();
-            serverSocket.bind(new InetSocketAddress(7777));
+            serverSocket.bind(new InetSocketAddress(host));
             return serverChannel;
         } catch (IOException e) {
             

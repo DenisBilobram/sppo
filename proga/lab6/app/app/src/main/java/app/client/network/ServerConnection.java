@@ -12,9 +12,9 @@ public class ServerConnection {
         return channel;
     }
 
-    public boolean coonectToServer() {
+    public boolean coonectToServer(String host, int port) {
         try {
-            ServerConnection.channel = SocketChannel.open(new InetSocketAddress("localhost", 7777));
+            ServerConnection.channel = SocketChannel.open(new InetSocketAddress(host, port));
             channel.configureBlocking(false);
             return true;
         } catch (IOException exception) {
