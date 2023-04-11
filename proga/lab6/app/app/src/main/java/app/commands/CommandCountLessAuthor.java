@@ -16,22 +16,22 @@ public class CommandCountLessAuthor extends Command {
 
     @Override
     public Signal execute(PriorityQueue<LabWork> PriorityQueue) {
+
         Person author = getPerson();
         Signal resultSignal = new Signal();
 
         if (author == null) {
+
             resultSignal.setMessage("Команда не может быть выполнена.");
             resultSignal.setSucces(false);
             return resultSignal;
+
         } else {
-            int c = 0;
-            for (LabWork labWork : PriorityQueue) {
-                if (labWork.getAuthor().getName().length() < author.getName().length()) {
-                    c += 1;
-                }
-            }
+
+            Long c = PriorityQueue.stream().filter(x -> x.getAuthor().getName().length() < author.getName().length()).count();
             resultSignal.setMessage(String.format("Количество: %d", c));
             resultSignal.setSucces(true);
+
         }
 
         return resultSignal;

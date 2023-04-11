@@ -30,19 +30,19 @@ public class CommandUpdate extends Command {
                     labWork.setMinimalPoint(labWorkNew.getMinimalPoint());
                     labWork.setTunedInWorks(labWorkNew.getTunedInWorks());
                     labWork.setAuthor(labWorkNew.getAuthor());
-                    resultSignal.setMessage("\nЭлемент был изменём.");
+                    resultSignal.setMessage("Элемент был изменём.");
                     resultSignal.setSucces(true);
                     return resultSignal;
                 } 
             } catch (NumberFormatException exp) {
                 System.out.println();
-                resultSignal.setMessage("\nНеверный формат аргумента id.");
+                resultSignal.setMessage("Неверный формат аргумента id.");
                 resultSignal.setSucces(false);
                 return resultSignal;
             }
             
         }
-        resultSignal.setMessage("\nЭлемент с таким id не найден.");
+        resultSignal.setMessage("Элемент с таким id не найден.");
         resultSignal.setSucces(false);
         return resultSignal;
     }

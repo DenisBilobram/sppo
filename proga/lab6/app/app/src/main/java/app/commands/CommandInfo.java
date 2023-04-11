@@ -24,7 +24,7 @@ public class CommandInfo extends Command {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String minString = dateFormat.format(min);
 
-        Signal resultSignal = new Signal(String.format("\nИнформация о коллекции:\nТип: %s\nДата создания: %s\nКол-во эллементов: %d", priorityQueue.getClass().toString(), minString, priorityQueue.size()));
+        Signal resultSignal = new Signal(String.format("Информация о коллекции:\nТип: %s\nДата создания: %s\nКол-во эллементов: %d", priorityQueue.getClass().toString(), minString, priorityQueue.size()));
         resultSignal.setSucces(true);
         return resultSignal;
     }

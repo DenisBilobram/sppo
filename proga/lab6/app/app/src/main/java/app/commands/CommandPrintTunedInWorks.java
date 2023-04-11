@@ -1,6 +1,8 @@
 package app.commands;
 
+import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.stream.Collectors;
 
 import app.labwork.LabWork;
 import app.signals.Signal;
@@ -12,15 +14,16 @@ public class CommandPrintTunedInWorks extends Command {
 
     @Override
     public Signal execute(PriorityQueue<LabWork> priorityQueue) {
-        PriorityQueue<LabWork> priorityQueueSorted = new PriorityQueue<>((s1,s2) -> s2.getTunedInWorks().intValue() - s1.getTunedInWorks().intValue());
-        for (LabWork labWork : priorityQueue) {
-            priorityQueueSorted.add(labWork);
-        }
-        String result = new String();
-        while (!priorityQueueSorted.isEmpty()) {
-            LabWork labWork = priorityQueueSorted.poll();
-            result += String.format("LabWork Id: %d, hourse: %d", labWork.getId(), labWork.getTunedInWorks());
-        }
+        
+
+        String result = priorityQueue.stream().sorted(new Comparator<LabWork>() {
+
+            public int compare(LabWork arg0, LabWork arg1) {
+                return arg1.getTunedInWorks().intValue() - arg0.getTunedInWorks().intValue();
+            }
+            
+        }).map(x -> String.format("LabWork Id: %d, hourse: %d", x.getId(), x.getTunedInWorks())).collect(Collectors.joining("\n"));
+
         Signal resultSignal = new Signal(result);
         resultSignal.setSucces(true);
         return resultSignal;

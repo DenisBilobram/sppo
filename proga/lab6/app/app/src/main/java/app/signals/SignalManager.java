@@ -4,11 +4,11 @@ public class SignalManager {
     
     public static void handle(Signal signal) {
         if (signal.isSucces()) {
-            System.out.println("Команда выполена успешно.");
+            System.out.println("Команда выполена успешно.\n");
         } else {
-            System.out.println("Не удалось выполнить команду");
+            System.out.println("Не удалось выполнить команду.\n");
         }
-        System.out.print(signal.getMessage());
+        System.out.println(signal.getMessage() + "\n");
     }
 
 }

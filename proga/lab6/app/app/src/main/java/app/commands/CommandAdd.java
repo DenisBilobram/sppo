@@ -22,7 +22,7 @@ public class CommandAdd extends Command {
         Signal resultSignal = new Signal();
 
         PriorityQueue.add(labWork);
-        resultSignal.setMessage("\nЭлемент был добавлен в коллекцию.");
+        resultSignal.setMessage("Элемент был добавлен в коллекцию.");
         resultSignal.setSucces(true);
         Receiver.maxId += 1;
         

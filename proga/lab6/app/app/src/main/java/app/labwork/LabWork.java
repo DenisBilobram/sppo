@@ -67,7 +67,7 @@ public class LabWork implements Comparable<LabWork>, Serializable{
         this.minimalPoint = minimalPoint;
     }
     public Long getTunedInWorks() {
-        return tunedInWorks;
+        return tunedInWorks == null ? 0 : tunedInWorks;
     }
     public void setTunedInWorks(long tunedInWorks) {
         this.tunedInWorks = tunedInWorks;

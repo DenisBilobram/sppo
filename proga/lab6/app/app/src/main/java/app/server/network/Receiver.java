@@ -9,7 +9,7 @@ import app.commands.*;
 
 import app.signals.CommandSignal;
 
-/** Класс отвечающий за парсинг строковой комманды в объект.
+/** Класс отвечающий за получение объектов от клиента по сети.
  * 
  */
 public class Receiver {
@@ -27,17 +27,20 @@ public class Receiver {
         byte[] data = new byte[1024 * 32];
 
         try {
+
             int i = inputStream.read(data);
             while (i == 0) {
+                Thread.sleep(10);
                 i = inputStream.read(data);
             }
-            if (i == -1) {
+
+            while (i == -1) {
                 throw new IOException();
             }
             return ((CommandSignal)SerializationUtils.deserialize(data)).getCommand();
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             return null;
-        }
+        } 
 
     }
 }

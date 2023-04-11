@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
 import app.labwork.LabWork;
 import app.signals.Signal;
 
-/** Класс реализующий базу данных программы. Хранение данных происходит в файле db.xml в формате xml.
+/** Класс реализующий базу данных программы. Хранение данных происходит в файле db.json в формате json.
  * 
  */
 public class Database {
@@ -33,7 +33,7 @@ public class Database {
         try  {
             this.storage = new File(env);
         } catch (NullPointerException exp) {
-            resultSignal.setMessage("\nНет переменной окружения DB_PATH.");
+            resultSignal.setMessage("Нет переменной окружения DB_PATH.");
             resultSignal.setSucces(false);
             return resultSignal;
         }
@@ -41,7 +41,7 @@ public class Database {
         try { 
             if (this.storage.exists() && !this.storage.isDirectory()) {
 
-                resultSignal.setMessage("\nПодключился к базе данных.");
+                resultSignal.setMessage("Подключился к базе данных.");
                 resultSignal.setSucces(true);
 
             } else if (!this.storage.createNewFile()) {
@@ -49,17 +49,17 @@ public class Database {
                 this.storage = new File("./db.json");
                 
                 if (this.storage.createNewFile() || this.storage.exists()) {
-                    resultSignal.setMessage("\nИспользую ./db.json.");
+                    resultSignal.setMessage("Использую ./db.json.");
                     resultSignal.setSucces(true);
                 } else {
                     throw new IOException();
                 }
             } else {
-                resultSignal.setMessage(String.format("\nСоздал базу данных по адресу %s и подключился.", this.storage.getAbsolutePath()));
+                resultSignal.setMessage(String.format("Создал базу данных по адресу %s и подключился.", this.storage.getAbsolutePath()));
                 resultSignal.setSucces(true);
             }
         } catch (IOException e) {
-            resultSignal.setMessage("\nОтсутсвует файл с базой данных и не получается его создать.");
+            resultSignal.setMessage("Отсутсвует файл с базой данных и не получается его создать.");
             resultSignal.setSucces(false);
         }
         return resultSignal;

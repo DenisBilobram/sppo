@@ -3,6 +3,7 @@ package app.commands;
 import java.util.PriorityQueue;
 
 import app.labwork.LabWork;
+import app.labwork.comparators.LabWorkComparatorById;
 import app.signals.Signal;
 
 /** Класс команды реализующей отображение элемента в начале коллекции. 
@@ -17,7 +18,8 @@ public class CommandHead extends Command{
             resultSignal.setMessage("Коллекция пуста.");
             resultSignal.setSucces(false);
         } else {
-            resultSignal.setMessage(priorityQueue.peek().toString());
+            LabWorkComparatorById comparator = new LabWorkComparatorById();
+            resultSignal.setMessage(priorityQueue.stream().max(comparator).get().toString());
             resultSignal.setSucces(true);
         }
 

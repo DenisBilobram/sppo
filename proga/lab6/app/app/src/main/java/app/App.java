@@ -4,17 +4,14 @@
 package app;
 
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
         if (args.length != 1) {
         } else {
             if (args[0].equals("client")) {
-                app.client.Client.main(null);
+                app.client.Client.startClient();
             } else if (args[0].equals("server")) {
-                app.server.Server.main(null);
+                app.server.Server.startServer();
             }
             return;
         }

@@ -1,5 +1,4 @@
 package app.client;
-
 import java.util.Scanner;
 
 import app.client.input.CommandParser;
@@ -13,7 +12,7 @@ import app.signals.Signal;
 import app.signals.SignalManager;
 
 public class Client {
-    public static void main(String[] args) {
+    public static void startClient() {
 
         ServerConnection server = new ServerConnection();
         CommandParser commandParser = new CommandParser();
@@ -27,27 +26,27 @@ public class Client {
             Reciever reciever = new Reciever(ServerConnection.getChannel());
 
             while (server.checkConnectiion()) {
-                System.out.print("\nВведите команду. Для списка команд введите help.");
+                System.out.print("Введите команду. Для списка команд введите help.");
                 Command command = commandParser.recieveCommand(scanner);
 
                 if (command == null) {
                     continue;
                 }
 
-                Signal executedCommand;
+                Signal responseSignal;
                 if (command instanceof ClientCommand) {
-                    executedCommand = ((ClientCommand)command).execute();
+                    responseSignal = ((ClientCommand)command).execute();
                 } else {
                     CommandSignal signal = new CommandSignal(command);
                     boolean sended = sender.sendCommandSignal(signal);
                     if (sended) {
-                        executedCommand = reciever.getServerSignal();
+                        responseSignal = reciever.getServerSignal();
                     } else {
-                        executedCommand = new Signal("\nНе удалось отправить команду на сервер.");
-                        executedCommand.setSucces(false);
+                        responseSignal = new Signal("Не удалось отправить команду на сервер.");
+                        responseSignal.setSucces(false);
                     }
                 }
-                SignalManager.handle(executedCommand);
+                SignalManager.handle(responseSignal);
             }
         }
     }

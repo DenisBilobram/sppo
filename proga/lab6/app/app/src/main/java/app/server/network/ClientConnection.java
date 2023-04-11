@@ -3,6 +3,8 @@ package app.server.network;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
@@ -26,6 +28,18 @@ public class ClientConnection {
 
     public void setChannel(SocketChannel channel) {
         this.channel = channel;
+    }
+
+    public static ServerSocketChannel openChannel() {
+        try {
+            ServerSocketChannel serverChannel = ServerSocketChannel.open();
+            ServerSocket serverSocket = serverChannel.socket();
+            serverSocket.bind(new InetSocketAddress(7777));
+            return serverChannel;
+        } catch (IOException e) {
+            
+            return null;
+        }
     }
 
     public boolean connectToClient(ServerSocketChannel serverChannel) {

@@ -3,6 +3,7 @@ package app.commands;
 import java.util.PriorityQueue;
 
 import app.labwork.LabWork;
+import app.labwork.comparators.LabwWorkComparatorByName;
 import app.signals.Signal;
 
 /** Класс команды реализующей отображение элемента с максимальным именем.
@@ -13,16 +14,13 @@ public class CommandMaxByName extends Command {
     @Override
     public Signal execute(PriorityQueue<LabWork> priorityQueue) {
         Signal resultSignal = new Signal();
-        PriorityQueue<LabWork> priorityQueueSorted = new PriorityQueue<>((s1,s2) -> s2.getName().length() - s1.getName().length());
-        for (LabWork lab : priorityQueue) {
-            priorityQueueSorted.add(lab);
-        }
 
-        if (priorityQueueSorted.size() == 0) {
+        if (priorityQueue.size() == 0) {
             resultSignal.setMessage("Коллекция пуста.");
             resultSignal.setSucces(false);
         } else {
-            resultSignal.setMessage(priorityQueueSorted.peek().toString());
+            LabwWorkComparatorByName comparator = new LabwWorkComparatorByName();
+            resultSignal.setMessage(priorityQueue.stream().max(comparator).get().toString());
             resultSignal.setSucces(true);
         }
         return resultSignal;

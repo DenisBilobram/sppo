@@ -37,7 +37,7 @@ public class CommandExecute extends ClientCommand {
             File file = getFile();
 
             if (filesList.contains(file)) {
-                resultSignal.setMessage("\nВ скрипте найдена рекурсия, завершаю выполнение.");
+                resultSignal.setMessage("В скрипте найдена рекурсия, завершаю выполнение.");
                 resultSignal.setSucces(false);
                 return resultSignal;
             }
@@ -66,7 +66,7 @@ public class CommandExecute extends ClientCommand {
                     if (sended) {
                         executedCommand = reciever.getServerSignal();
                     } else {
-                        executedCommand = new Signal("\nНе удалось отправить команду на сервер.");
+                        executedCommand = new Signal("Не удалось отправить команду на сервер.");
                         executedCommand.setSucces(false);
                     }
                 }
@@ -80,7 +80,7 @@ public class CommandExecute extends ClientCommand {
 
             return resultSignal;
         } catch (FileNotFoundException exp) {
-            resultSignal.setMessage("\nФайл скрипта не найден.");
+            resultSignal.setMessage("Файл скрипта не найден.");
             resultSignal.setSucces(false);
         }
         return resultSignal;

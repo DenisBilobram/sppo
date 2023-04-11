@@ -1,9 +1,5 @@
 package app.server;
 
-
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
 import java.nio.channels.ServerSocketChannel;
 import java.util.PriorityQueue;
 
@@ -18,7 +14,7 @@ import app.signals.Signal;
 
 
 public class Server {
-    public static void main(String[] args) {
+    public static void startServer() {
 
         Database dataBase = new Database();
         Signal dbSignal = dataBase.connect();
@@ -41,14 +37,10 @@ public class Server {
 
         Receiver.maxId = maxId;
 
-        ServerSocketChannel serverChannel;
-        try {
-            serverChannel = ServerSocketChannel.open();
-            ServerSocket serverSocket = serverChannel.socket();
-            serverSocket.bind(new InetSocketAddress(7777));
-        } catch (IOException e) {
+        ServerSocketChannel serverChannel = ClientConnection.openChannel();
+        if (serverChannel == null) {
             System.out.println("Не могу открыть сокет.");
-            return;
+            System.exit(0);
         }
 
         while (true) {
@@ -71,7 +63,7 @@ public class Server {
                     System.out.println("Получил команду.");
                     if (command == null) {
                         client.disconnect();
-                        System.out.println("Отключил клиента.");
+                        System.out.println("Соединение с клиентом прервано.");
                         continue;
                     }
                     Signal serverSignal = command.execute(priorityQueue);

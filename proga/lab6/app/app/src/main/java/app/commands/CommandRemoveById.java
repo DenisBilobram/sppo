@@ -29,7 +29,7 @@ public class CommandRemoveById extends Command {
             labWork = null;
         }
         if (labWork == null) {
-            resultSignal.setMessage("\nЭлемента с таким id не найдено.");
+            resultSignal.setMessage("Элемента с таким id не найдено.");
             resultSignal.setSucces(false);
         } else {
             priorityQueue.remove(labWork);
