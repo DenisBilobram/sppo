@@ -17,13 +17,14 @@ import app.labwork.fields.NameField;
 import app.labwork.fields.TunedInWorksField;
 import app.labwork.fields.author.EyeColorField;
 import app.labwork.fields.author.HeightField;
+import app.signals.SignalManager;
 
 public class LabWorkInput {
 
     public static String[] getCommand(Scanner scanner) {
         while (true) {
             String line = null;
-            System.out.print("\n> ");
+            System.out.print("> ");
             try {
                 line = scanner.nextLine();
             } catch (NoSuchElementException exp) {
@@ -37,15 +38,15 @@ public class LabWorkInput {
                 }
                 return parsedLine;
             }
-            System.out.print("\nНеверный ввод команды, попробуйте ещё раз. ");
+            SignalManager.printMessage("Неверный ввод команды, попробуйте ещё раз.", true);
         }
     }
 
 
     public static LabWork getLabWork(Scanner scanner) {
-        System.out.printf("\nИспользовать дефолтные значения для полей?(yes/no): ");
+        SignalManager.printMessage("Использовать дефолтные значения для полей?(yes/no): ", false);
         if (getYesNo(scanner)) {
-            System.out.println("Использую дефолтные значения.");
+            SignalManager.printMessage("Использую дефолтные значения.", true);
             return new LabWork("proga", new Coordinates(0, 0), new Date(), 10l, 45l, Difficulty.NORMAL, new Person("denis", 185, Color.BLACK));
         }
 
@@ -65,11 +66,11 @@ public class LabWorkInput {
         while (counter < 5) {
             try {
                 if (misstakeCounter == 0) {
-                    System.out.printf("\nВведите значение для поля %s: ", fieldNames[counter]);
+                    SignalManager.printMessage(String.format("Введите значение для поля %s: ", fieldNames[counter]), false);
                 } else if (misstakeCounter < 3){
-                    System.out.printf("\nНеподходящее значение для поля %s, попробуйте ещё раз: ", fieldNames[counter]);
+                    SignalManager.printMessage(String.format("Неподходящее значение для поля %s, попробуйте ещё раз: ", fieldNames[counter]), false);
                 } else {
-                    System.out.printf("\nСлишком много попыток ввести значение. Завершение ввода...");
+                    SignalManager.printMessage("\nСлишком много попыток ввести значение. Завершение ввода...", true);
                     return null;
                 }
                 String line = scanner.nextLine();
@@ -150,11 +151,11 @@ public class LabWorkInput {
         while (counter < 3) {
             try {
                 if (misstakeCounter == 0) {
-                    System.out.printf("\nВведите значение для поля %s: ", fields[counter]);
+                    SignalManager.printMessage(String.format("Введите значение для поля %s: ", fields[counter]), false);
                 } else if (misstakeCounter < 3){
-                    System.out.printf("\nНеподходящее значение для поля %s, попробуйте ещё раз: ", fields[counter]);
+                    SignalManager.printMessage(String.format("Неподходящее значение для поля %s, попробуйте ещё раз: ", fields[counter]), false);
                 } else {
-                    System.out.printf("\nСлишком много попыток ввести значение. Завершение ввода...");
+                    SignalManager.printMessage("Слишком много попыток ввести значение. Завершение ввода...", true);
                     return null;
                 }
                 String line = scanner.nextLine();
@@ -204,9 +205,9 @@ public class LabWorkInput {
         while (true) {
             try {
                 if (misstakeCounter != 0 && misstakeCounter < 3) {
-                    System.out.printf("\nНеверное значение, попробуйте ещё раз(yes/no):");
+                    SignalManager.printMessage("Неверное значение, попробуйте ещё раз(yes/no): ", false);
                 } else if (misstakeCounter >= 3) {
-                    System.out.printf("\nСлишком много попыток, использую дефолтные значения.");
+                    SignalManager.printMessage("Слишком много попыток, использую дефолтные значения.", true);
                     return true;
                 }
                 String line = scanner.nextLine();
@@ -217,7 +218,7 @@ public class LabWorkInput {
                 }
                 misstakeCounter += 1;
             } catch (NoSuchElementException exp) {
-                System.out.println("\nКонец скрипта.");
+                SignalManager.printMessage("Конец скрипта.", true);
                 return true;
             }
         }

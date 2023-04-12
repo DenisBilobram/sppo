@@ -3,12 +3,39 @@ package app.signals;
 public class SignalManager {
     
     public static void handle(Signal signal) {
+        String output;
         if (signal.isSucces()) {
-            System.out.println("Команда выполена успешно.\n");
+            output = "Команда выполена успешно.";
         } else {
-            System.out.println("Не удалось выполнить команду.\n");
+            output = "Не удалось выполнить команду.";
         }
-        System.out.println(signal.getMessage() + "\n");
+        
+        printMessage(output, true);
+        System.out.println();
+        
+        output = signal.getMessage();
+        
+        printMessage(output, true);
+    }
+
+    public static void printMessage(String output, boolean lineSeparator) {
+
+        Long timeLong = 10l;
+
+        if (output.length() > 100) timeLong = 1l;
+
+        for (int i = 0; i < output.length(); i++) {
+            System.out.print(output.charAt(i));
+            try {
+                Thread.sleep(timeLong);
+            } catch (InterruptedException e) {
+            }
+        }
+
+        if (lineSeparator) {
+            System.out.print(System.lineSeparator());
+        }
+        
     }
 
 }

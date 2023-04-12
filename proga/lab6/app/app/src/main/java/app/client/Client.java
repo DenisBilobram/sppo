@@ -26,7 +26,8 @@ public class Client {
             Reciever reciever = new Reciever(ServerConnection.getChannel());
 
             while (server.checkConnectiion()) {
-                System.out.print("Введите команду. Для списка команд введите help.");
+                System.out.println();
+                SignalManager.printMessage("Введите команду. Для списка команд введите help.", true);
                 Command command = commandParser.recieveCommand(scanner);
 
                 if (command == null) {
