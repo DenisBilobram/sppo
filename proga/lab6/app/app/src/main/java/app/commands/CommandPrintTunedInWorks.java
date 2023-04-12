@@ -14,6 +14,13 @@ public class CommandPrintTunedInWorks extends Command {
 
     @Override
     public Signal execute(PriorityQueue<LabWork> priorityQueue) {
+        Signal resultSignal = new Signal();
+
+        if (priorityQueue.size() == 0) {
+            resultSignal.setMessage("Коллекция пуста.");
+            resultSignal.setSucces(true);
+            return resultSignal;
+        }
         
 
         String result = priorityQueue.stream().sorted(new Comparator<LabWork>() {
@@ -24,7 +31,9 @@ public class CommandPrintTunedInWorks extends Command {
             
         }).map(x -> String.format("LabWork Id: %d, hourse: %d", x.getId(), x.getTunedInWorks())).collect(Collectors.joining("\n"));
 
-        Signal resultSignal = new Signal(result);
+        
+
+        resultSignal.setMessage(result);
         resultSignal.setSucces(true);
         return resultSignal;
     }

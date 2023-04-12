@@ -18,6 +18,7 @@ public class CommandMaxByName extends Command {
         if (priorityQueue.size() == 0) {
             resultSignal.setMessage("Коллекция пуста.");
             resultSignal.setSucces(false);
+            return resultSignal;
         } else {
             LabwWorkComparatorByName comparator = new LabwWorkComparatorByName();
             resultSignal.setMessage(priorityQueue.stream().max(comparator).get().toString());

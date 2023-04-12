@@ -1,3 +1,2 @@
-add
-yes
 show
+execute_script c

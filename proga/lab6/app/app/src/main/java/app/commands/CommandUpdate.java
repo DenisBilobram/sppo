@@ -1,6 +1,5 @@
 package app.commands;
 
-import java.util.Iterator;
 import java.util.PriorityQueue;
 import app.labwork.LabWork;
 import app.signals.Signal;
@@ -16,34 +15,32 @@ public class CommandUpdate extends Command {
     }
 
     public Signal execute(PriorityQueue<LabWork> priorityQueue) {
+
         Signal resultSignal = new Signal();
-        
-        Iterator<LabWork> iter = priorityQueue.iterator();
-        while(iter.hasNext()) {
-            LabWork labWork = iter.next();
-            try {
-                if (labWork.getId().equals(Long.parseLong(id))) {
-                    LabWork labWorkNew = labWork;
-                    labWork.setName(labWorkNew.getName());
-                    labWork.setCoordinates(labWorkNew.getCoordinates());
-                    labWork.setDifficulty(labWorkNew.getDifficulty());
-                    labWork.setMinimalPoint(labWorkNew.getMinimalPoint());
-                    labWork.setTunedInWorks(labWorkNew.getTunedInWorks());
-                    labWork.setAuthor(labWorkNew.getAuthor());
-                    resultSignal.setMessage("Элемент был изменём.");
-                    resultSignal.setSucces(true);
-                    return resultSignal;
-                } 
-            } catch (NumberFormatException exp) {
-                System.out.println();
-                resultSignal.setMessage("Неверный формат аргумента id.");
-                resultSignal.setSucces(false);
-                return resultSignal;
-            }
+
+        try {
             
+            LabWork labWorkUpdate = priorityQueue.stream().filter(x -> x.getId().equals(Long.parseLong(getId()))).findFirst().get();
+
+            if (labWorkUpdate != null) {
+                labWork.setName(labWorkUpdate.getName());
+                labWork.setCoordinates(labWorkUpdate.getCoordinates());
+                labWork.setDifficulty(labWorkUpdate.getDifficulty());
+                labWork.setMinimalPoint(labWorkUpdate.getMinimalPoint());
+                labWork.setTunedInWorks(labWorkUpdate.getTunedInWorks());
+                labWork.setAuthor(labWorkUpdate.getAuthor());
+                resultSignal.setMessage("Элемент был изменём.");
+                resultSignal.setSucces(true);
+            } else {
+                resultSignal.setMessage("Элемент с таким id не найден.");
+                resultSignal.setSucces(false);
+            }
+
+        } catch (NumberFormatException exp) {
+            resultSignal.setMessage("Неверный формат аргумента id.");
+            resultSignal.setSucces(false);
         }
-        resultSignal.setMessage("Элемент с таким id не найден.");
-        resultSignal.setSucces(false);
+        
         return resultSignal;
     }
     

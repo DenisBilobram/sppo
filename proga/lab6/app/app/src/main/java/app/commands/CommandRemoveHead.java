@@ -15,9 +15,17 @@ public class CommandRemoveHead extends Command {
 
     @Override
     public Signal execute(PriorityQueue<LabWork> priorityQueue) {
+
+        Signal resultSignal = new Signal();
+
+        if (priorityQueue.size() == 0) {
+            resultSignal.setMessage("Коллекция пуста.");
+            resultSignal.setSucces(false);
+            return resultSignal;
+        }
         
         priorityQueue.poll();
-        Signal resultSignal = new Signal("Верхний элемент удалён.");
+        resultSignal.setMessage("Верхний элемент удалён.");
         resultSignal.setSucces(true);
         return resultSignal;
     }

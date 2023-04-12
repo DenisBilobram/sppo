@@ -17,6 +17,12 @@ public class CommandShow extends Command {
 
         Signal resultSignal = new Signal();
 
+        if (priorityQueue.size() == 0) {
+            resultSignal.setMessage("Коллекция пуста.");
+            resultSignal.setSucces(true);
+            return resultSignal;
+        }
+
         String result = priorityQueue.stream().map(x -> x.toString() + "\n").collect(Collectors.joining("---------------------------------\n"));
         resultSignal.setMessage(result);
         resultSignal.setSucces(true);

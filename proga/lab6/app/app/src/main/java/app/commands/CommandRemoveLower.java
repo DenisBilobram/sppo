@@ -1,6 +1,5 @@
 package app.commands;
 
-import java.util.Iterator;
 import java.util.PriorityQueue;
 
 import app.labwork.LabWork;
@@ -18,18 +17,10 @@ public class CommandRemoveLower extends Command {
     @Override
     public Signal execute(PriorityQueue<LabWork> priorityQueue) {
         LabWork userLabWork = labWork;
-        Iterator<LabWork> iter = priorityQueue.iterator(); 
-        LabWork labWork = null;
-        while (iter.hasNext()) {
-            labWork = iter.next();
-            if (labWork.getTunedInWorks() == null) {
-                continue;
-            }
-            if (labWork.getTunedInWorks() < userLabWork.getTunedInWorks()) {
-                iter.remove();
-            }
-        }
-        Signal resultSignal = new Signal("Элементы с полем ID меньше заданного, если таковые были, удалены.");
+        
+        priorityQueue.stream().filter(x -> x.getTunedInWorks() < userLabWork.getTunedInWorks()).forEach(x -> priorityQueue.remove(x));
+
+        Signal resultSignal = new Signal("Элементы с полем tunedInWorks меньше заданного, если таковые были, удалены.");
         resultSignal.setSucces(true);
         return resultSignal;
     }

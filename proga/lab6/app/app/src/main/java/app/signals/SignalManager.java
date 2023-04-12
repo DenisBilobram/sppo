@@ -16,6 +16,7 @@ public class SignalManager {
         output = signal.getMessage();
         
         printMessage(output, true);
+        System.out.println();
     }
 
     public static void printMessage(String output, boolean lineSeparator) {

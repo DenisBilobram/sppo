@@ -16,7 +16,7 @@ public class CommandHead extends Command{
         Signal resultSignal = new Signal();
         if (priorityQueue.size() == 0) {
             resultSignal.setMessage("Коллекция пуста.");
-            resultSignal.setSucces(false);
+            resultSignal.setSucces(true);
         } else {
             LabWorkComparatorById comparator = new LabWorkComparatorById();
             resultSignal.setMessage(priorityQueue.stream().max(comparator).get().toString());
