@@ -27,15 +27,8 @@ public class Server {
         DataReader dataReader = new DataReader(dataBase);
 
         PriorityQueue<LabWork> priorityQueue = dataReader.read();
-        Long maxId = 0l;
-
-        for (LabWork lab : priorityQueue) {
-            if (lab.getId() > maxId) {
-                maxId = lab.getId();
-            }
-        }
-
-        Receiver.maxId = maxId;
+        
+        Receiver.setMaxId(priorityQueue);
 
         ServerSocketChannel serverChannel = ClientConnection.openChannel(host);
 

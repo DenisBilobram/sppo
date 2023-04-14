@@ -7,18 +7,27 @@ import app.client.network.Sender;
 import app.client.network.ServerConnection;
 import app.commands.Command;
 import app.commands.client.ClientCommand;
-import app.signals.CommandSignal;
+import app.signals.ClientSignal;
 import app.signals.Signal;
 import app.signals.SignalManager;
 
 public class Client {
-    public static void startClient(String host, int port) {
+
+    private int port;
+    private String host;
+
+    public Client(String host, int port) {
+        this.port = port;
+        this.host = host;
+    }
+
+    public void startClient() {
 
         ServerConnection server = new ServerConnection();
         CommandParser commandParser = new CommandParser();
         Scanner scanner = new Scanner(System.in);
 
-        boolean connected = server.coonectToServer(host, port);
+        boolean connected = server.coonectToServer(this.host, this.port);
 
         if (connected) {
 
@@ -43,7 +52,7 @@ public class Client {
 
                 } else {
 
-                    CommandSignal signal = new CommandSignal(command);
+                    ClientSignal signal = new ClientSignal(command);
                     boolean sended = sender.sendCommandSignal(signal);
 
                     if (sended) {
