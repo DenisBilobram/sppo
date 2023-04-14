@@ -27,7 +27,7 @@ public class App {
 
             new Server(Integer.parseInt(args[1])).startServer();
 
-        } else if (args.length == 3 && args[0].equals("client") && isPort(args[2])) {
+        } else if (args.length == 3 && args[0].equals("client") && validate(args[1]) && isPort(args[2])) {
 
             new Client(args[1], Integer.parseInt(args[2])).startClient();
 
