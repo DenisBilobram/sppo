@@ -15,7 +15,6 @@ public class ServerConnection {
     public boolean coonectToServer(String host, int port) {
         try {
             InetSocketAddress address = new InetSocketAddress(host, port);
-            System.out.printf(host, port);
             System.out.println("Пытаюсь подключиться к " + address.getAddress());
             ServerConnection.channel = SocketChannel.open(address);
             channel.configureBlocking(false);
