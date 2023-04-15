@@ -33,7 +33,6 @@ public class Reciever {
             int numRead = 0;
             
             while(true) {
-                System.out.println(numRead);
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
@@ -46,7 +45,6 @@ public class Reciever {
                     byteComm[2] = byteBuffer.get(byteBuffer.position()-1);
                     
                     String comm = new String(byteComm);
-                    System.out.println(comm);
 
                     if (comm.equals("END")) {
                         byteBuffer = byteBuffer.slice(0, byteBuffer.position()-3);
