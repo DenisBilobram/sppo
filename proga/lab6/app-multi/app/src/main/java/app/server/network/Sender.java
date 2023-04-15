@@ -16,11 +16,18 @@ public class Sender {
 
             ByteBuffer buffer = ByteBuffer.wrap(SerializationUtils.serialize(signal));
 
-            int numWrite = channel.write(buffer);
+            while (buffer.hasRemaining()) {
 
-            if (numWrite == -1) {
-                return false;
+                int numWrite = channel.write(buffer);
+
+                if (numWrite == -1) {
+                    return false;
+                }
+
             }
+
+            buffer = ByteBuffer.wrap((new String("END")).getBytes());
+            channel.write(buffer);
 
             return true;
 
