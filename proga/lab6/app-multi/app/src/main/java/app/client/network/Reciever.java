@@ -22,53 +22,50 @@ public class Reciever {
 
         Signal serverSignal;
 
-        ByteBuffer buffer = ByteBuffer.allocate(1024 * 1024);
+        int size = 1024 * 32;
 
-        int i = 0;
-        while (i == 0) {
-            try {
-                i = this.channel.read(buffer);
-            } catch (IOException e) {
-                serverSignal = new Signal("Не удалось получить ответ от сервера.");
-                serverSignal.setSucces(false);
-                return serverSignal;
-            }
-        }
+        ByteBuffer byteBuffer = ByteBuffer.allocate(size);
 
-        
-        if (i == -1) {
+        byte[] data;
 
-            int waitCounter = 0;
-            SignalManager.printMessage("Прервалось подключение к серверу.", true);
+        try {
+            byte[] byteComm = new byte[3];
+            int numRead = 0;
+            
+            while(true) {
+                if (numRead >= 3) {
+                    byteComm[0] = byteBuffer.get(byteBuffer.position()-3);
+                    byteComm[1] = byteBuffer.get(byteBuffer.position()-2);
+                    byteComm[2] = byteBuffer.get(byteBuffer.position()-1);
+                    
+                    String comm = new String(byteComm);
 
-            while (i == -1) {
-                waitCounter += 1;
-                try {
-                    SignalManager.printMessage("Попытка чтения с сервера...", true);
-                    Thread.sleep(1000);
-                    i = this.channel.read(buffer);
-                } catch (InterruptedException | IOException e) {
-                    SignalManager.printMessage("Ошибка при чтении с сервера.", true);
-                }
-
-                if (waitCounter > 2) {
-                    serverSignal = new Signal("Прервалось подключение к серверу.");
-                    serverSignal.setSucces(false);
-
-                    try {
-                        ServerConnection.channel.close();
-                    } catch (IOException e) {
-                        serverSignal.setMessage("Возникли проблемы при отключении от сервера.");
+                    if (comm.equals("END")) {
+                        byteBuffer = byteBuffer.slice(0, byteBuffer.position()-3);
+                        break;
                     }
-                    return serverSignal;
-                }      
+                }
+                    
+                if (byteBuffer.remaining() < 1024*16) {
+                    ByteBuffer byteBufferOld = byteBuffer;
+                    byteBuffer = ByteBuffer.allocate(size * 2);
+                    byteBuffer.put(byteBufferOld.array());
+                }
+                numRead = channel.read(byteBuffer);
             }
-        }
+            byteBuffer.flip();
+            if (numRead == -1) {
+                return null;
+            }
 
-        buffer.flip();
+            serverSignal = SerializationUtils.deserialize(byteBuffer.array());
+            return serverSignal;
+            
+        } catch (IOException e) {
+            return null;
+        } 
         
-        serverSignal = (ServerSignal)SerializationUtils.deserialize(buffer.array());
-        return serverSignal;
+        
     }
 
 }

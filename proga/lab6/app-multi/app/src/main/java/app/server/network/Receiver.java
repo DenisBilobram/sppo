@@ -20,24 +20,14 @@ public class Receiver {
 
     public static Command recieveCommand(SocketChannel channel) {
 
-        int size = 1024 * 32;
-
-        ByteBuffer byteBuffer = ByteBuffer.allocate(size);
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024*32);
 
         byte[] data;
 
         try {
-
+            
             int numRead = channel.read(byteBuffer);
-            if (numRead != 0 && numRead != 3 && (new String(byteBuffer.array())).equals("END")) {
-                if (byteBuffer.remaining() < 1024*16) {
-                    ByteBuffer byteBufferOld = byteBuffer;
-                    byteBuffer = ByteBuffer.allocate(size * 2);
-                    byteBuffer.put(byteBufferOld.array());
-                }
-                numRead = channel.read(byteBuffer);
-                byteBuffer.flip();
-            }
+            byteBuffer.flip();
 
             if (numRead == -1) {
                 return null;
