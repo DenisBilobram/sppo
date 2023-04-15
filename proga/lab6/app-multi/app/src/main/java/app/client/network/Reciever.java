@@ -22,7 +22,7 @@ public class Reciever {
 
         Signal serverSignal;
 
-        int size = 1024 * 32;
+        int size = 1024;
 
         ByteBuffer byteBuffer = ByteBuffer.allocate(size);
 
@@ -33,12 +33,20 @@ public class Reciever {
             int numRead = 0;
             
             while(true) {
+                System.out.println(numRead);
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
                 if (numRead >= 3) {
                     byteComm[0] = byteBuffer.get(byteBuffer.position()-3);
                     byteComm[1] = byteBuffer.get(byteBuffer.position()-2);
                     byteComm[2] = byteBuffer.get(byteBuffer.position()-1);
                     
                     String comm = new String(byteComm);
+                    System.out.println(comm);
 
                     if (comm.equals("END")) {
                         byteBuffer = byteBuffer.slice(0, byteBuffer.position()-3);
@@ -46,12 +54,14 @@ public class Reciever {
                     }
                 }
                     
-                if (byteBuffer.remaining() < 1024*16) {
+                if (!byteBuffer.hasRemaining()) {
                     ByteBuffer byteBufferOld = byteBuffer;
-                    byteBuffer = ByteBuffer.allocate(size * 2);
+                    size *= 2;
+                    byteBuffer = ByteBuffer.allocate(size);
                     byteBuffer.put(byteBufferOld.array());
                 }
                 numRead = channel.read(byteBuffer);
+                System.out.println(byteBuffer);
             }
             byteBuffer.flip();
             if (numRead == -1) {
