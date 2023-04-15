@@ -20,7 +20,7 @@ public class Receiver {
 
     public static Command recieveCommand(SocketChannel channel) {
 
-        ByteBuffer byteBuffer = ByteBuffer.allocate(1024 * 32);
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024 * 1024);
 
         byte[] data;
 
