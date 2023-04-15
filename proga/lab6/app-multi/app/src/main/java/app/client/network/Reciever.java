@@ -59,7 +59,6 @@ public class Reciever {
                     byteBuffer.put(byteBufferOld.array());
                 }
                 numRead = channel.read(byteBuffer);
-                System.out.println(byteBuffer);
             }
             byteBuffer.flip();
             if (numRead == -1) {
