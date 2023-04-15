@@ -21,16 +21,8 @@ public class SignalManager {
 
     public static void printMessage(String output, boolean lineSeparator) {
 
-        Long timeLong = 10l;
-
-        if (output.length() > 100) timeLong = 1l;
-
         for (int i = 0; i < output.length(); i++) {
             System.out.print(output.charAt(i));
-            try {
-                Thread.sleep(timeLong);
-            } catch (InterruptedException e) {
-            }
         }
 
         if (lineSeparator) {
