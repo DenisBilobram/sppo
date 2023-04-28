@@ -26,19 +26,18 @@ public class Reciever {
 
 
         try {
-            byte[] byteComm = new byte[3];
+            byte[] byteComm = new byte[13];
             int numRead = 0;
             
             while(true) {
 
-                if (numRead >= 3) {
-                    byteComm[0] = byteBuffer.get(byteBuffer.position()-3);
-                    byteComm[1] = byteBuffer.get(byteBuffer.position()-2);
-                    byteComm[2] = byteBuffer.get(byteBuffer.position()-1);
+                if (numRead >= 13) {
+
+                    byteBuffer.get(byteBuffer.position()-13, byteComm);
                     
                     String comm = new String(byteComm);
 
-                    if (comm.equals("END")) {
+                    if (comm.equals("END8374857392")) {
                         byteBuffer = byteBuffer.slice(0, byteBuffer.position()-3);
                         break;
                     }

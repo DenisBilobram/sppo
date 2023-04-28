@@ -26,7 +26,7 @@ public class Sender {
 
             }
 
-            buffer = ByteBuffer.wrap((new String("END")).getBytes());
+            buffer = ByteBuffer.wrap((new String("END8374857392")).getBytes());
             channel.write(buffer);
 
             return true;
