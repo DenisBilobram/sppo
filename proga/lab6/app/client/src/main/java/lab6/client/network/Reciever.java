@@ -50,11 +50,11 @@ public class Reciever {
                     byteBuffer.put(byteBufferOld.array());
                 }
                 numRead = channel.read(byteBuffer);
+                if (numRead == -1) {
+                    return null;
+                }
             }
             byteBuffer.flip();
-            if (numRead == -1) {
-                return null;
-            }
 
             serverSignal = SerializationUtils.deserialize(byteBuffer.array());
             return serverSignal;

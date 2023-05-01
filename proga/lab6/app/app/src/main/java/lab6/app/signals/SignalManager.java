@@ -5,7 +5,7 @@ public class SignalManager {
     public static void handle(Signal signal) {
         String output;
         if (signal.isSucces()) {
-            output = "Команда выполена успешно.";
+            output = "Команда выполнена успешно.";
         } else {
             output = "Не удалось выполнить команду.";
         }
@@ -14,6 +14,9 @@ public class SignalManager {
         System.out.println();
         
         output = signal.getMessage();
+        if (output.equals("") || output == null) {
+            return;
+        }
         
         printMessage(output, true);
         System.out.println();

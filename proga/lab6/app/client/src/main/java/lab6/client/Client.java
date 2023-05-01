@@ -1,19 +1,20 @@
 package lab6.client;
 import java.util.Scanner;
 
-import lab6.client.commands.ClientCommand;
-import lab6.client.input.CommandParser;
 import lab6.client.network.Reciever;
 import lab6.client.network.Sender;
 import lab6.client.network.ServerConnection;
 import lab6.app.commands.Command;
+import lab6.app.commands.CommandExecute;
+import lab6.app.commands.client.ClientCommand;
+import lab6.app.input.CommandParser;
 import lab6.app.signals.ClientSignal;
 import lab6.app.signals.Signal;
 import lab6.app.signals.SignalManager;
 
 public class Client {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         if (args.length != 2 || !isPort(args[1])) {
             System.out.println("Неверный формат аргументов: {host} {port}");
             System.exit(0);
@@ -22,49 +23,79 @@ public class Client {
         String host = args[0];
         int port = Integer.parseInt(args[1]);
 
-        ServerConnection server = new ServerConnection();
+        ServerConnection server = new ServerConnection(host, port);
         CommandParser commandParser = new CommandParser();
         Scanner scanner = new Scanner(System.in);
 
-        boolean connected = server.coonectToServer(host, port);
-
-        if (connected) {
+        while (server.checkConnectiion()) {
 
             Sender sender = new Sender(ServerConnection.getChannel());
             Reciever reciever = new Reciever(ServerConnection.getChannel());
+            
+            System.out.println();
+            SignalManager.printMessage("Введите команду. Для списка команд введите help.", true);
+            Command command = commandParser.recieveCommand(scanner, true);
 
-            while (server.checkConnectiion()) {
-                
-                System.out.println();
-                SignalManager.printMessage("Введите команду. Для списка команд введите help.", true);
-                Command command = commandParser.recieveCommand(scanner, true);
+            if (command == null) {
+                continue;
+            }
 
-                if (command == null) {
-                    continue;
+            Signal responseSignal;
+
+            if (command instanceof ClientCommand) {
+
+                responseSignal = ((ClientCommand)command).execute();
+
+            } else {
+                if (command instanceof CommandExecute) {
+                    responseSignal = ((CommandExecute)command).pull();
+                    System.out.println("\n" + responseSignal.getMessage() + "\n");
+                    if (((CommandExecute)command).getListOfCommands().size() == 0) {
+                        continue;
+                    }
                 }
 
-                Signal responseSignal;
+                ClientSignal signalToSend = new ClientSignal(command);
+                boolean sended = sender.sendCommandSignal(signalToSend);
 
-                if (command instanceof ClientCommand) {
+                if (sended) {
+                    responseSignal = reciever.getServerSignal();
+                    if (responseSignal == null) {
 
-                    responseSignal = ((ClientCommand)command).execute();
+                        server.disconnect();
+                        server = new ServerConnection(host, port);
 
+                        while (!server.checkConnectiion()) {
+                            Thread.sleep(3000);
+                            server = new ServerConnection(host, port);
+                        }
+
+                        System.out.println("Переподключился.");
+                        responseSignal = reciever.getServerSignal();
+                    }
                 } else {
 
-                    ClientSignal signal = new ClientSignal(command);
-                    boolean sended = sender.sendCommandSignal(signal);
+                    server.disconnect();
+                    server = new ServerConnection(host, port);
 
-                    if (sended) {
-                        responseSignal = reciever.getServerSignal();
-                    } else {
-                        responseSignal = new Signal("Не удалось отправить команду на сервер.");
-                        responseSignal.setSucces(false);
+                    while (!server.checkConnectiion()) {
+                        Thread.sleep(3000);
+                        server = new ServerConnection(host, port);
                     }
 
+                    System.out.println("Переподключился.");
+                    sender.sendCommandSignal(signalToSend);
+                    System.out.println("Отправил");
+                    responseSignal = reciever.getServerSignal();
+                    System.out.println("Получил");
+                    System.out.println(responseSignal);
                 }
 
+            }
+            if (responseSignal != null) {
                 SignalManager.handle(responseSignal);
             }
+            
         }
     }
     

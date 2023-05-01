@@ -1,4 +1,4 @@
-package lab6.client.input;
+package lab6.app.input;
 
 import java.io.File;
 import java.util.HashMap;
@@ -8,6 +8,7 @@ import lab6.app.commands.Command;
 import lab6.app.commands.CommandAdd;
 import lab6.app.commands.CommandClear;
 import lab6.app.commands.CommandCountLessAuthor;
+import lab6.app.commands.CommandExecute;
 import lab6.app.commands.CommandHead;
 import lab6.app.commands.CommandHelp;
 import lab6.app.commands.CommandInfo;
@@ -18,10 +19,9 @@ import lab6.app.commands.CommandRemoveHead;
 import lab6.app.commands.CommandRemoveLower;
 import lab6.app.commands.CommandShow;
 import lab6.app.commands.CommandUpdate;
+import lab6.app.commands.client.CommandExit;
 import lab6.app.labwork.LabWork;
 import lab6.app.labwork.Person;
-import lab6.client.commands.CommandExecute;
-import lab6.client.commands.CommandExit;
 
 /** Класс отвечающий за парсинг строковой комманды в объект.
  * 

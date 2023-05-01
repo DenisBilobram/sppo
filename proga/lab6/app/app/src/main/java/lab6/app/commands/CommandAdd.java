@@ -10,12 +10,12 @@ import lab6.app.signals.Signal;
  */
 public class CommandAdd extends Command {
 
+
     public CommandAdd() {
         this.requireLabWork = true;
     }
 
     public Signal execute(PriorityQueue<LabWork> PriorityQueue) {
-
         LabWork labWork = getLabWork();
         Signal resultSignal = new Signal();
 

@@ -1,4 +1,4 @@
-package lab6.client.commands;
+package lab6.app.commands.client;
 
 import lab6.app.signals.Signal;
 

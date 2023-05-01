@@ -3,6 +3,8 @@ package lab6.server.network;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.commons.lang3.SerializationUtils;
 
@@ -15,7 +17,7 @@ import lab6.server.Server;
  */
 public class Receiver {
 
-    public static Command recieveCommand(SocketChannel channel) {
+    public static List<Command> recieveCommand(SocketChannel channel) {
 
         ByteBuffer byteBuffer = ByteBuffer.allocate(1024*32);
 
@@ -33,15 +35,24 @@ public class Receiver {
             data = byteBuffer.array();
 
             Command command = ((ClientSignal)SerializationUtils.deserialize(data)).getCommand();
+            List<Command> commands;
 
-            if (command instanceof CommandAdd) {
-                Server.maxId += 1;
-                command.getLabWork().setId(Server.maxId);
-            } else if (command instanceof CommandClear) {
-                Server.maxId = 0l;
+            if (command instanceof CommandExecute) {
+                commands = ((CommandExecute)command).getListOfCommands();
+            } else {
+                commands = new LinkedList<Command>(List.of(command));
+            }
+        
+            for (Command innerCommand : commands) {
+                if (innerCommand instanceof CommandAdd) {
+                    Server.maxId += 1;
+                    innerCommand.getLabWork().setId(Server.maxId);
+                } else if (innerCommand instanceof CommandClear) {
+                    Server.maxId = 0l;
+                }
             }
 
-            return command;
+            return commands;
             
         } catch (IOException e) {
             return null;

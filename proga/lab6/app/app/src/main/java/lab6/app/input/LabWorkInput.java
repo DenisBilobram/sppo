@@ -1,4 +1,4 @@
-package lab6.client.input;
+package lab6.app.input;
 
 import java.util.Date;
 import java.util.NoSuchElementException;
@@ -255,8 +255,6 @@ public class LabWorkInput {
                 }
                 misstakeCounter += 1;
             } catch (NoSuchElementException exp) {
-                SignalManager.printMessage("Конец скрипта.", true);
-                
                 return true;
             }
         }

@@ -9,7 +9,9 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Scanner;
 import java.util.Set;
 
 import lab6.server.network.Sender;
@@ -24,6 +26,7 @@ import lab6.app.signals.Signal;
 public class Server {
 
     private static PriorityQueue<LabWork> priorityQueue;
+    private static Database dataBase;
     private static Selector selector;
     private static InetSocketAddress address;
     private static Set<SocketChannel> session;
@@ -41,19 +44,21 @@ public class Server {
         session = new HashSet<SocketChannel>();
         signals = new HashSet<ServerSignal>();
 
-        Database dataBase = new Database();
+        dataBase = new Database();
         Signal dbSignal = dataBase.connect();
 
         if (!dbSignal.isSucces()) {
             System.out.println(dbSignal.getMessage());
             System.exit(0);
         }
-
         DataReader dataReader = new DataReader(dataBase);
 
         priorityQueue = dataReader.read();
         
         setMaxId(priorityQueue);
+
+        Thread consoleReader = new ConsoleReader();
+        consoleReader.start();
 
         try {
 
@@ -110,8 +115,9 @@ public class Server {
 
             SocketChannel channel = (SocketChannel) key.channel();
 
-            Command command = Receiver.recieveCommand(channel);
-            if (command == null) {
+            List<Command> commands = Receiver.recieveCommand(channel);
+
+            if (commands == null) {
                 session.remove(channel);
                 System.out.println("Потеряно соединение с клиентом " + channel.getRemoteAddress() + ".");
                 channel.close();
@@ -121,7 +127,29 @@ public class Server {
             
             System.out.println("Получил команду.");
 
-            ServerSignal serverSignal = new ServerSignal(command.execute(priorityQueue));
+            ServerSignal serverSignal = new ServerSignal();
+
+            if (commands.size() == 0) {
+                
+                serverSignal.setMessage("В скрипте не найдено валидных команд.");
+                serverSignal.setSucces(false);
+
+            } else {
+                
+                serverSignal = new ServerSignal(commands.get(0).execute(priorityQueue));
+                commands.remove(0);
+
+                if (commands.size() > 0) {
+                    for (Command command : commands) {
+                        serverSignal.setMessage(serverSignal.getMessage() + "\n" + command.execute(priorityQueue).getMessage());
+                    }
+                    serverSignal.setSucces(true);
+                    serverSignal.setMessage(serverSignal.getMessage() + "\nСкрипт выполнен.");
+                }
+            }
+
+            
+            
             serverSignal.setClientAdress(channel.getRemoteAddress());
             
             signals.add(serverSignal);
@@ -185,4 +213,51 @@ public class Server {
         return false;
     }
 
+    public static PriorityQueue<LabWork> getPriorityQueue() {
+        return priorityQueue;
+    }
+
+    public static void setPriorityQueue(PriorityQueue<LabWork> priorityQueue) {
+        Server.priorityQueue = priorityQueue;
+    }
+
+    public static Database getDataBase() {
+        return dataBase;
+    }
+
+    public static void setDataBase(Database dataBase) {
+        Server.dataBase = dataBase;
+    }
+
+    public static Selector getSelector() {
+        return selector;
+    }
+
+    public static void setSelector(Selector selector) {
+        Server.selector = selector;
+    }
+
+}
+
+class ConsoleReader extends Thread {
+    ConsoleReader() {
+        super();
+    }
+
+    public void run() {
+        Scanner scanner = new Scanner(System.in);
+        
+        while (true) {
+            String command = scanner.nextLine();
+            if (command.equals("save")) {
+                Server.getDataBase().save(Server.getPriorityQueue());
+                System.out.println("Коллекция сохранена.");
+            }
+            if (command.equals("exit")) {
+                scanner.close();
+                System.exit(0);
+            }
+            
+        }
+    }
 }

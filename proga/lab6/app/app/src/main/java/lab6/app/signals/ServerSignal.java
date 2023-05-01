@@ -6,6 +6,10 @@ public class ServerSignal extends Signal {
     
     protected SocketAddress clientAdress;
 
+    public ServerSignal() {
+        message = "";
+    }
+
     public ServerSignal(Signal signal) {
 
         this.message = signal.getMessage();

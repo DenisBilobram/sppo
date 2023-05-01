@@ -22,7 +22,10 @@ public class Sender {
         try {
             byte [] data = SerializationUtils.serialize(signal);
             ByteBuffer byteData = ByteBuffer.wrap(data);
-            channel.write(byteData);
+            int numWrite = channel.write(byteData);
+            if (numWrite == -1) {
+                return false;
+            }
             return true;
 
         } catch (IOException exception) {
