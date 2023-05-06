@@ -69,6 +69,7 @@ public class Client {
                         server = server.reconnect();
                         sender = new Sender(ServerConnection.getChannel());
                         reciever = new Reciever(ServerConnection.getChannel());
+                        System.out.println("Отправлен получаю...");
                         responseSignal = reciever.getServerSignal();
 
                     }
