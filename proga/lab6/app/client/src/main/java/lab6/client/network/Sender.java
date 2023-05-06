@@ -24,6 +24,7 @@ public class Sender {
             byte [] data = SerializationUtils.serialize(signal);
             ByteBuffer byteData = ByteBuffer.wrap(data);
 
+            System.out.println("HELLO:");
             System.out.println(server.checkConnectiion());
 
             if (!server.checkConnectiion()) {
