@@ -18,14 +18,22 @@ public class Sender {
     }
     
 
-    public boolean sendCommandSignal(ClientSignal signal) {
+    public boolean sendCommandSignal(ClientSignal signal, ServerConnection server) {
         try {
+
             byte [] data = SerializationUtils.serialize(signal);
             ByteBuffer byteData = ByteBuffer.wrap(data);
-            int numWrite = channel.write(byteData);
-            if (numWrite == -1) {
+
+            if (!server.checkConnectiion()) {
                 return false;
             }
+
+            int numWrite = channel.write(byteData);
+
+            if (numWrite == -1 || !server.checkConnectiion()) {
+                return false;
+            }
+            
             return true;
 
         } catch (IOException exception) {

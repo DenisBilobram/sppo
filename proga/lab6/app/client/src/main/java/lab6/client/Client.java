@@ -27,10 +27,12 @@ public class Client {
         CommandParser commandParser = new CommandParser();
         Scanner scanner = new Scanner(System.in);
 
+        Sender sender = new Sender(ServerConnection.getChannel());
+        Reciever reciever = new Reciever(ServerConnection.getChannel());
+
         while (server.checkConnectiion()) {
 
-            Sender sender = new Sender(ServerConnection.getChannel());
-            Reciever reciever = new Reciever(ServerConnection.getChannel());
+            
             
             System.out.println();
             SignalManager.printMessage("Введите команду. Для списка команд введите help.", true);
@@ -47,6 +49,7 @@ public class Client {
                 responseSignal = ((ClientCommand)command).execute();
 
             } else {
+                
                 if (command instanceof CommandExecute) {
                     responseSignal = ((CommandExecute)command).pull();
                     System.out.println("\n" + responseSignal.getMessage() + "\n");
@@ -56,39 +59,27 @@ public class Client {
                 }
 
                 ClientSignal signalToSend = new ClientSignal(command);
-                boolean sended = sender.sendCommandSignal(signalToSend);
+                boolean sended = sender.sendCommandSignal(signalToSend, server);
 
                 if (sended) {
+
                     responseSignal = reciever.getServerSignal();
                     if (responseSignal == null) {
-
                         server.disconnect();
-                        server = new ServerConnection(host, port);
-
-                        while (!server.checkConnectiion()) {
-                            Thread.sleep(3000);
-                            server = new ServerConnection(host, port);
-                        }
-
-                        System.out.println("Переподключился.");
+                        server = server.reconnect();
+                        sender = new Sender(ServerConnection.getChannel());
+                        reciever = new Reciever(ServerConnection.getChannel());
                         responseSignal = reciever.getServerSignal();
+
                     }
                 } else {
 
                     server.disconnect();
-                    server = new ServerConnection(host, port);
-
-                    while (!server.checkConnectiion()) {
-                        Thread.sleep(3000);
-                        server = new ServerConnection(host, port);
-                    }
-
-                    System.out.println("Переподключился.");
-                    sender.sendCommandSignal(signalToSend);
-                    System.out.println("Отправил");
+                    server = server.reconnect();
+                    sender = new Sender(ServerConnection.getChannel());
+                    reciever = new Reciever(ServerConnection.getChannel());
+                    sender.sendCommandSignal(signalToSend, server);
                     responseSignal = reciever.getServerSignal();
-                    System.out.println("Получил");
-                    System.out.println(responseSignal);
                 }
 
             }

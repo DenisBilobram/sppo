@@ -245,19 +245,23 @@ class ConsoleReader extends Thread {
     }
 
     public void run() {
-        Scanner scanner = new Scanner(System.in);
+        try {
+            Scanner scanner = new Scanner(System.in);
         
-        while (true) {
-            String command = scanner.nextLine();
-            if (command.equals("save")) {
-                Server.getDataBase().save(Server.getPriorityQueue());
-                System.out.println("Коллекция сохранена.");
-            }
-            if (command.equals("exit")) {
-                scanner.close();
-                System.exit(0);
-            }
+            while (true) {
+                String command = scanner.nextLine();
+                if (command.equals("save")) {
+                    Server.getDataBase().save(Server.getPriorityQueue());
+                    System.out.println("Коллекция сохранена.");
+                }
+                if (command.equals("exit")) {
+                    scanner.close();
+                    System.exit(0);
+                }
             
+            }
+        } catch (Exception exp) {
         }
+        
     }
 }

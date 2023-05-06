@@ -8,6 +8,8 @@ public class ServerConnection {
 
     public static SocketChannel channel;
     private boolean isConnected;
+    private String host;
+    private int port;
 
     public boolean isConnected() {
         return isConnected;
@@ -20,6 +22,8 @@ public class ServerConnection {
             ServerConnection.channel = SocketChannel.open(address);
             channel.configureBlocking(false);
             isConnected = true;
+            this.host = host;
+            this.port = port;
         } catch (Exception exception) {
             System.out.println("Не удалось подключиться к серверу.");
             isConnected = false;
@@ -28,6 +32,21 @@ public class ServerConnection {
     
     public static SocketChannel getChannel() {
         return channel;
+    }
+
+    public ServerConnection reconnect() {
+        ServerConnection serverConnection = new ServerConnection(host, port);
+        while (!serverConnection.checkConnectiion()) {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            serverConnection = new ServerConnection(host, port);
+        }
+        System.out.println("Переподключился.\n");
+        return serverConnection;
+
     }
 
     public void disconnect() {
