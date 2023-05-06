@@ -49,7 +49,7 @@ public class Client {
                 responseSignal = ((ClientCommand)command).execute();
 
             } else {
-                
+
                 if (command instanceof CommandExecute) {
                     responseSignal = ((CommandExecute)command).pull();
                     System.out.println("\n" + responseSignal.getMessage() + "\n");
@@ -78,8 +78,11 @@ public class Client {
                     server = server.reconnect();
                     sender = new Sender(ServerConnection.getChannel());
                     reciever = new Reciever(ServerConnection.getChannel());
+                    System.out.println("Отправляю");
                     sender.sendCommandSignal(signalToSend, server);
+                    System.out.println("Получаю");
                     responseSignal = reciever.getServerSignal();
+                    System.out.println("Получил");
                 }
 
             }
