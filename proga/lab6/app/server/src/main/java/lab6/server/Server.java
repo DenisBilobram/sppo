@@ -256,6 +256,10 @@ class ConsoleReader extends Thread {
                 }
                 if (command.equals("exit")) {
                     scanner.close();
+                    for (SelectionKey key : Server.getSelector().selectedKeys()) {
+                        ((SocketChannel)key.channel()).finishConnect();
+                        key.channel().close();
+                    }
                     System.exit(0);
                 }
             
