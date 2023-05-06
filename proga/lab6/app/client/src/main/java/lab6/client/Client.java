@@ -69,9 +69,6 @@ public class Client {
                         server = server.reconnect();
                         sender = new Sender(ServerConnection.getChannel());
                         reciever = new Reciever(ServerConnection.getChannel());
-                        System.out.println("Отправлен получаю...");
-                        responseSignal = reciever.getServerSignal();
-
                     }
                 } else {
 
@@ -79,11 +76,8 @@ public class Client {
                     server = server.reconnect();
                     sender = new Sender(ServerConnection.getChannel());
                     reciever = new Reciever(ServerConnection.getChannel());
-                    System.out.println("Отправляю");
                     sender.sendCommandSignal(signalToSend, server);
-                    System.out.println("Получаю");
                     responseSignal = reciever.getServerSignal();
-                    System.out.println("Получил");
                 }
 
             }
