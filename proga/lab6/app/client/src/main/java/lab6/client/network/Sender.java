@@ -24,19 +24,17 @@ public class Sender {
             byte [] data = SerializationUtils.serialize(signal);
             ByteBuffer byteData = ByteBuffer.wrap(data);
 
-            if (!server.checkConnectiion()) {
-                return false;
-            }
-
             int numWrite = channel.write(byteData);
-
-            if (numWrite == -1 || !server.checkConnectiion()) {
+            System.out.println(numWrite);
+            
+            if (numWrite == -1) {
                 return false;
             }
             
             return true;
 
         } catch (IOException exception) {
+            System.out.println("Потеряно соединение с сервером...");
             return false;
         }
     }

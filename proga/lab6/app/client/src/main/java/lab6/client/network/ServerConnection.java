@@ -59,10 +59,6 @@ public class ServerConnection {
     }
 
     public boolean checkConnectiion() {
-        if (isConnected && channel.isConnected()) {
-            return true;
-        } else {
-            return false;
-        }
+        return isConnected && channel.isConnected();
     }
 }

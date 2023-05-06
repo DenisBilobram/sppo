@@ -30,9 +30,7 @@ public class Client {
         Sender sender = new Sender(ServerConnection.getChannel());
         Reciever reciever = new Reciever(ServerConnection.getChannel());
 
-        while (server.checkConnectiion()) {
-
-            
+        while (true) {
             
             System.out.println();
             SignalManager.printMessage("Введите команду. Для списка команд введите help.", true);
