@@ -16,6 +16,9 @@ dependencies {
     implementation project(':app')
 }
 
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
 tasks.jar {
     manifest.attributes["Main-Class"] = "lab6.server.Server"
 }

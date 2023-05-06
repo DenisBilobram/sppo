@@ -10,6 +10,9 @@ dependencies {
     implementation 'org.apache.commons:commons-text'
 }
 
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
 application {
     // Define the main class for the application.
     mainClass = 'lab6.lab6.lab6.server.App'
