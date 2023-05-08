@@ -253,14 +253,11 @@ class ConsoleReader extends Thread {
                 if (command.equals("save")) {
                     Server.getDataBase().save(Server.getPriorityQueue());
                     System.out.println("Коллекция сохранена.");
-                }
-                if (command.equals("exit")) {
+                }else if (command.equals("exit")) {
                     scanner.close();
-                    for (SelectionKey key : Server.getSelector().selectedKeys()) {
-                        ((SocketChannel)key.channel()).finishConnect();
-                        key.channel().close();
-                    }
                     System.exit(0);
+                } else {
+                    System.out.println("Неверная команда. Введите save для сохранения, или exit для выхода.");
                 }
             
             }

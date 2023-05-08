@@ -25,10 +25,9 @@ public class Sender {
             ByteBuffer byteData = ByteBuffer.wrap(data);
 
             int numWrite = channel.write(byteData);
-            System.out.println(numWrite);
             
             if (numWrite == -1) {
-                return false;
+                throw new IOException();
             }
             
             return true;
