@@ -33,7 +33,6 @@ public class Sender {
             return true;
 
         } catch (IOException exception) {
-            System.out.println("Потеряно соединение с сервером...");
             return false;
         }
     }

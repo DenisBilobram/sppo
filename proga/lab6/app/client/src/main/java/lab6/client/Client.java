@@ -57,19 +57,12 @@ public class Client {
                 }
 
                 ClientSignal signalToSend = new ClientSignal(command);
-                boolean sended = sender.sendCommandSignal(signalToSend, server);
+                sender.sendCommandSignal(signalToSend, server);
 
-                if (sended) {
 
-                    responseSignal = reciever.getServerSignal();
-                    if (responseSignal == null) {
-                        server.disconnect();
-                        server = server.reconnect();
-                        sender = new Sender(ServerConnection.getChannel());
-                        reciever = new Reciever(ServerConnection.getChannel());
-                    }
-                } else {
-
+                responseSignal = reciever.getServerSignal();
+                if (responseSignal == null) {
+                    System.out.println("Потеряно соединение с сервером...");
                     server.disconnect();
                     server = server.reconnect();
                     sender = new Sender(ServerConnection.getChannel());
