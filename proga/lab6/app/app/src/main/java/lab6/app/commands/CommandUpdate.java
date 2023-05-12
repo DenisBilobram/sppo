@@ -23,14 +23,14 @@ public class CommandUpdate extends Command {
             
 
             LabWork labWorkUpdate = getLabWork();
-            LabWork labWork = priorityQueue.stream().filter(x -> x.getId().equals(Long.parseLong(getId()))).findFirst().get();
+            LabWork labWorkToChame = priorityQueue.stream().filter(x -> x.getId().equals(Long.parseLong(getId()))).findFirst().get();
 
-            labWork.setName(labWorkUpdate.getName());
-            labWork.setCoordinates(labWorkUpdate.getCoordinates());
-            labWork.setDifficulty(labWorkUpdate.getDifficulty());
-            labWork.setMinimalPoint(labWorkUpdate.getMinimalPoint());
-            labWork.setTunedInWorks(labWorkUpdate.getTunedInWorks());
-            labWork.setAuthor(labWorkUpdate.getAuthor());
+            labWorkToChame.setName(labWorkUpdate.getName());
+            labWorkToChame.setCoordinates(labWorkUpdate.getCoordinates());
+            labWorkToChame.setDifficulty(labWorkUpdate.getDifficulty());
+            labWorkToChame.setMinimalPoint(labWorkUpdate.getMinimalPoint());
+            labWorkToChame.setTunedInWorks(labWorkUpdate.getTunedInWorks());
+            labWorkToChame.setAuthor(labWorkUpdate.getAuthor());
             resultSignal.setMessage("Элемент был изменём.");
             resultSignal.setSucces(true);
 

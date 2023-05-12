@@ -58,7 +58,7 @@ public class LabWork implements Comparable<LabWork>, Serializable{
         this.creationDate = creationDate;
     }
     public long getMinimalPoint() {
-        return minimalPoint;
+        return minimalPoint == null ? 0 : minimalPoint;
     }
     public void setMinimalPoint(long minimalPoint) {
         this.minimalPoint = minimalPoint;
