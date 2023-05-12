@@ -34,9 +34,10 @@ public class DataBase {
             String[] data = line.split(":");
 
 
-            DataBase.dataBasConnection = DriverManager.getConnection(url, data[4], data[5]);
+            DataBase.dataBasConnection = DriverManager.getConnection(url, data[3], data[4]);
         } catch (Exception e) {
             System.out.println("ERROR: Ошбика при подключении к базе данных.");
+            e.printStackTrace();
             System.exit(1);
         }
     }
