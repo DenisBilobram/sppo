@@ -40,12 +40,8 @@ public class DataBase {
             String pass = scanner.nextLine().split("=")[1];
 
             DataBase.dataBasConnection = DriverManager.getConnection(url, user, pass);
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             System.out.println("ERROR: Ошбика при подключении к базе данных.");
-            e.printStackTrace();
             System.exit(1);
         }
     }
