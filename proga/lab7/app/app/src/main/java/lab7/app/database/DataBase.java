@@ -28,18 +28,13 @@ public class DataBase {
     static {
         String url = "jdbc:postgresql://localhost:5432/studs";
         try {
-            String cfgPath = System.getenv("DB_CFG");
 
-            if (cfgPath == null) {
-                System.out.println("ERROR: Нет переменной окружения DB_CFG.");
-                System.exit(1);
-            }
+            Scanner scanner = new Scanner(new File("~/.pgpass"));
+            String line = scanner.nextLine();
+            String[] data = line.split(":");
 
-            Scanner scanner = new Scanner(new File(cfgPath));
-            String user = scanner.nextLine().split("=")[1];
-            String pass = scanner.nextLine().split("=")[1];
 
-            DataBase.dataBasConnection = DriverManager.getConnection(url, user, pass);
+            DataBase.dataBasConnection = DriverManager.getConnection(url, data[4], data[5]);
         } catch (Exception e) {
             System.out.println("ERROR: Ошбика при подключении к базе данных.");
             System.exit(1);
