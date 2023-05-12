@@ -29,7 +29,7 @@ public class DataBase {
         String url = "jdbc:postgresql://localhost:5432/studs";
         try {
 
-            Scanner scanner = new Scanner(new File("~/.pgpass"));
+            Scanner scanner = new Scanner(new File("/home/studs/s367893/.pgpass"));
             String line = scanner.nextLine();
             String[] data = line.split(":");
 

@@ -90,7 +90,9 @@ public class Server {
             }
 
         } catch (IOException exp) {
+            
             System.out.println("Ошибка во время запуска сервера.");
+            exp.printStackTrace();
         }
 
         
