@@ -21,7 +21,9 @@ public class CommandUpdate extends Command {
 
         try {
             
-            LabWork labWorkUpdate = priorityQueue.stream().filter(x -> x.getId().equals(Long.parseLong(getId()))).findFirst().get();
+
+            LabWork labWorkUpdate = getLabWork();
+            LabWork labWork = priorityQueue.stream().filter(x -> x.getId().equals(Long.parseLong(getId()))).findFirst().get();
 
             labWork.setName(labWorkUpdate.getName());
             labWork.setCoordinates(labWorkUpdate.getCoordinates());
