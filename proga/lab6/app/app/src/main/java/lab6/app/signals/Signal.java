@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Signal implements Serializable {
     
-    protected String message;
+    protected String message = "";
 
     protected boolean succes;
 

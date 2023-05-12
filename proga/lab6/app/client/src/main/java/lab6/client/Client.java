@@ -52,6 +52,7 @@ public class Client {
                     responseSignal = ((CommandExecute)command).pull();
                     System.out.println("\n" + responseSignal.getMessage() + "\n");
                     if (((CommandExecute)command).getListOfCommands().size() == 0) {
+                        System.out.println("Пустой скрипт.");
                         continue;
                     }
                 }

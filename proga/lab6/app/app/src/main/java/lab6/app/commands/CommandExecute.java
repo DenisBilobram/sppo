@@ -62,6 +62,9 @@ public class CommandExecute extends Command {
             while (scanner.hasNextLine()) {
                 CommandParser commandParser = new CommandParser();
                 Command command = commandParser.recieveCommand(scanner, false);
+                if (command == null) {
+                    continue;
+                }
 
                 if (command instanceof CommandExecute) {
                     Signal result = ((CommandExecute)command).pull();
