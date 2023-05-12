@@ -12,8 +12,3 @@ dependencies {
 
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
-
-application {
-    // Define the main class for the application.
-    mainClass = 'lab7.lab7.lab7.server.App'
-}
