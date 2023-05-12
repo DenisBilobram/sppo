@@ -26,7 +26,7 @@ public class DataBase {
     }
 
     static {
-        String url = "jdbc:postgresql://localhost:5432/app";
+        String url = "jdbc:postgresql://db:5432/app";
         try {
             String cfgPath = System.getenv("DB_CFG");
 
