@@ -25,7 +25,7 @@ public class LoginCommand extends AuthCommand{
 
                 password = "8ak34$6%" + password + password.length()*145;
 
-                byte[] passwordByte = MessageDigest.getInstance("MD5").digest(password.getBytes());
+                byte[] passwordByte = MessageDigest.getInstance("MD2").digest(password.getBytes());
 
                 StringBuilder userHashPassword = new StringBuilder();
                 for (byte b : passwordByte) {

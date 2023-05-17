@@ -1,6 +1,6 @@
 package lab7.app.commands;
 
-import java.util.PriorityQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 import lab7.app.labwork.LabWork;
 import lab7.app.labwork.comparators.LabWorkComparatorById;
@@ -12,14 +12,14 @@ import lab7.app.signals.Signal;
 public class CommandHead extends Command{
 
     @Override
-    public Signal execute(PriorityQueue<LabWork> priorityQueue) {
+    public Signal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue) {
         Signal resultSignal = new Signal();
-        if (priorityQueue.size() == 0) {
+        if (priorityBlockingQueue.size() == 0) {
             resultSignal.setMessage("Коллекция пуста.");
             resultSignal.setSucces(true);
         } else {
             LabWorkComparatorById comparator = new LabWorkComparatorById();
-            resultSignal.setMessage(priorityQueue.stream().max(comparator).get().toString());
+            resultSignal.setMessage(priorityBlockingQueue.stream().max(comparator).get().toString());
             resultSignal.setSucces(true);
         }
 

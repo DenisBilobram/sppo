@@ -1,6 +1,6 @@
 package lab7.app.commands;
 
-import java.util.PriorityQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 import lab7.app.labwork.LabWork;
 import lab7.app.labwork.Person;
 import lab7.app.signals.Signal;
@@ -15,7 +15,7 @@ public class CommandCountLessAuthor extends Command {
     }
 
     @Override
-    public Signal execute(PriorityQueue<LabWork> PriorityQueue) {
+    public Signal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue) {
 
         Person author = getPerson();
         Signal resultSignal = new Signal();
@@ -28,7 +28,7 @@ public class CommandCountLessAuthor extends Command {
 
         } else {
 
-            Long c = PriorityQueue.stream().filter(x -> x.getAuthor().getName().length() < author.getName().length()).count();
+            Long c = priorityBlockingQueue.stream().filter(x -> x.getAuthor().getName().length() < author.getName().length()).count();
             resultSignal.setMessage(String.format("Количество: %d", c));
             resultSignal.setSucces(true);
 

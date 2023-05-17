@@ -1,6 +1,6 @@
 package lab7.app.commands;
 
-import java.util.PriorityQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 import lab7.app.auth.User;
 import lab7.app.database.DataBase;
@@ -17,7 +17,7 @@ public class CommandAdd extends Command {
         this.requireLabWork = true;
     }
 
-    public Signal execute(PriorityQueue<LabWork> PriorityQueue) {
+    public Signal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue) {
         
         LabWork labWork = getLabWorkUpdate();
         User user = getUser();
@@ -27,7 +27,7 @@ public class CommandAdd extends Command {
 
         LabWork createdLabWork = DataBase.createLabWork(labWork, user);
         if (createdLabWork != null) {
-            PriorityQueue.add(labWork);
+            priorityBlockingQueue.add(labWork);
             resultSignal.setMessage("Элемент был добавлен в коллекцию.");
             resultSignal.setSucces(true);
         } else {

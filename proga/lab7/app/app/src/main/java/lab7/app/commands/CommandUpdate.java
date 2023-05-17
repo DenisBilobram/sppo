@@ -1,7 +1,7 @@
 package lab7.app.commands;
 
 import java.util.NoSuchElementException;
-import java.util.PriorityQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 import lab7.app.database.DataBase;
 import lab7.app.labwork.LabWork;
@@ -17,7 +17,7 @@ public class CommandUpdate extends Command {
         this.requireId = true;
     }
 
-    public Signal execute(PriorityQueue<LabWork> priorityQueue) {
+    public Signal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue) {
 
         Signal resultSignal = new Signal();
 
@@ -25,7 +25,13 @@ public class CommandUpdate extends Command {
             
             LabWork labWorkUpdate = getLabWorkUpdate();
 
-            LabWork labWork = priorityQueue.stream().filter(x -> x.getId().equals(Long.parseLong(getId()))).findFirst().get();
+            LabWork labWork = priorityBlockingQueue.stream().filter(x -> x.getId().equals(Long.parseLong(getId()))).findFirst().get();
+
+            if (labWork.getAuthor().getId() != DataBase.readProfileByUserId(getUser().getId()).getId()) {
+                resultSignal.setMessage("Вы не являетесь владельцем данного LabWork.");
+                resultSignal.setSucces(false);
+                return resultSignal;
+            }
 
             boolean updated = DataBase.updateLabWorkById(labWork.getId(), labWorkUpdate);
 

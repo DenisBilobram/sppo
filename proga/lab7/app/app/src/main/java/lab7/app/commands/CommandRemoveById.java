@@ -1,7 +1,7 @@
 package lab7.app.commands;
 
 import java.util.Iterator;
-import java.util.PriorityQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 import lab7.app.database.DataBase;
 import lab7.app.labwork.LabWork;
@@ -18,9 +18,9 @@ public class CommandRemoveById extends Command {
     }
 
     @Override
-    public Signal execute(PriorityQueue<LabWork> priorityQueue) {
+    public Signal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue) {
         Signal resultSignal = new Signal();
-        Iterator<LabWork> iter = priorityQueue.iterator();
+        Iterator<LabWork> iter = priorityBlockingQueue.iterator();
         LabWork labWork = null;
         while (iter.hasNext()) {
             labWork = iter.next();
@@ -36,7 +36,7 @@ public class CommandRemoveById extends Command {
 
             boolean deleted = DataBase.deleteLabWorkById(labWork.getId());
             if (deleted) {
-                priorityQueue.remove(labWork);
+                priorityBlockingQueue.remove(labWork);
                 resultSignal.setMessage("Элемент удалён.");
                 resultSignal.setSucces(true);
             } else {

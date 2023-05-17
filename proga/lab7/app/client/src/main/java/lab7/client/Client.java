@@ -43,7 +43,6 @@ public class Client {
         Reciever reciever = new Reciever(ServerConnection.getChannel());
 
         while (true) {
-
             while (Client.user == null) {
                 Authenticator authenticator = new Authenticator(sender, reciever);
                 Client.user = authenticator.authentication();
@@ -76,8 +75,9 @@ public class Client {
             }
 
             ClientSignal signalToSend = new ClientSignal(command);
+            
             sender.sendClientSignal(signalToSend);
-
+            
 
             responseSignal = reciever.getServerSignal();
             if (responseSignal == null) {

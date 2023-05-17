@@ -34,14 +34,13 @@ public class Authenticator {
 
             User user = null;
 
-            
-
             AuthCommand authCommand = LabWorkInput.getAuthOption(scanner);
             if (authCommand instanceof RegistrationCommand) {
                 user = LabWorkInput.getRegister(scanner);
             } else if (authCommand instanceof LoginCommand) {
                 user = LabWorkInput.getLogin(scanner);
             }
+
 
             if (user == null) {
                 continue;

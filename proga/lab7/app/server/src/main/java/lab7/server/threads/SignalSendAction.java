@@ -1,6 +1,7 @@
 package lab7.server.threads;
 
 import java.io.IOException;
+import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.concurrent.RecursiveAction;
 
@@ -19,8 +20,9 @@ public class SignalSendAction extends RecursiveAction{
     ServerSignal signal;
 
 
-    public SignalSendAction(SocketChannel channel, ServerSignal signal) {
-        this.channel = channel;
+    public SignalSendAction(SelectionKey key, ServerSignal signal) {
+        this.channel = (SocketChannel)key.channel();
+        key.cancel();
         this.receiver = new Receiver(channel);
         this.sender = new Sender(channel);
         this.signal = signal;
@@ -30,19 +32,23 @@ public class SignalSendAction extends RecursiveAction{
     protected void compute() {
         boolean sended = sender.sendSignal(signal);
 
-        if (sended) {
-            System.out.println("Отправил сигнал клиенту.");
-        } else {
-            try {
+
+        try {
+
+            if (sended) {
+                System.out.println("Отправил сигнал клиенту.");
+
+                channel.register(Server.getSelector(), SelectionKey.OP_READ);
+            } else {
                 System.out.println("Потеряно соединение с клиентом " + channel.getRemoteAddress() + ".");
                 channel.close();
                 Server.getSession().remove(channel);
-            } catch (IOException exp) {
-                exp.printStackTrace();
+                return;
             }
-        }
 
-        Server.createReceiveTask(channel);
+        } catch (IOException exp) {
+            exp.printStackTrace();
+        }
     }
     
 }

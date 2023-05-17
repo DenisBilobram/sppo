@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 import java.util.Scanner;
 
 import lab7.app.signals.Signal;
@@ -34,7 +34,7 @@ public class CommandExecute extends Command {
 
     private static List<File> filesList = new ArrayList<>();
 
-    public Signal execute(PriorityQueue<LabWork> priorityQueue) {
+    public Signal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue) {
 
         Signal serverSignal = new Signal();
 
@@ -46,7 +46,7 @@ public class CommandExecute extends Command {
         } else {
 
             for (Command command : listOfCommands) {
-                serverSignal.setMessage(serverSignal.getMessage() + "\n" + command.execute(priorityQueue).getMessage());
+                serverSignal.setMessage(serverSignal.getMessage() + "\n" + command.execute(priorityBlockingQueue).getMessage());
             }
             serverSignal.setSucces(true);
             serverSignal.setMessage(serverSignal.getMessage() + "\nСкрипт выполнен.");

@@ -1,14 +1,15 @@
 package lab7.server.threads;
 
+import java.io.IOException;
+import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
-import java.util.concurrent.RecursiveAction;
 
 import lab7.app.auth.commands.AuthCommand;
 import lab7.app.commands.Command;
 import lab7.app.signals.ServerSignal;
 import lab7.server.Server;
 
-public class CommandExecuteTask extends RecursiveAction {
+public class CommandExecuteTask extends Thread {
 
     Command command;
     SocketChannel channel;
@@ -18,8 +19,9 @@ public class CommandExecuteTask extends RecursiveAction {
         this.channel = channel;
     }
 
-    @Override
-    protected void compute() {
+    public void run() {
+
+        System.out.println("Начал выполнение.");
 
         ServerSignal serverSignal;
 
@@ -29,13 +31,19 @@ public class CommandExecuteTask extends RecursiveAction {
             serverSignal = execute(command);
         }
 
-        Server.createSendTask(channel, serverSignal);
+        try {
+            serverSignal.setClientAdress(channel.getRemoteAddress());
+            Server.addSignal(serverSignal);
+            channel.register(Server.getSelector(), SelectionKey.OP_WRITE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
     
     public ServerSignal execute(Command command) {
 
-        return new ServerSignal(command.execute(Server.getPriorityQueue()));
+        return new ServerSignal(command.execute(Server.getpriorityBlockingQueue()));
 
     }
 

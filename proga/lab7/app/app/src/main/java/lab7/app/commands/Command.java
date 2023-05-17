@@ -2,7 +2,7 @@ package lab7.app.commands;
 
 import java.io.File;
 import java.io.Serializable;
-import java.util.PriorityQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 import lab7.app.auth.User;
 import lab7.app.labwork.LabWork;
@@ -43,7 +43,7 @@ public abstract class Command implements Serializable {
         this.file = file;
     }
 
-    public abstract Signal execute(PriorityQueue<LabWork> PriorityQueue);
+    public abstract Signal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue);
 
     public boolean isRequireLabWork() {
         return requireLabWork;

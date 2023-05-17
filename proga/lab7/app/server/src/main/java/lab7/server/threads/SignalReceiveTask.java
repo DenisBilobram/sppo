@@ -1,6 +1,7 @@
 package lab7.server.threads;
 
 import java.io.IOException;
+import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.concurrent.RecursiveAction;
 
@@ -15,14 +16,17 @@ public class SignalReceiveTask extends RecursiveAction{
     Receiver receiver;
     Sender sender;
 
-    public SignalReceiveTask(SocketChannel channel) {
-        this.channel = channel;
+    public SignalReceiveTask(SelectionKey key) {
+        this.channel = (SocketChannel)key.channel();
+        key.cancel();
         this.receiver = new Receiver(channel);
         this.sender = new Sender(channel);
     }
 
     @Override
     protected void compute() {
+
+        System.out.println("Пытаюсь получить комманду от клиента");
         Command command = receiver.recieveCommands();
 
         if (command == null) {
@@ -34,11 +38,13 @@ public class SignalReceiveTask extends RecursiveAction{
                 System.out.println("Ошибка во время получения команды.");
                 exp.printStackTrace();
             }
+            return;
         }
 
         System.out.println("Получил команду.");
 
-        Server.createExecuteTask(command, channel);
+        
+        new CommandExecuteTask(command, channel).start();
 
     }
     

@@ -1,7 +1,7 @@
 package lab7.app.commands;
 
 import java.util.Comparator;
-import java.util.PriorityQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 import java.util.stream.Collectors;
 
 import lab7.app.labwork.LabWork;
@@ -13,17 +13,17 @@ import lab7.app.signals.Signal;
 public class CommandPrintTunedInWorks extends Command {
 
     @Override
-    public Signal execute(PriorityQueue<LabWork> priorityQueue) {
+    public Signal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue) {
         Signal resultSignal = new Signal();
 
-        if (priorityQueue.size() == 0) {
+        if (priorityBlockingQueue.size() == 0) {
             resultSignal.setMessage("Коллекция пуста.");
             resultSignal.setSucces(true);
             return resultSignal;
         }
         
 
-        String result = priorityQueue.stream().sorted(new Comparator<LabWork>() {
+        String result = priorityBlockingQueue.stream().sorted(new Comparator<LabWork>() {
 
             public int compare(LabWork arg0, LabWork arg1) {
                 return arg1.getTunedInWorks().intValue() - arg0.getTunedInWorks().intValue();

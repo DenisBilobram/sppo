@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.PriorityQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 import lab7.app.labwork.Color;
 import lab7.app.labwork.Coordinates;
@@ -14,11 +14,11 @@ import lab7.app.labwork.LabWork;
 import lab7.app.labwork.Person;
 
 public class DataSync {
-    public static PriorityQueue<LabWork> getQueueFromDataBase(Connection dataBasConnection) {
+    public static PriorityBlockingQueue<LabWork> getQueueFromDataBase(Connection dataBasConnection) {
         try (Statement statement = dataBasConnection.createStatement()) {
-            ResultSet result = statement.executeQuery("SELECT * FROM LABWORK INNER JOIN PERSON ON LABWORK.user_id = PERSON.id");
+            ResultSet result = statement.executeQuery("SELECT * FROM APP_LABWORKS INNER JOIN APP_PERSONS ON APP_LABWORKS.user_id = APP_PERSONS.id");
 
-            PriorityQueue<LabWork> priorityQueue = new PriorityQueue<>();
+             PriorityBlockingQueue<LabWork> priorityBlockingQueue = new PriorityBlockingQueue<>();
 
             while (result.next()) {
 
@@ -35,11 +35,11 @@ public class DataSync {
                 LabWork labWork = new LabWork(name, coordinates, creationDate, minimalPoint, tunedInWorks, difficulty, auhor);
                 labWork.setId(id);
 
-                priorityQueue.add(labWork);
+                priorityBlockingQueue.add(labWork);
 
             }
 
-            return priorityQueue;
+            return priorityBlockingQueue;
 
         } catch (SQLException e) {
             System.out.println("ERROR: Ошибка при извлечении коллекции из БД.");

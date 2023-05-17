@@ -1,6 +1,6 @@
 package lab7.app.commands;
 
-import java.util.PriorityQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 import lab7.app.database.DataBase;
 import lab7.app.labwork.LabWork;
@@ -13,13 +13,13 @@ import lab7.app.signals.Signal;
 public class CommandClear extends Command{
 
     @Override
-    public Signal execute(PriorityQueue<LabWork> priorityQueue) {
+    public Signal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue) {
 
         Signal resultSignal = new Signal();
 
         boolean cleared = DataBase.deleteAllLabWorks();
         if (cleared) {
-            priorityQueue.clear();
+            priorityBlockingQueue.clear();
             resultSignal.setMessage("Коллекция была очищена.");
             resultSignal.setSucces(true);
         } else {

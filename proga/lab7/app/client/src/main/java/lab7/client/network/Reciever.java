@@ -29,6 +29,7 @@ public class Reciever {
         try {
             byte[] byteComm = new byte[13];
             int numRead = 0;
+
             
             while(true) {
 

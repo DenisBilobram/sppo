@@ -1,6 +1,6 @@
 package lab7.app.commands;
 
-import java.util.PriorityQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 import lab7.app.database.DataBase;
 import lab7.app.labwork.LabWork;
@@ -15,21 +15,21 @@ public class CommandRemoveHead extends Command {
     int index;
 
     @Override
-    public Signal execute(PriorityQueue<LabWork> priorityQueue) {
+    public Signal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue) {
 
         Signal resultSignal = new Signal();
 
-        if (priorityQueue.size() == 0) {
+        if (priorityBlockingQueue.size() == 0) {
             resultSignal.setMessage("Коллекция пуста.");
             resultSignal.setSucces(false);
             return resultSignal;
         }
         
-        LabWork labWorkToDelete = priorityQueue.peek();
+        LabWork labWorkToDelete = priorityBlockingQueue.peek();
 
         boolean deleted = DataBase.deleteLabWorkById(labWorkToDelete.getId());
         if (deleted) {
-            priorityQueue.poll();
+            priorityBlockingQueue.poll();
             resultSignal.setMessage("Верхний элемент удалён.");
             resultSignal.setSucces(true);
         } else {
