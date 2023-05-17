@@ -1,13 +1,11 @@
 package lab7.app.database;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Scanner;
 
 import lab7.app.auth.User;
 import lab7.app.labwork.Color;
@@ -26,15 +24,18 @@ public class DataBase {
     }
 
     static {
-        String url = "jdbc:postgresql://localhost:5432/studs";
+        // String url = "jdbc:postgresql://localhost:5432/studs";
+        String url = "jdbc:postgresql://localhost:5432/app";
         try {
 
-            Scanner scanner = new Scanner(new File("/home/studs/s367893/.pgpass"));
-            String line = scanner.nextLine();
-            String[] data = line.split(":");
+            // Scanner scanner = new Scanner(new File("/home/studs/s367893/.pgpass"));
+            // String line = scanner.nextLine();
+            // String[] data = line.split(":");
 
 
-            DataBase.dataBasConnection = DriverManager.getConnection(url, data[3], data[4]);
+            // DataBase.dataBasConnection = DriverManager.getConnection(url, data[3], data[4]);
+
+            DataBase.dataBasConnection = DriverManager.getConnection(url, "postgres", "postgres");
         } catch (Exception e) {
             System.out.println("ERROR: Ошбика при подключении к базе данных.");
             e.printStackTrace();
@@ -147,7 +148,7 @@ public class DataBase {
         try {
             Statement statement = dataBasConnection.createStatement();
 
-            statement.executeUpdate("TRUNCATE TABLE LABWORK");
+            statement.executeUpdate("TRUNCATE TABLE LABWORK RESTART IDENTITY");
 
             return true;
 

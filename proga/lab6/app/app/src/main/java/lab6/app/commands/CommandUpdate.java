@@ -1,5 +1,6 @@
 package lab6.app.commands;
 
+import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.PriorityQueue;
 import lab6.app.labwork.LabWork;
@@ -20,7 +21,6 @@ public class CommandUpdate extends Command {
         Signal resultSignal = new Signal();
 
         try {
-            
 
             LabWork labWorkUpdate = getLabWork();
             LabWork labWorkToChame = priorityQueue.stream().filter(x -> x.getId().equals(Long.parseLong(getId()))).findFirst().get();

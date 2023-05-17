@@ -72,7 +72,9 @@ public class Server {
 
             while (true) {
 
+                System.out.println("Выбираю ключи.");
                 selector.select();
+                System.out.println("Выбрал ключи.");
                 Iterator<SelectionKey> keys = selector.selectedKeys().iterator();
 
                 while(keys.hasNext()) {
