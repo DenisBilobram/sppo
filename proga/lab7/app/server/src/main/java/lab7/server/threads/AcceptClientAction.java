@@ -29,12 +29,11 @@ public class AcceptClientAction extends RecursiveAction{
 
             Server.getSession().add(socketChannel);
 
-            socketChannel.register(Server.getSelector(), SelectionKey.OP_READ);
-            System.out.println("Добавил ключ на чтение.");
-
             serverSocketChannel.register(Server.getSelector(), SelectionKey.OP_ACCEPT);
-            
 
+            socketChannel.register(Server.getSelector(), SelectionKey.OP_READ);
+            
+            Server.getSelector().wakeup();
             
 
 

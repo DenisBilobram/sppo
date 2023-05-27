@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.Set;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ForkJoinPool;
 
 import lab7.server.threads.AcceptClientAction;
@@ -31,7 +33,9 @@ public class Server {
     private static Set<SocketChannel> session = new HashSet<SocketChannel>();
     private static HashMap<SocketAddress, ServerSignal> signals = new HashMap<>();
 
-    private static ForkJoinPool pool = ForkJoinPool.commonPool();
+    private static ForkJoinPool pool = new ForkJoinPool(Runtime.getRuntime().availableProcessors()-4);
+    private static Executor executor = Executors.newFixedThreadPool(4);
+
     private static Selector selector;
 
     
@@ -63,27 +67,28 @@ public class Server {
             serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 
             System.out.println("Сервер запустился...");
-
+            
             while (true) {
 
-                selector.select(300);
+                selector.select(5000);
+                
                 Set<SelectionKey> set = selector.selectedKeys();
                 Iterator<SelectionKey> keys = set.iterator();
                 
+                // System.out.println("------------");
+                // selector.keys().stream().filter(x -> x.channel() instanceof ServerSocketChannel).forEach(x->System.out.println(x));;
+                // System.out.println("------------");
+
                 while(keys.hasNext()) {
                     SelectionKey key = (SelectionKey) keys.next();
                     keys.remove();
 
                     if (!key.isValid()) continue;
-
                     if (key.isAcceptable()) {
-                        System.out.println("Запускаю подключение.");
                         pool.execute(new AcceptClientAction(key));
                     } else if (key.isReadable()) {
-                        System.out.println("Запускаю чтение.");
                         pool.execute(new SignalReceiveTask(key));
                     } else if (key.isWritable()){
-                        System.out.println("Запускаю отправку.");
                         pool.execute(new SignalSendAction(key, signals.get(((SocketChannel)key.channel()).getRemoteAddress())));
                     }
 
@@ -136,6 +141,8 @@ public class Server {
         signals.put(signal.getClientAdress(), signal);
     }
 
-
+    public static Executor getExecutor() {
+        return executor;
+    }
 }
 

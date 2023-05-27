@@ -21,20 +21,20 @@ public class CommandExecuteTask extends Thread {
 
     public void run() {
 
-        System.out.println("Начал выполнение.");
-
         ServerSignal serverSignal;
 
         if (command instanceof AuthCommand) {
             serverSignal = auth(command);
         } else {
             serverSignal = execute(command);
+            System.out.println("Команда выполнена.");
         }
 
         try {
             serverSignal.setClientAdress(channel.getRemoteAddress());
             Server.addSignal(serverSignal);
             channel.register(Server.getSelector(), SelectionKey.OP_WRITE);
+            Server.getSelector().wakeup();
         } catch (IOException e) {
             e.printStackTrace();
         }

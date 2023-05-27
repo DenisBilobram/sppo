@@ -26,7 +26,6 @@ public class SignalReceiveTask extends RecursiveAction{
     @Override
     protected void compute() {
 
-        System.out.println("Пытаюсь получить комманду от клиента");
         Command command = receiver.recieveCommands();
 
         if (command == null) {
@@ -41,10 +40,8 @@ public class SignalReceiveTask extends RecursiveAction{
             return;
         }
 
-        System.out.println("Получил команду.");
-
-        
-        new CommandExecuteTask(command, channel).start();
+        System.out.println("Команда получена.");
+        Server.getExecutor().execute(new CommandExecuteTask(command, channel));
 
     }
     

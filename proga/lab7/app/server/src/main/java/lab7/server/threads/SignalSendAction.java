@@ -36,9 +36,10 @@ public class SignalSendAction extends RecursiveAction{
         try {
 
             if (sended) {
-                System.out.println("Отправил сигнал клиенту.");
-
+                System.out.println("Сигнал отправлен.");
                 channel.register(Server.getSelector(), SelectionKey.OP_READ);
+
+                Server.getSelector().wakeup();
             } else {
                 System.out.println("Потеряно соединение с клиентом " + channel.getRemoteAddress() + ".");
                 channel.close();
