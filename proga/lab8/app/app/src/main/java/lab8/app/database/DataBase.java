@@ -1,4 +1,4 @@
-package lab7.app.database;
+package lab8.app.database;
 
 import java.io.File;
 import java.security.MessageDigest;
@@ -11,10 +11,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
-import lab7.app.auth.User;
-import lab7.app.labwork.Color;
-import lab7.app.labwork.LabWork;
-import lab7.app.labwork.Person;
+import lab8.app.auth.User;
+import lab8.app.labwork.Color;
+import lab8.app.labwork.LabWork;
+import lab8.app.labwork.Person;
 
 /** Класс реализующий базу данных программы.
  * 
@@ -180,6 +180,31 @@ public class DataBase {
             PreparedStatement statement = dataBasConnection.prepareStatement("SELECT username, password, id FROM APP_USERS where username=?");
 
             statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                User gotUser = new User(resultSet.getString(1), resultSet.getString(2), null);
+                gotUser.setId(resultSet.getLong(3));
+
+                Person profile = readProfileByUserId(gotUser.getId());
+                gotUser.setProfile(profile);
+
+                return gotUser;
+            } else {
+                return null;
+            }
+        } catch (SQLException exp) {
+            exp.printStackTrace();
+            return null;
+        }
+    }
+
+    public static synchronized User readUserById(Double id) {
+
+        try {
+            PreparedStatement statement = dataBasConnection.prepareStatement("SELECT username, password, id FROM APP_USERS where id=?");
+
+            statement.setDouble(1, id);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {

@@ -1,0 +1,38 @@
+.auth-container {
+    -fx-background-color: rgb(238, 237, 237);
+}
+
+.auth-button {
+    /* -fx-background-color: #dfdfdf; */
+    -fx-background-color: rgb(255,27,0);
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 0%, rgba(255, 25, 0, 0.774) 0%, rgba(251, 77, 2, 0.774) 100%);
+    -fx-background-radius: 7px;
+    -fx-text-fill: white;
+    -fx-padding: 8px 12px;
+    -fx-font-family: Arial, Helvetica, sans-serif;
+    -fx-font-size: 22;
+    -fx-alignment: center;
+    -fx-max-width: 350px;
+}
+
+.auth-button:hover {
+    -fx-effect: dropshadow( gaussian , rgba(199, 63, 0, 0.701) , 10,0,0,1 );
+}
+
+.auth-field {
+    -fx-font-family: Arial, Helvetica, sans-serif;
+    -fx-font-size: 20;
+    -fx-max-width: 350px;
+    -fx-padding: 7px;
+}
+
+.errors-box {
+    -fx-padding: 12px;
+    
+}
+
+.errors-box Label {
+    -fx-font-family: Arial, Helvetica, sans-serif;
+    -fx-font-size: 14;
+    -fx-text-fill: red;
+}
