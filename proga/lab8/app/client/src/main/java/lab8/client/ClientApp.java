@@ -1,12 +1,23 @@
 package lab8.client;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.ArrayList;
 import java.util.concurrent.PriorityBlockingQueue;
 
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
+
+import javafx.util.Duration;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -16,10 +27,14 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -35,14 +50,30 @@ import lab8.app.auth.User;
 import lab8.app.auth.commands.LoginCommand;
 import lab8.app.auth.commands.RegistrationCommand;
 import lab8.app.commands.Command;
+import lab8.app.commands.CommandAdd;
+import lab8.app.commands.CommandClear;
+import lab8.app.commands.CommandCountLessAuthor;
+import lab8.app.commands.CommandExecute;
+import lab8.app.commands.CommandHead;
+import lab8.app.commands.CommandInfo;
+import lab8.app.commands.CommandLook;
+import lab8.app.commands.CommandMaxByName;
+import lab8.app.commands.CommandPrintTunedInWorks;
+import lab8.app.commands.CommandRemoveById;
+import lab8.app.commands.CommandRemoveHead;
+import lab8.app.commands.CommandRemoveLower;
+import lab8.app.commands.CommandUpdate;
 import lab8.app.labwork.Color;
 import lab8.app.labwork.Coordinates;
 import lab8.app.labwork.Difficulty;
 import lab8.app.labwork.LabWork;
+import lab8.app.labwork.Language;
 import lab8.app.labwork.Person;
 import lab8.app.signals.ServerSignal;
 import lab8.client.auth.Authenticator;
 import lab8.client.gui.GuiFabric;
+import lab8.client.gui.LabWorksController;
+import lab8.client.gui.table.ButtonTableCell;
 import lab8.client.gui.validators.FormValidator;
 import lab8.client.network.ServerConnection;
 
@@ -50,76 +81,64 @@ public class ClientApp extends Application {
 
     private static User user;
 
-    private static ServerConnection server;
+	private static ServerConnection server;
 
     private static Pane mainPaneWithLabWorks;
 
-    private static PriorityBlockingQueue<LabWork> currentCollectLabWorks = new PriorityBlockingQueue<>();
+    private static TableView<LabWork> labWorksTable;
 
-    public static void setServer(ServerConnection server) {
-        ClientApp.server = server;
-    }
+	private static PriorityBlockingQueue<LabWork> currentCollectLabWorks = new PriorityBlockingQueue<>();
 
     private static String host;
-    public static String getHost() {
-        return host;
-    }
-
+    
     private static int port;
-
-    public static int getPort() {
-        return port;
-    }
-
-    private static Stage primaryStage;
-    public static Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
-    private static Stage authStage;
-    public static Stage getAuthStage() {
-        return authStage;
-    }
-
-    private static Stage mainAppStage;
-    public static Stage getMainAppStage() {
-        return mainAppStage;
-    }
 
     private static Stage errorStage;
 
     private static Stage commandStage;
 
-    public static Stage getCommandStage() {
-        return commandStage;
-    }
+    private static Locale locale = new Locale("ru");
+
+    private static Language language = Language.RUSSIAN;
+
+    private static ResourceBundle bundle = ResourceBundle.getBundle("locale/all", locale);
+
+    private static Double[] xCoordCurrent = {Double.valueOf(0)};
+    private static Double[] yCoordCurrent = {Double.valueOf(0)};
+
+    public static Locale getLocale() {
+		return locale;
+	}
+
+    public static ResourceBundle getBundle() {
+		return bundle;
+	}
+
+	private static LabWorksController collChecker;
 
     @Override
     public void start(Stage primaryStage) {
         ClientApp.primaryStage = primaryStage;
 
-        ClientApp.setServer(new ServerConnection(host, port));
-
         createAuthStage();
-
-        // createMainStage();
-
 
     }
 
-    private void createAuthStage() {
+
+    private static void createAuthStage() {
 
         ClientApp.authStage = new Stage();
         ClientApp.authStage.setResizable(false);
         authStage.setTitle("LabWork App");
 
-        Button loginButton = new Button("Авторизоваться");
+
+        Button loginButton = new Button(bundle.getString("authlogbut"));
         loginButton.getStyleClass().clear();
         loginButton.getStyleClass().add("auth-button");
         loginButton.setPrefSize(350, 30);
         
 
-        Button registerButton = new Button("Зарегестрироваться");
+        Button registerButton = new Button(bundle.getString("authregbut"));
         registerButton.getStyleClass().clear();
         registerButton.getStyleClass().add("auth-button");
         registerButton.setPrefSize(350, 30);
@@ -132,6 +151,7 @@ public class ClientApp extends Application {
         authVBoxCommon.setAlignment(Pos.TOP_CENTER);
 
         StackPane rootCoomon = new StackPane(authVBoxCommon);
+        
         rootCoomon.setAlignment(Pos.CENTER);
         rootCoomon.getStyleClass().add("auth-container");
 
@@ -169,7 +189,7 @@ public class ClientApp extends Application {
 
         loginButton.setOnAction(event -> {
 
-            submitButton1.setText("Войти");
+            submitButton1.setText(bundle.getString("loginbut"));
 
             submitButton1.setOnAction(eventInner -> {
 
@@ -178,10 +198,12 @@ public class ClientApp extends Application {
                     Authenticator authenticator = new Authenticator(getConnection());
                     LoginCommand loginCommand = new LoginCommand();
                     loginCommand.setUser(new User(userNameField1.getText(), passwordField1.getText()));
-                    User user = authenticator.authentication(loginCommand);
-                    if (user != null) {
+                    User newUser = authenticator.authentication(loginCommand);
+                    if (newUser != null) {
+    
                         authStage.close();
-                        ClientApp.user = user;
+                        ClientApp.user = newUser;
+                        ClientApp.user.setLanguage(language);
                         createMainStage();
                     }
                 } else {
@@ -238,7 +260,7 @@ public class ClientApp extends Application {
         authSceneRegister.getStylesheets().add("/css/auth.css");
 
         registerButton.setOnAction(event -> {
-            submitButton2.setText("Подтвердить");
+            submitButton2.setText(bundle.getString("submitbut"));
             submitButton2.setOnAction(eventInner -> {
 
                 ArrayList<Label> errosUser = FormValidator.validateUser(userNameField2.getText(), passwordField2.getText());
@@ -247,10 +269,11 @@ public class ClientApp extends Application {
                     Authenticator authenticator = new Authenticator(getConnection());
                     RegistrationCommand loginCommand = new RegistrationCommand();
                     loginCommand.setUser(new User(userNameField2.getText(), passwordField2.getText(), new Person(nameField.getText(), Long.parseLong(heightField.getText()), eyeColorBox.getValue())));
-                    User user = authenticator.authentication(loginCommand);
-                    if (user != null) {
+                    User userNew = authenticator.authentication(loginCommand);
+                    if (userNew != null) {
                         authStage.close();
-                        ClientApp.user = user;
+                        ClientApp.user = userNew;
+                        ClientApp.user.setLanguage(language);
                         createMainStage();
                         return;
                     }
@@ -268,13 +291,34 @@ public class ClientApp extends Application {
         authStage.setScene(authSceneCommon);
 
         authStage.show();
+
+        ClientApp.setServer(new ServerConnection(host, port));
+
     }
 
-    public static void createErrorStage(String errorText, String buttunText, EventHandler<ActionEvent> vHandler) {
+    public static void createErrorStage(String errorText, String buttunText, EventHandler<ActionEvent> vHandler, boolean crit) {
+
         ClientApp.errorStage = new Stage();
-        errorStage.setResizable(true);
-        errorStage.setTitle("Ошибка");
         errorStage.initModality(Modality.APPLICATION_MODAL);
+        errorStage.setTitle(bundle.getString("errotitle"));
+
+        errorStage.setOnCloseRequest(event -> {
+            if (crit) {
+                if (authStage != null) {
+                    authStage.close();
+                }
+                if (mainAppStage != null) {
+                    mainAppStage.close();
+                }
+                if (commandStage != null) {
+                    commandStage.close();
+                }
+                primaryStage.close();
+            } else {
+                errorStage.close();
+                ClientApp.errorStage = null;
+            }
+        });
 
         Label errorMessage = new Label(errorText);
         VBox.setMargin(errorMessage, new Insets(0, 0, 30, 0));
@@ -312,6 +356,7 @@ public class ClientApp extends Application {
             }
         });
 
+
         StackPane rootVizual = new StackPane();
         rootVizual.setAlignment(Pos.TOP_CENTER);
         Scene mainAppVizualScene = new Scene(rootVizual, 1280, 820);
@@ -328,18 +373,28 @@ public class ClientApp extends Application {
         rootProfile.setAlignment(Pos.TOP_CENTER);
         Scene mainAppProfileScene = new Scene(rootProfile, 1280, 820);
 
+
+        // Настройка сцена визуализации
+
+
         ClientApp.mainPaneWithLabWorks = new Pane();
+        mainPaneWithLabWorks.setTranslateX(0);
+        mainPaneWithLabWorks.setTranslateY(0);
+
+        currentCollectLabWorks.clear(); 
         
         updateMainPainWithLabWorks();
+
+        ClientApp.collChecker = new LabWorksController();
+        collChecker.setDaemon(true);
+        collChecker.start();
 
         Double[] xOffset = {Double.valueOf(0)};
         Double[] yOffset = {Double.valueOf(0)};
 
-        Double[] xCoordCurrent = {Double.valueOf(0)};
-        Double[] yCoordCurrent = {Double.valueOf(0)};
-
-        Label xCoord = new Label("x: " + xCoordCurrent[0].toString() + "     ");
-        Label yCoord = new Label("y: " + yCoordCurrent[0].toString());
+        Label xCoord = new Label("x: " + xCoordCurrent[0].intValue());
+        HBox.setMargin(xCoord, new Insets(0, 20, 0, 0));
+        Label yCoord = new Label("y: " + yCoordCurrent[0].intValue());
         HBox coordinates = new HBox(xCoord, yCoord);
 
         mainPaneWithLabWorks.setOnMousePressed(event -> {
@@ -358,8 +413,8 @@ public class ClientApp extends Application {
             }
             xOffset[0] = event.getSceneX();
             yOffset[0] = event.getSceneY();
-            xCoord.setText("x: " + xCoordCurrent[0] + "     ");
-            yCoord.setText("y: " + yCoordCurrent[0]);
+            xCoord.setText("x: " + xCoordCurrent[0].intValue());
+            yCoord.setText("y: " + yCoordCurrent[0].intValue());
         });
 
 
@@ -389,6 +444,283 @@ public class ClientApp extends Application {
         menuAndCommands.setAlignment(Pos.TOP_CENTER);
         VBox.setVgrow(commandsContainerStackPane, Priority.ALWAYS);
 
+
+        // Настройка сцены коллекции
+
+        ClientApp.labWorksTable = new TableView<>();
+        TableColumn<LabWork, String> idField = new TableColumn<>("Id");
+        TableColumn<LabWork, String> nameField = new TableColumn<>("Name");
+        TableColumn<LabWork, String> xField = new TableColumn<>("X");
+        TableColumn<LabWork, String> yField = new TableColumn<>("Y");
+        TableColumn<LabWork, String> dateField = new TableColumn<>("Creation date");
+        TableColumn<LabWork, String> minimalField = new TableColumn<>("Minimal point");
+        TableColumn<LabWork, String> tunedField = new TableColumn<>("Tuned in works");
+        TableColumn<LabWork, String> diffField = new TableColumn<>("Difficulty");
+        TableColumn<LabWork, String> ownerField = new TableColumn<>("Owner");
+        TableColumn<LabWork, Void> editField = new TableColumn<>("Command Update");
+        TableColumn<LabWork, Void> deleteField = new TableColumn<>("Command Remove");
+
+        idField.setCellValueFactory(new PropertyValueFactory<>("id"));
+        nameField.setCellValueFactory(new PropertyValueFactory<>("name"));
+        xField.setCellValueFactory(param -> {
+            return new SimpleStringProperty(Long.valueOf((param.getValue().getCoordinates().getX())).toString());
+        });
+        yField.setCellValueFactory(param -> {
+            return new SimpleStringProperty(Long.valueOf((param.getValue().getCoordinates().getX())).toString());
+        });
+        dateField.setCellValueFactory(param -> {
+            return new SimpleStringProperty(param.getValue().getCreationDate().toString());
+        });
+        minimalField.setCellValueFactory(new PropertyValueFactory<>("minimalPoint"));
+        tunedField.setCellValueFactory(new PropertyValueFactory<>("tunedInWorks"));
+        diffField.setCellValueFactory(param -> {
+            return new SimpleStringProperty(param.getValue().getDifficulty().toString());
+        });
+        diffField.setPrefWidth(100);
+        ownerField.setCellValueFactory(param -> {
+            return new SimpleStringProperty(param.getValue().getOwner().getUsername());
+        });;
+        editField.setCellFactory(param -> new ButtonTableCell(bundle.getString("menuedit"), new CommandUpdate()));
+        deleteField.setCellFactory(param -> new ButtonTableCell(bundle.getString("menudelete"), new CommandRemoveById()));
+
+        labWorksTable.getColumns().add(idField);
+        labWorksTable.getColumns().add(nameField);
+        labWorksTable.getColumns().add(xField);
+        labWorksTable.getColumns().add(yField);
+        labWorksTable.getColumns().add(minimalField);
+        labWorksTable.getColumns().add(tunedField);
+        labWorksTable.getColumns().add(diffField);
+        labWorksTable.getColumns().add(dateField);
+        labWorksTable.getColumns().add(ownerField);
+        labWorksTable.getColumns().add(editField);
+        labWorksTable.getColumns().add(deleteField);
+
+        updateLabWorkTable();
+
+
+        TextField idFilterField = new TextField();
+        idFilterField.setPromptText("Id");
+        idFilterField.setPrefWidth(idField.getWidth());
+        idField.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+            idFilterField.setPrefWidth(newWidth.doubleValue());
+        });
+        FormValidator.addNumberValidator(idFilterField);
+        
+
+        TextField nameFilterField = new TextField();
+        nameFilterField.setPromptText("Name");
+        nameFilterField.setPrefWidth(nameField.getWidth());
+        nameField.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+            nameFilterField.setPrefWidth(newWidth.doubleValue());
+        });
+
+
+        TextField xFilterField = new TextField();
+        xFilterField.setPromptText("X");
+        xFilterField.setPrefWidth(xField.getWidth());
+        xField.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+            xFilterField.setPrefWidth(newWidth.doubleValue());
+        });
+        FormValidator.addNumberValidator(xFilterField);
+    
+
+        TextField yFilterField = new TextField();
+        yFilterField.setPromptText("Y");
+        yFilterField.setPrefWidth(yField.getWidth());
+        yField.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+            yFilterField.setPrefWidth(newWidth.doubleValue());
+        });
+        FormValidator.addNumberValidator(yFilterField);
+
+        TextField minmalFilterField = new TextField();
+        minmalFilterField.setPromptText("Minimal point");
+        minmalFilterField.setPrefWidth(minimalField.getWidth());
+        minimalField.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+            minmalFilterField.setPrefWidth(newWidth.doubleValue());
+        });
+        FormValidator.addNumberValidator(minmalFilterField);
+
+        TextField tunedFilterField = new TextField();
+        tunedFilterField.setPromptText("Tuned in works");
+        tunedFilterField.setPrefWidth(tunedField.getWidth());
+        tunedField.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+            tunedFilterField.setPrefWidth(newWidth.doubleValue());
+        });
+        FormValidator.addNumberValidator(tunedFilterField);
+
+        ObservableList<Difficulty> options = FXCollections.observableArrayList();
+        options.add(null);
+        options.addAll(Difficulty.values());
+        ComboBox<Difficulty> diffFilterField = new ComboBox<>();
+        diffFilterField.setItems(options);
+        diffFilterField.getSelectionModel().selectFirst();
+        diffFilterField.setPromptText("Difficulty");
+        diffFilterField.setPrefWidth(diffField.getWidth());
+        diffField.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+            diffFilterField.setPrefWidth(newWidth.doubleValue());
+        });
+
+        DatePicker datePicker = new DatePicker();
+        datePicker.setPromptText("Creation date");
+        datePicker.setPrefWidth(dateField.getWidth());
+        dateField.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+            datePicker.setPrefWidth(newWidth.doubleValue());
+        });
+
+        TextField ownerFilterField = new TextField();
+        ownerFilterField.setPromptText("Owner");
+        ownerFilterField.setPrefWidth(ownerField.getWidth());
+        ownerField.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+            ownerFilterField.setPrefWidth(newWidth.doubleValue());
+        });
+
+        idFilterField.textProperty().addListener((obs, old, newVal) -> {
+            filterTable(idFilterField.getText(), nameFilterField.getText(), xFilterField.getText(), yFilterField.getText(), minmalFilterField.getText(), tunedFilterField.getText(), diffFilterField.getValue(), datePicker.getValue(), ownerFilterField.getText());
+        });
+
+        nameFilterField.textProperty().addListener((obs, old, newVal) -> {
+            filterTable(idFilterField.getText(), nameFilterField.getText(), xFilterField.getText(), yFilterField.getText(), minmalFilterField.getText(), tunedFilterField.getText(), diffFilterField.getValue(), datePicker.getValue(), ownerFilterField.getText());
+        });
+
+        xFilterField.textProperty().addListener((obs, old, newVal) -> {
+            filterTable(idFilterField.getText(), nameFilterField.getText(), xFilterField.getText(), yFilterField.getText(), minmalFilterField.getText(), tunedFilterField.getText(), diffFilterField.getValue(), datePicker.getValue(), ownerFilterField.getText());
+        });
+
+        yFilterField.textProperty().addListener((obs, old, newVal) -> {
+            filterTable(idFilterField.getText(), nameFilterField.getText(), xFilterField.getText(), yFilterField.getText(), minmalFilterField.getText(), tunedFilterField.getText(), diffFilterField.getValue(), datePicker.getValue(), ownerFilterField.getText());
+        });
+
+        minmalFilterField.textProperty().addListener((obs, old, newVal) -> {
+            filterTable(idFilterField.getText(), nameFilterField.getText(), xFilterField.getText(), yFilterField.getText(), minmalFilterField.getText(), tunedFilterField.getText(), diffFilterField.getValue(), datePicker.getValue(), ownerFilterField.getText());
+        });
+        
+        tunedFilterField.textProperty().addListener((obs, old, newVal) -> {
+            filterTable(idFilterField.getText(), nameFilterField.getText(), xFilterField.getText(), yFilterField.getText(), minmalFilterField.getText(), tunedFilterField.getText(), diffFilterField.getValue(), datePicker.getValue(), ownerFilterField.getText());
+        });
+
+        diffFilterField.valueProperty().addListener((obs, old, newVal) -> {
+            filterTable(idFilterField.getText(), nameFilterField.getText(), xFilterField.getText(), yFilterField.getText(), minmalFilterField.getText(), tunedFilterField.getText(), diffFilterField.getValue(), datePicker.getValue(), ownerFilterField.getText());
+        });
+
+        datePicker.valueProperty().addListener((obs, old, newVal) -> {
+            filterTable(idFilterField.getText(), nameFilterField.getText(), xFilterField.getText(), yFilterField.getText(), minmalFilterField.getText(), tunedFilterField.getText(), diffFilterField.getValue(), datePicker.getValue(), ownerFilterField.getText());
+        });
+
+        ownerFilterField.textProperty().addListener((obs, old, newVal) -> {
+            filterTable(idFilterField.getText(), nameFilterField.getText(), xFilterField.getText(), yFilterField.getText(), minmalFilterField.getText(), tunedFilterField.getText(), diffFilterField.getValue(), datePicker.getValue(), ownerFilterField.getText());
+        });
+
+
+        HBox tableFilters = new HBox(idFilterField, nameFilterField, xFilterField, yFilterField, minmalFilterField, tunedFilterField, diffFilterField, datePicker, ownerFilterField);
+
+        VBox menuAndTable = new VBox(GuiFabric.generateTopMenu(mainAppVizualScene, mainAppCollectScene, mainAppCommandsScene, mainAppProfileScene), labWorksTable, tableFilters);
+        rootCollect.getChildren().add(menuAndTable);
+
+        
+
+
+        // Найстройка сцены профиля
+
+
+        Button profileHeader = new Button(bundle.getString("profilebut"));
+        profileHeader.getStyleClass().add("profile-header");
+        profileHeader.setTextAlignment(TextAlignment.CENTER);
+        VBox.setMargin(profileHeader, new Insets(0, 0, 30, 0));
+        
+
+        Button userNameLabel = new Button(user.getUsername());
+        userNameLabel.getStyleClass().add("profile-field");
+        userNameLabel.setTextAlignment(TextAlignment.CENTER);
+        VBox.setMargin(userNameLabel ,new Insets(0, 0, 20, 0));
+
+        Button nameLabel = new Button(user.getProfile().getName());
+        nameLabel.getStyleClass().add("profile-field");
+        VBox.setMargin(nameLabel ,new Insets(0, 0, 20, 0));
+
+        Button heightLabel = new Button(user.getProfile().getHeigth().toString());
+        heightLabel.getStyleClass().add("profile-field");
+        VBox.setMargin(heightLabel ,new Insets(0, 0, 20, 0));
+
+        Button eyeColorLabel = new Button(user.getProfile().getEyeColor().toString());
+        eyeColorLabel.getStyleClass().add("profile-field");
+        VBox.setMargin(eyeColorLabel ,new Insets(0, 0, 20, 0));
+
+        Button exitButton = new Button(bundle.getString("exitbut"));
+        exitButton.getStyleClass().add("command-button");
+        VBox.setMargin(exitButton ,new Insets(0, 0, 20, 0));
+
+        Button langButton = new Button(bundle.getString("langbut"));
+        langButton.getStyleClass().add("command-button");
+        langButton.setOnAction(event -> {
+            Stage changeLangStage = new Stage();
+            changeLangStage.setTitle(bundle.getString("langbut"));
+
+            Label langLabel = new Label("Выберите язык");
+            langLabel.getStyleClass().add("command-header-label");
+            
+            ComboBox<Language> langField = new ComboBox<>();
+            langField.getItems().addAll(Language.values());
+            langField.setValue(language);
+            VBox.setMargin(langField, new Insets(25));
+            langField.setMinWidth(150);
+
+            Button submitLang = new Button(bundle.getString("submitbut"));
+            submitLang.getStyleClass().add("menu-button");
+            submitLang.setOnAction(eventIn -> {
+                if (langField.getValue().equals(Language.RUSSIAN)) {
+                    locale = new Locale("ru");
+                    language = Language.RUSSIAN;
+	                bundle = ResourceBundle.getBundle("locale/all", locale);
+                } else if (langField.getValue().equals(Language.ENGLISH)) {
+                    locale = new Locale("en");
+                    language = Language.ENGLISH;
+	                bundle = ResourceBundle.getBundle("locale/all", locale);
+                } else if (langField.getValue().equals(Language.ALBANIAN)) {
+                    locale = new Locale("alb");
+                    language = Language.ALBANIAN;
+	                bundle = ResourceBundle.getBundle("locale/all", locale);
+                } else if (langField.getValue().equals(Language.SERBIAN)) {
+                    locale = new Locale("sr");
+                    language = Language.SERBIAN;
+	                bundle = ResourceBundle.getBundle("locale/all", locale);
+                }
+                ClientApp.getUser().setLanguage(language);
+                changeLangStage.close();
+                mainAppStage.close();
+                createMainStage();
+            });
+
+            VBox langVBox = new VBox(langLabel, langField, submitLang);
+            langVBox.setAlignment(Pos.TOP_CENTER);
+            StackPane rootLang = new StackPane(langVBox);
+            rootLang.setAlignment(Pos.CENTER);
+            Scene langScene = new Scene(rootLang, 360, 180);
+
+            langScene.getStylesheets().add("/css/app.css");
+            changeLangStage.setScene(langScene);
+
+            changeLangStage.show();
+
+        });
+
+        exitButton.setOnAction(event -> {
+            ClientApp.mainAppStage.close();
+            ClientApp.user = null;
+            collChecker.interrupt();
+            ClientApp.createAuthStage();
+        });
+
+
+        VBox profileInfo = new VBox(profileHeader, userNameLabel, nameLabel, heightLabel, eyeColorLabel);
+        VBox.setMargin(profileInfo, new Insets(30));
+        profileInfo.getStyleClass().add("profile-info-container");
+        profileInfo.setAlignment(Pos.TOP_CENTER);
+        
+
+        VBox headerAndProfile = new VBox(GuiFabric.generateTopMenu(mainAppVizualScene, mainAppCollectScene, mainAppCommandsScene, mainAppProfileScene), profileInfo, exitButton, langButton);
+        rootProfile.getChildren().add(headerAndProfile);
+        headerAndProfile.setAlignment(Pos.TOP_CENTER);
+
         
         mainAppVizualScene.getStylesheets().add("/css/app.css");
         mainAppCollectScene.getStylesheets().add("/css/app.css");
@@ -406,42 +738,59 @@ public class ClientApp extends Application {
     }
 
 
-    public static void updateMainPainWithLabWorks() {
+    public static synchronized void updateMainPainWithLabWorks() {
 
         PriorityBlockingQueue<LabWork> labWorksNew = getConnection().getLabWorkCollection();
 
-        List<LabWork> labWorksToDelete =  ClientApp.currentCollectLabWorks.stream().filter(labWrok -> !(labWorksNew.contains(labWrok))).toList();
+        List<LabWork> labWorksToAdd = labWorksNew.stream().filter(labWork -> !(currentCollectLabWorks.contains(labWork))).toList();
+        
+        List<LabWork> labWorksToDelete = currentCollectLabWorks.stream().filter(labWork -> !(labWorksNew.contains(labWork))).toList();
 
-        List<LabWork> labWorksToAdd = labWorksNew.stream().filter(labWork -> !(ClientApp.currentCollectLabWorks.contains(labWork))).toList();
-
-        for (LabWork labWorktToDelete : labWorksToDelete) {
-            Node labWorkCanvasDelete = mainPaneWithLabWorks.getChildren().stream().filter(labWorkCanvas -> labWorkCanvas.getId().equals(labWorktToDelete.getId().toString())).findFirst().get();
-            mainPaneWithLabWorks.getChildren().remove(labWorkCanvasDelete);
-
+        ObservableList<Node> labWorkIcons = mainPaneWithLabWorks.getChildren();
+        Iterator<Node> iterator = labWorkIcons.iterator();
+        while (iterator.hasNext()) {
+            Node icon = iterator.next();
+            for (LabWork labWork : labWorksToDelete) {
+                if (Long.valueOf(icon.getId()).equals(labWork.getId())) {
+                    iterator.remove();
+                }
+            }
         }
 
         ArrayList<Canvas> labWorksCanvases = GuiFabric.generateLabWorksIcons(labWorksToAdd);
 
         for (Canvas labWork : labWorksCanvases) {
+            labWork.setLayoutX(labWork.getLayoutX()-xCoordCurrent[0]);
+            labWork.setLayoutY(labWork.getLayoutY()-yCoordCurrent[0]);
+            FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2),labWork);
+            fadeTransition.setFromValue(0);
+            fadeTransition.setToValue(1);
+            fadeTransition.setDelay(Duration.seconds(0.75));
+            labWork.setOpacity(0);
             mainPaneWithLabWorks.getChildren().add(labWork);
+            fadeTransition.play();
         }
         ClientApp.currentCollectLabWorks = labWorksNew;
     }
 
-    public static void createCommandStage(Command command) {
+    public static void createCommandStage(Command command, boolean quickMode) {
+
         ClientApp.commandStage = new Stage();
         ClientApp.commandStage.setTitle("Collection Command");
 
 
+
+        command.setUser(ClientApp.user);
+
         StackPane rootCommandStage = new StackPane();
         rootCommandStage.setAlignment(Pos.TOP_CENTER);
 
-        Label descrHeader = new Label("Описание комманды");
+        Label descrHeader = new Label(bundle.getString("comdescr"));
+
         descrHeader.getStyleClass().add("command-header-label");
         VBox.setMargin(descrHeader, new Insets(15, 15, 15, 15));
 
-
-        Label descrText = new Label(command.getDescription());
+        Label descrText = new Label(getCommandDescription(command));
         descrText.getStyleClass().add("command-descr-label");
         descrText.setWrapText(true);
         descrText.setTextAlignment(TextAlignment.CENTER);
@@ -465,28 +814,32 @@ public class ClientApp extends Application {
         final ComboBox<Difficulty> difficultyCheckBox = new ComboBox<>();
 
         Label selectedFilePath = new Label();
+        Label scriptInfo = new Label();
 
-        if (command.isRequireId()) {
+        if (command.isRequireId() && !quickMode) {
             FormValidator.addNumberValidator(idField);
-            idField.setPromptText("Введите ID элемента");
+            idField.setPromptText(bundle.getString("fielddescrid"));
             commandInfoAndSet.getChildren().add(idField);
             commandInfoAndSet.getStyleClass().add("command-field");
         }
         if (command.isRequireFile()) {
-            Button chooseFileButton = new Button("Выбрать скрипт");
+            Button chooseFileButton = new Button(bundle.getString("fielddescrscript"));
             chooseFileButton.getStyleClass().add("menu-button");
             chooseFileButton.setOnAction(event -> {
                 FileChooser fileChooser = new FileChooser();
                 scriptFile[0] = fileChooser.showOpenDialog(ClientApp.commandStage);
                 if (scriptFile[0] != null) {
+                    command.setFile(scriptFile[0]);
+                    scriptInfo.setText(((CommandExecute)command).pull(bundle).getMessage());
                     selectedFilePath.setText(scriptFile[0].getPath());
                 }
             });
             commandInfoAndSet.getChildren().add(chooseFileButton);
             commandInfoAndSet.getChildren().add(selectedFilePath);
+            commandInfoAndSet.getChildren().add(scriptInfo);
         }
         if (command.isRequireLabWork()) {
-            Label newLabWorkLabel = new Label("Новые значения LabWork");
+            Label newLabWorkLabel = new Label(bundle.getString("newvalueslab"));
             newLabWorkLabel.getStyleClass().add("command-header-label");
             VBox.setMargin(newLabWorkLabel, new Insets(15, 15, 15, 15));
 
@@ -511,6 +864,16 @@ public class ClientApp extends Application {
             difficultyCheckBox.setMinWidth(400);
             difficultyCheckBox.setMaxHeight(40);
 
+            if (quickMode) {
+                LabWork labWorkNew = command.getLabWorkNew();
+                nameField.setText(labWorkNew.getName());
+                xCoordField.setText(Long.valueOf(labWorkNew.getCoordinates().getX()).toString());
+                yCoordField.setText(Long.valueOf(labWorkNew.getCoordinates().getY()).toString());
+                minimalPointField.setText(Long.valueOf(labWorkNew.getMinimalPoint()).toString());
+                tunedInWorksField.setText(Long.valueOf(labWorkNew.getTunedInWorks()).toString());
+                difficultyCheckBox.setValue(labWorkNew.getDifficulty());
+            }
+
             commandInfoAndSet.getChildren().addAll(newLabWorkLabel, nameField, coordContainer, minimalPointField, tunedInWorksField, difficultyCheckBox);
         }
 
@@ -518,11 +881,11 @@ public class ClientApp extends Application {
         errorsBox.getStyleClass().add("errors-box");
         errorsBox.setAlignment(Pos.TOP_CENTER);
 
-        Button submiButton = new Button("Подтвердить");
+        Button submiButton = new Button(bundle.getString("submitbut"));
         submiButton.getStyleClass().add("command-button");
         VBox.setMargin(submiButton, new Insets(25, 0, 15, 0));
 
-        Button backButton = new Button("Назад");
+        Button backButton = new Button(bundle.getString("backbut"));
         backButton.getStyleClass().add("command-button");
         backButton.setOnAction(event -> {
             ClientApp.commandStage.close();
@@ -552,7 +915,7 @@ public class ClientApp extends Application {
         resultTextContainer.setMaxHeight(500);
         
 
-        Button closeCommandResult = new Button("Закрыть");
+        Button closeCommandResult = new Button(bundle.getString("closebut"));
         closeCommandResult.getStyleClass().add("command-button");
         VBox.setMargin(closeCommandResult, new Insets(30));
         closeCommandResult.setOnAction(event -> {
@@ -572,16 +935,16 @@ public class ClientApp extends Application {
             ArrayList<Label> errors = new ArrayList<>();
 
 
-            if (command.isRequireId()) {
+            if (command.isRequireId() && !quickMode) {
                 if (idField.getText() == "") {
-                    errors.add(new Label("Введите поле ID."));
+                    errors.add(new Label(bundle.getString("errorid")));
                 } else {
                     command.setId(idField.getText());
                 }
             }
             if (command.isRequireFile()) {
                 if (scriptFile[0] == null) {
-                    errors.add(new Label("Необходимо загрузить скрипт."));
+                    errors.add(new Label(bundle.getString("errorscr")));
                 } else {
                     command.setFile(scriptFile[0]);
                 }
@@ -590,7 +953,7 @@ public class ClientApp extends Application {
                 ArrayList<Label> labWorkErrors = FormValidator.validateLabWork(nameField.getText(), xCoordField.getText(), yCoordField.getText(), minimalPointField.getText(), tunedInWorksField.getText(), difficultyCheckBox.getValue());
                 errors.addAll(labWorkErrors);
                 if (errors.size() == 0) {
-                    LabWork labWorkUpdate = new LabWork(nameField.getText(), new Coordinates(Long.parseLong(xCoordField.getText()), Long.parseLong(yCoordField.getText())), new Date(), !minimalPointField.getText().equals("") ? Long.parseLong(minimalPointField.getText()) : null, !tunedInWorksField.getText().equals("") ? Long.parseLong(minimalPointField.getText()) : null, difficultyCheckBox.getValue(), ClientApp.user.getProfile());
+                    LabWork labWorkUpdate = new LabWork(nameField.getText(), new Coordinates(Long.parseLong(xCoordField.getText()), Long.parseLong(yCoordField.getText())), new Date(), !minimalPointField.getText().equals("") ? Long.parseLong(minimalPointField.getText()) : null, !tunedInWorksField.getText().equals("") ? Long.parseLong(tunedInWorksField.getText()) : null, difficultyCheckBox.getValue(), ClientApp.user.getProfile());
                     labWorkUpdate.setOwner(ClientApp.user);
                     command.setLabWorkNew(labWorkUpdate);
                     command.setUser(ClientApp.user);
@@ -598,16 +961,20 @@ public class ClientApp extends Application {
             }
 
             if (errors.size() == 0) {
-                ServerSignal ServerSignal = ClientApp.getConnection().executeCommandOnServer(command);
+                ServerSignal ServerSignal = ClientApp.getConnection().executeCommandOnServer(command, true);
+                if (ServerSignal == null) {
+                    return;
+                }
                 if (!ServerSignal.isSucces()) {
-                    createErrorStage(ServerSignal.getMessage(), "Закрыть", innerEvent -> {
+                    createErrorStage(ServerSignal.getMessage(), bundle.getString("closebut"), innerEvent -> {
                         ClientApp.getErrorStage().close();
-                    });
+                    }, false);
                 } else {
-                    resultHeader.setText("Команда выполнена успешно");
+                    resultHeader.setText(bundle.getString("commsucc"));
                     resultText.setText(ServerSignal.getMessage());
                     ClientApp.commandStage.setScene(commandResultScene);
                     updateMainPainWithLabWorks();
+                    updateLabWorkTable();
                 }
 
             } else {
@@ -617,6 +984,84 @@ public class ClientApp extends Application {
 
         ClientApp.commandStage.show();
 
+    }
+
+
+    public static void filterTable(String idFilterField, String nameFilterField, String xFilterField, String yFilterField, String minmalFilterField, String tunedFilterField, Difficulty diffFilterField, LocalDate datePicker, String ownerFilterField) {
+        List<LabWork> resultCollection = new ArrayList<>(currentCollectLabWorks);
+
+        if (idFilterField != "") {
+            resultCollection = resultCollection.stream().filter(x -> x.getId().equals(Long.valueOf(idFilterField))).toList();
+        }
+        if (nameFilterField != "") {
+            resultCollection = resultCollection.stream().filter(x -> x.getName().contains(nameFilterField)).toList();
+        }
+        if (xFilterField != "") {
+            resultCollection = resultCollection.stream().filter(x -> x.getCoordinates().getX() == Long.parseLong(xFilterField)).toList();
+        }
+        if (yFilterField != "") {
+            resultCollection = resultCollection.stream().filter(x -> x.getCoordinates().getY() == Long.parseLong(yFilterField)).toList();
+        }
+        if (minmalFilterField != "") {
+            resultCollection = resultCollection.stream().filter(x -> x.getMinimalPoint() == Long.parseLong(minmalFilterField)).toList();
+        }
+        if (tunedFilterField != "") {
+            resultCollection = resultCollection.stream().filter(x -> x.getTunedInWorks() == Long.parseLong(tunedFilterField)).toList();
+        }
+        if (diffFilterField != null) {
+            resultCollection = resultCollection.stream().filter(x -> x.getDifficulty().equals(diffFilterField)).toList();
+        }
+        if (datePicker != null) {
+            resultCollection = resultCollection.stream().filter(x -> x.getCreationDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().equals(datePicker)).toList();
+        }
+        if (ownerFilterField != "") {
+            resultCollection = resultCollection.stream().filter(x -> x.getOwner().getUsername().contains(ownerFilterField)).toList();
+        }
+
+        labWorksTable.getItems().clear();
+        labWorksTable.getItems().addAll(resultCollection);
+
+    }
+
+    public static String getCommandDescription(Command command) {
+        if (command instanceof CommandAdd) {
+            return bundle.getString("commandadd");
+        } if (command instanceof CommandClear) {
+            return bundle.getString("commandclear");
+        } if (command instanceof CommandCountLessAuthor) {
+            return bundle.getString("commandlessauthor");
+        } if (command instanceof CommandExecute) {
+            return bundle.getString("commandexecute");
+        } if (command instanceof CommandHead) {
+            return bundle.getString("commandhead");
+        } if (command instanceof CommandInfo) {
+            return bundle.getString("commandinfo");
+        } if (command instanceof CommandLook) {
+            return bundle.getString("commandlook");
+        } if (command instanceof CommandMaxByName) {
+            return bundle.getString("commandmaxbyname");
+        } if (command instanceof CommandPrintTunedInWorks) {
+            return bundle.getString("commandprinttuned");
+        } if (command instanceof CommandRemoveById) {
+            return bundle.getString("commandremoveid");
+        } if (command instanceof CommandRemoveHead) {
+            return bundle.getString("commandremovehead");
+        } if (command instanceof CommandRemoveLower) {
+            return bundle.getString("commandremovelower");
+        } if (command instanceof CommandUpdate) {
+            return bundle.getString("commandupdate");
+        }
+        return "";
+    }
+
+
+    public static synchronized void updateLabWorkTable() {
+        ObservableList<LabWork> listOfLabworks = labWorksTable.getItems();
+        listOfLabworks.clear();
+        
+        for (LabWork labWork : currentCollectLabWorks) {
+            listOfLabworks.add(labWork);
+        }
     }
 
     public static void main(String[] args) {
@@ -650,5 +1095,52 @@ public class ClientApp extends Application {
     public static Stage getErrorStage() {
         return errorStage;
     }
+
+    public static void setServer(ServerConnection server) {
+        ClientApp.server = server;
+    }
+
+
+    public static String getHost() {
+        return host;
+    }
+
+    public static int getPort() {
+        return port;
+    }
+
+    private static Stage primaryStage;
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    private static Stage authStage;
+    public static Stage getAuthStage() {
+        return authStage;
+    }
+
+    private static Stage mainAppStage;
+    public static Stage getMainAppStage() {
+        return mainAppStage;
+    }
+    public static User getUser() {
+		return user;
+	}
+
+    public static Stage getCommandStage() {
+        return commandStage;
+    }
+
+    public static PriorityBlockingQueue<LabWork> getCurrentCollectLabWorks() {
+        return currentCollectLabWorks;
+    }
+
+    public static void setCurrentCollectLabWorks(PriorityBlockingQueue<LabWork> queue) {
+        currentCollectLabWorks = queue;
+    }
+
+    public static TableView<LabWork> getLabWorksTable() {
+		return labWorksTable;
+	}
     
 }

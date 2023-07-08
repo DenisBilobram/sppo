@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.Scanner;
 
 import lab8.app.signals.ServerSignal;
 import lab8.app.signals.Signal;
+import lab8.app.input.CommandParser;
 import lab8.app.labwork.LabWork;
 
 
@@ -30,83 +32,80 @@ public class CommandExecute extends Command {
 
     public CommandExecute() {
         this.requireFile = true;
-        this.description = "Команда Execute выполняет указанный скрипт.";
     }
 
     private static List<File> filesList = new ArrayList<>();
 
-    public ServerSignal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue) {
+    public ServerSignal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue, ResourceBundle bundle) {
 
-        // ServerSignal serverSignal = new ServerSignal();
+        ServerSignal serverSignal = new ServerSignal();
 
-        // if (listOfCommands.size() == 0) {
+        if (listOfCommands.size() == 0) {
             
-        //     serverSignal.setMessage("В скрипте не найдено валидных команд.");
-        //     serverSignal.setSucces(false);
+            serverSignal.setMessage(bundle.getString("novalid"));
+            serverSignal.setSucces(false);
 
-        // } else {
+        } else {
 
-        //     for (Command command : listOfCommands) {
-        //         serverSignal.setMessage(serverSignal.getMessage() + "\n" + command.execute(priorityBlockingQueue).getMessage());
-        //     }
-        //     serverSignal.setSucces(true);
-        //     serverSignal.setMessage(serverSignal.getMessage() + "\nСкрипт выполнен.");
+            for (Command command : listOfCommands) {
+                serverSignal.setMessage(serverSignal.getMessage() + "\n" + command.execute(priorityBlockingQueue, bundle).getMessage());
+            }
+            serverSignal.setSucces(true);
+            serverSignal.setMessage(serverSignal.getMessage() + "\n" + bundle.getString("scriptcompl"));
 
-        // }
+        }
 
-        // return serverSignal;
-        return null;
+        return serverSignal;
         
     }
 
-    public Signal pull() {
+    public Signal pull(ResourceBundle bundle) {
 
-        // Signal resultSignal = new Signal();
+        Signal resultSignal = new Signal();
 
-        // try {
+        try {
 
-        //     File file = getFile();
+            File file = getFile();
 
-        //     if (filesList.contains(file)) {
-        //         resultSignal.setMessage("В скрипте найдена рекурсия, завершаю выполнение.");
-        //         filesList.clear();
-        //         return resultSignal;
-        //     }
+            if (filesList.contains(file)) {
+                resultSignal.setMessage(bundle.getString("recfound"));
+                filesList.clear();
+                return resultSignal;
+            }
 
-        //     filesList.add(file);
+            filesList.add(file);
 
-        //     Scanner scanner = new Scanner(file);
+            Scanner scanner = new Scanner(file);
 
-        //     while (scanner.hasNextLine()) {
-        //         CommandParser commandParser = new CommandParser();
-        //         Command command = commandParser.recieveCommand(scanner, false, getUser());
+            while (scanner.hasNextLine()) {
+                CommandParser commandParser = new CommandParser();
+                Command command = commandParser.recieveCommand(scanner, false, getUser());
 
-        //         if (command instanceof CommandExecute) {
-        //             Signal result = ((CommandExecute)command).pull();
-        //             resultSignal.setMessage(result.getMessage());
-        //             listOfCommands.addAll(((CommandExecute)command).getListOfCommands());
-        //         } else {
-        //             if (command != null) {
-        //                 listOfCommands.add(command);
-        //             }   
-        //         }
-        //     }
+                if (command instanceof CommandExecute) {
+                    Signal result = ((CommandExecute)command).pull(bundle);
+                    resultSignal.setMessage(result.getMessage());
+                    listOfCommands.addAll(((CommandExecute)command).getListOfCommands());
+                } else {
+                    if (command != null) {
+                        listOfCommands.add(command);
+                    }   
+                }
+            }
 
-        //     scanner.close();
-        //     filesList.remove(file);
+            scanner.close();
+            filesList.remove(file);
 
-        //     resultSignal.setMessage("Скрипт отсканирован.\n" + resultSignal.getMessage());
-        //     resultSignal.setSucces(true);
+            resultSignal.setMessage(bundle.getString("scriptscaned") + "\n" + resultSignal.getMessage());
+            resultSignal.setSucces(true);
 
-        //     filesList.clear();
-        //     return resultSignal;
+            filesList.clear();
+            return resultSignal;
 
-        // } catch (FileNotFoundException exp) {
-        //     resultSignal.setMessage(String.format("Файл %s не найден.", getFile().getPath()));
-        // }
+        } catch (FileNotFoundException exp) {
+            resultSignal.setMessage(bundle.getString("file") + " " + getFile().getPath() + " " + bundle.getString("filenotfound"));
+        }
 
-        // filesList.clear();
-        // return resultSignal;
-        return null;
+        filesList.clear();
+        return resultSignal;
     }
 }

@@ -1,6 +1,7 @@
 package lab8.app.commands;
 
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.concurrent.PriorityBlockingQueue;
 
 import lab8.app.database.DataBase;
@@ -12,21 +13,31 @@ public class CommandRemoveLower extends Command {
     
 
     public CommandRemoveLower() {
-        this.description = "Команда Remove lower удаляет все элементы с полем Tuned in works меньше заданного.";
         this.requireLabWork = true;
     }
 
     @Override
-    public ServerSignal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue) {
+    public ServerSignal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue, ResourceBundle bundle) {
+
+        ServerSignal resultSignal = new ServerSignal();
+
         LabWork userLabWork = labWorkNew;
 
-        List<LabWork> labWorks = priorityBlockingQueue.stream().filter(x -> x.getTunedInWorks() < userLabWork.getTunedInWorks()).toList();
+        List<LabWork> labWorksOwner = priorityBlockingQueue.stream().filter(labWork -> labWork.getOwner().getId() == getUser().getId()).toList();
 
-        for (LabWork labWork : labWorks) {
+        List<LabWork> labWorksToDelete = labWorksOwner.stream().filter(x -> x.getTunedInWorks() < userLabWork.getTunedInWorks()).toList();
+
+        if (labWorksToDelete.size() == 0) {
+            resultSignal.setMessage(bundle.getString("errtuned"));
+            resultSignal.setSucces(false);
+            return resultSignal;
+        }
+
+        for (LabWork labWork : labWorksToDelete) {
 
             boolean deleted = DataBase.deleteLabWorkById(labWork.getId());
             if (!deleted) {
-                ServerSignal resultSignal = new ServerSignal("Не удалось удалить элементы по техническим причинам.");
+                resultSignal.setMessage(bundle.getString("elnotdel"));
                 resultSignal.setSucces(false);
                 return resultSignal;
             }
@@ -34,7 +45,7 @@ public class CommandRemoveLower extends Command {
         
         priorityBlockingQueue.stream().filter(x -> x.getTunedInWorks() < userLabWork.getTunedInWorks()).forEach(x -> priorityBlockingQueue.remove(x));
 
-        ServerSignal resultSignal = new ServerSignal("Элементы с полем tunedInWorks меньше заданного, если таковые были, удалены.");
+        resultSignal.setMessage(bundle.getString("tunedsuc"));
         resultSignal.setSucces(true);
         return resultSignal;
     }

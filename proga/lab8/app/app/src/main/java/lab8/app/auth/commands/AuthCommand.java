@@ -1,5 +1,6 @@
 package lab8.app.auth.commands;
 
+import java.util.ResourceBundle;
 import java.util.concurrent.PriorityBlockingQueue;
 
 import org.apache.commons.lang3.NotImplementedException;
@@ -16,11 +17,11 @@ public abstract class AuthCommand extends Command {
     private User user;
 
     @Override
-    public ServerSignal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue) {
+    public ServerSignal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue, ResourceBundle bundle) {
         throw new NotImplementedException();
     }
 
-    public abstract Signal execute();
+    public abstract Signal execute(ResourceBundle bundle);
 
     public User getUser() {
         return user;

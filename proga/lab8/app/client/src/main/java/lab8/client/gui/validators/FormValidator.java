@@ -6,16 +6,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import lab8.app.labwork.Color;
 import lab8.app.labwork.Difficulty;
+import lab8.client.ClientApp;
 
 public class FormValidator {
     public static ArrayList<Label> validateUser(String username, String password) {
         ArrayList<Label> errors = new ArrayList<>();
         if (username.length() < 4 || username.length() > 30) {
-            Label usernameLenError = new Label("После username должно быть от 4 до 30 символов.");
+            Label usernameLenError = new Label(ClientApp.getBundle().getString("usernameerr"));
             errors.add(usernameLenError);
         }
         if (password.length() < 4 || password.length() > 30) {
-            Label passwordLenError = new Label("После password должно быть от 4 до 30 символов.");
+            Label passwordLenError = new Label(ClientApp.getBundle().getString("passwerr"));
             errors.add(passwordLenError);
         }
         return errors;
@@ -24,19 +25,19 @@ public class FormValidator {
     public static ArrayList<Label> validateProfile(String firstName, String height, Color color) {
         ArrayList<Label> errors = new ArrayList<>();
         if (firstName.equals("")) {
-            errors.add(new Label("Введите значение для поля Name."));
+            errors.add(new Label(ClientApp.getBundle().getString("nameerr")));
         }
         Double heightNum;
         try {
             heightNum = Double.parseDouble(height);
             if (heightNum == null || heightNum <= 0) {
-                errors.add(new Label("Поле height должно быть больше 0."));
+                errors.add(new Label(ClientApp.getBundle().getString("heighterr1")));
             }
         } catch (Exception exp) {
-            errors.add(new Label("Значение поля height должно быть числом."));
+            errors.add(new Label(ClientApp.getBundle().getString("heighterr2")));
         }
         if (color == null) {
-            errors.add(new Label("Выберите значение для поля Eye color"));
+            errors.add(new Label(ClientApp.getBundle().getString("colorerr")));
         }
         return errors;
     }
@@ -53,47 +54,47 @@ public class FormValidator {
         ArrayList<Label> errors = new ArrayList<>();
 
         if (name == null || name.equals("")) {
-            errors.add(new Label("Введите поле Name."));
+            errors.add(new Label(ClientApp.getBundle().getString("nameeerror")));
         }
 
         try {
             if (xCoord == null || xCoord.equals("")) {
-                errors.add(new Label("Введите значение X Coordinate."));
+                errors.add(new Label(ClientApp.getBundle().getString("xcorderr")));
             } else if (Long.parseLong(xCoord) > 689) {
-                errors.add(new Label("Введите корректное значение X Coordinate, оно должно быть меньше 689."));
+                errors.add(new Label(ClientApp.getBundle().getString("xcorderr1")));
             }
         } catch (Exception exp) {
-            errors.add(new Label("Неверный формат X Coordinate."));
+            errors.add(new Label(ClientApp.getBundle().getString("xcorderr2")));
         }
         
         try {
             if (yCoord == null || yCoord.equals("")) {
-                errors.add(new Label("Введите значение Y Coordinate."));
-            } else if (Long.parseLong(yCoord) > 689) {
-                errors.add(new Label("Введите корректное значение Y Coordinate, оно должно быть меньше 475."));
+                errors.add(new Label(ClientApp.getBundle().getString("ycorderr")));
+            } else if (Long.parseLong(yCoord) > 475) {
+                errors.add(new Label(ClientApp.getBundle().getString("ycorderr1")));
             }
         } catch (Exception exp) {
-            errors.add(new Label("Неверный формат Y Coordinate."));
+            errors.add(new Label(ClientApp.getBundle().getString("ycorderr2")));
         }
         
         try {
             if (minimalPoint != null && !minimalPoint.equals("") && Long.parseLong(minimalPoint) <= 0) {
-                errors.add(new Label("Значение Minimal point длжно быть больше 0."));
+                errors.add(new Label(ClientApp.getBundle().getString("minerr")));
             }
         } catch (Exception exp) {
-            errors.add(new Label("Неверный формат Minimal point."));
+            errors.add(new Label(ClientApp.getBundle().getString("minerr1")));
         }
 
         try {
             if (tunedInWorks != null && !tunedInWorks.equals("") && (Long.parseLong(tunedInWorks) < Long.MIN_VALUE || Long.parseLong(tunedInWorks) > Long.MAX_VALUE)) {
-                errors.add(new Label("Введите корректное значение Tuned in works."));
+                errors.add(new Label(ClientApp.getBundle().getString("tunederr")));
             }
         } catch (Exception exp) {
-            errors.add(new Label("Неверный формат Tuned in works."));
+            errors.add(new Label(ClientApp.getBundle().getString("tunederr1")));
         }
 
         if (difficulty == null) {
-            errors.add(new Label("Введите значение Difficulty."));
+            errors.add(new Label(ClientApp.getBundle().getString("diferr")));
         }
 
         return errors;

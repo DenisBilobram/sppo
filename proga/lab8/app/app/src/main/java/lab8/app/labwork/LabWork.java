@@ -55,7 +55,7 @@ public class LabWork implements Comparable<LabWork>, Serializable{
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
-    public java.util.Date getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
     public void setCreationDate(java.util.Date creationDate) {
@@ -109,5 +109,10 @@ public class LabWork implements Comparable<LabWork>, Serializable{
     @Override
     public int compareTo(LabWork arg0) {
         return this.id.compareTo((arg0).getId());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.id.equals(((LabWork)obj).getId()) && this.getCoordinates().getX() == ((LabWork)obj).getCoordinates().getX() && this.getCoordinates().getY() == ((LabWork)obj).getCoordinates().getY();
     }
 }

@@ -1,5 +1,6 @@
 package lab8.app.commands;
 
+import java.util.ResourceBundle;
 import java.util.concurrent.PriorityBlockingQueue;
 
 import lab8.app.auth.User;
@@ -14,10 +15,9 @@ public class CommandAdd extends Command {
 
     public CommandAdd() {
         this.requireLabWork = true;
-        this.description = "Команда Add добавляет новый элемент LabWork в коллекцию.";
     }
 
-    public ServerSignal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue) {
+    public ServerSignal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue, ResourceBundle bundle) {
         
         LabWork labWork = getLabWorkNew();
         User user = getUser();
@@ -28,10 +28,10 @@ public class CommandAdd extends Command {
         LabWork createdLabWork = DataBase.createLabWork(labWork, user);
         if (createdLabWork != null) {
             priorityBlockingQueue.add(labWork);
-            resultSignal.setMessage("Элемент был добавлен в коллекцию.");
+            resultSignal.setMessage(bundle.getString("addsuc"));
             resultSignal.setSucces(true);
         } else {
-            resultSignal.setMessage("Элемент не был добавлен в коллекцию по техническим причинам.");
+            resultSignal.setMessage(bundle.getString("addnotsuc"));
             resultSignal.setSucces(false);
         }
         

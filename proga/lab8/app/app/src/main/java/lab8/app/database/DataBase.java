@@ -1,6 +1,5 @@
 package lab8.app.database;
 
-import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -9,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Scanner;
+import java.sql.Timestamp;
 
 import lab8.app.auth.User;
 import lab8.app.labwork.Color;
@@ -29,7 +28,7 @@ public class DataBase {
 
     static {
         // String url = "jdbc:postgresql://localhost:5432/studs";
-        String url = "jdbc:postgresql://localhost:5432/app";
+        String url = "jdbc:postgresql://localhost:5433/app";
         try {
 
             // Scanner scanner = new Scanner(new File("/home/studs/s367893/.pgpass"));
@@ -39,7 +38,7 @@ public class DataBase {
 
             // DataBase.dataBasConnection = DriverManager.getConnection(url, data[3], data[4]);
 
-            DataBase.dataBasConnection = DriverManager.getConnection(url, "postgres", "postgres");
+            DataBase.dataBasConnection = DriverManager.getConnection(url, "postgres", "20045");
         } catch (Exception e) {
             System.out.println("ERROR: Ошбика при подключении к базе данных.");
             e.printStackTrace();
@@ -55,7 +54,7 @@ public class DataBase {
             statement.setString(1, labWork.getName());
             statement.setLong(2, labWork.getCoordinates().getX());
             statement.setLong(3, labWork.getCoordinates().getY());
-            statement.setDate(4, new java.sql.Date(labWork.getCreationDate().getTime()));
+            statement.setTimestamp(4, new Timestamp(labWork.getCreationDate().getTime()));
             statement.setLong(5, labWork.getMinimalPoint());
             statement.setLong(6, labWork.getTunedInWorks());
             statement.setString(7, labWork.getDifficulty().toString());

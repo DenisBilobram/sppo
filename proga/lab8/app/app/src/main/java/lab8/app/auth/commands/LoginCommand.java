@@ -1,7 +1,7 @@
 package lab8.app.auth.commands;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.ResourceBundle;
 
 import lab8.app.auth.User;
 import lab8.app.database.DataBase;
@@ -11,7 +11,7 @@ import lab8.app.signals.Signal;
 public class LoginCommand extends AuthCommand{
 
     @Override
-    public Signal execute() {
+    public Signal execute(ResourceBundle bundle) {
         
         Signal resultSignal = new Signal();
 
@@ -40,20 +40,21 @@ public class LoginCommand extends AuthCommand{
                     getUser().setProfile(profile);
 
                     resultSignal.setSucces(true);
-                    resultSignal.setMessage("Авторизация выполнена успешно.");
+                    resultSignal.setMessage(bundle.getString("authsuc"));
                 } else {
                     resultSignal.setSucces(false);
-                    resultSignal.setMessage("Неверный password.");
+                    resultSignal.setMessage(bundle.getString("paser"));
                 }
 
             } else {
                 resultSignal.setSucces(false);
-                resultSignal.setMessage("Пользователя с таким username не существует.");
+                resultSignal.setMessage(bundle.getString("usnotex"));
             }
 
-        } catch (NoSuchAlgorithmException exp) {
+        } catch (Exception exp) {
+            exp.printStackTrace();
             resultSignal.setSucces(false);
-            resultSignal.setMessage("Ошибка авторизаци.");
+            resultSignal.setMessage(bundle.getString("autheror"));
         }
 
         return resultSignal;

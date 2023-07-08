@@ -1,5 +1,2 @@
-add
-yes
-add
-yes
+show
 execute_script b

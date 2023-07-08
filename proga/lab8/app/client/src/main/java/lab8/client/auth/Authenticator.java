@@ -1,14 +1,9 @@
 package lab8.client.auth;
 
-import java.util.Scanner;
-
 import lab8.app.auth.User;
 import lab8.app.auth.commands.AuthCommand;
-import lab8.app.auth.commands.LoginCommand;
-import lab8.app.auth.commands.RegistrationCommand;
 import lab8.app.signals.ClientSignal;
 import lab8.app.signals.ServerSignal;
-import lab8.app.signals.SignalManager;
 import lab8.client.network.Sender;
 import lab8.client.network.ServerConnection;
 import lab8.client.ClientApp;
@@ -35,7 +30,7 @@ public class Authenticator {
             if (!responseSignal.isSucces()) {
                 ClientApp.createErrorStage(responseSignal.getMessage(), "Ок", event -> {
                     ClientApp.getErrorStage().close();
-                });
+                }, false);
                 return null;
             } else if (responseSignal.isSucces()) {
                 this.authenticated = true;

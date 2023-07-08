@@ -1,11 +1,11 @@
 package lab8.app.commands;
 
+import java.util.ResourceBundle;
 import java.util.concurrent.PriorityBlockingQueue;
 
 import lab8.app.labwork.LabWork;
 import lab8.app.labwork.comparators.LabwWorkComparatorByName;
 import lab8.app.signals.ServerSignal;
-import lab8.app.signals.Signal;
 
 /** Класс команды реализующей отображение элемента с максимальным именем.
  * 
@@ -13,15 +13,16 @@ import lab8.app.signals.Signal;
 public class CommandMaxByName extends Command {
 
     public CommandMaxByName() {
-        this.description = "Команда Max by name отображает элемент с максимальным полем name.";
     }
 
     @Override
-    public ServerSignal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue) {
+    public ServerSignal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue, ResourceBundle bundle) {
         ServerSignal resultSignal = new ServerSignal();
+        System.out.println(bundle.getLocale().getLanguage());
 
         if (priorityBlockingQueue.size() == 0) {
-            resultSignal.setMessage("Коллекция пуста.");
+            
+            resultSignal.setMessage(bundle.getString("colempty"));
             resultSignal.setSucces(false);
             return resultSignal;
         } else {

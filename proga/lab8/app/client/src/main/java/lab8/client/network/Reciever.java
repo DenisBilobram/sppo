@@ -7,7 +7,6 @@ import java.nio.channels.SocketChannel;
 import org.apache.commons.lang3.SerializationUtils;
 
 import lab8.app.signals.ServerSignal;
-import lab8.client.ClientApp;
 
 public class Reciever {
 
@@ -63,7 +62,6 @@ public class Reciever {
             
         } catch (IOException e) {
             System.out.println("Ошибка при получении сигнала от сервера.");
-            ClientApp.getConnection().setConnected(false);
             return null;
         } 
         

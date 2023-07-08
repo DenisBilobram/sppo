@@ -27,5 +27,5 @@ CREATE TABLE APP_LABWORKS(
 	tuned_in_works bigint,
 	difficulty difficulty NOT NULL,
 	user_id integer NOT NULL,
-	FOREIGN KEY (user_id) REFERENCES "APP_USERS"(id)
+	FOREIGN KEY (user_id) REFERENCES APP_USERS(id)
 );

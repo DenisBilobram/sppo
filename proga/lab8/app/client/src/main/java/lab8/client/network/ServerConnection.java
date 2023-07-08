@@ -57,7 +57,7 @@ public class ServerConnection {
             ClientApp.createErrorStage(errLabel, errButton, event -> {
                 ClientApp.getErrorStage().close();
                 ClientApp.setServer(new ServerConnection(host, port));
-            });
+            }, true);
             ClientApp.getErrorStage().setOnCloseRequest(event -> {
                 ClientApp.getPrimaryStage().close();
                 ClientApp.getAuthStage().close();
@@ -65,6 +65,8 @@ public class ServerConnection {
             isConnected = false;
         }
     }
+
+    
     
     public static SocketChannel getChannel() {
         return channel;
@@ -96,14 +98,18 @@ public class ServerConnection {
         } 
     }
 
-    public ServerSignal executeCommandOnServer(Command command) {
+    public ServerSignal executeCommandOnServer(Command command, boolean withError) {
         ServerConnection.sender.sendClientSignal(new ClientSignal(command));
+        command.setUser(ClientApp.getUser());
+        
         ServerSignal serverSignal = ServerConnection.receiver.getServerSignal();
         if (serverSignal != null) {
             return serverSignal;
         } else {
-            ClientApp.setServer(new ServerConnection(host, port));
-            return executeCommandOnServer(command);
+            if (withError) {
+                ClientApp.setServer(new ServerConnection(host, port));
+            }
+            return null;
         } 
     }
 

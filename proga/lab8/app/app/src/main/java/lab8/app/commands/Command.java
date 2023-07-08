@@ -2,14 +2,12 @@ package lab8.app.commands;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.ResourceBundle;
 import java.util.concurrent.PriorityBlockingQueue;
 
 import lab8.app.auth.User;
 import lab8.app.labwork.LabWork;
-import lab8.app.labwork.Person;
 import lab8.app.signals.ServerSignal;
-import lab8.app.signals.Signal;
-
 
 /** Интерфейс для реализации пользовательских команд в виде классов.
  * 
@@ -50,7 +48,8 @@ public abstract class Command implements Serializable {
         this.file = file;
     }
 
-    public abstract ServerSignal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue);
+    public abstract ServerSignal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue, ResourceBundle bundle);
+    
 
     public boolean isRequireLabWork() {
         return requireLabWork;

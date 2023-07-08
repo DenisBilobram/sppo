@@ -24,7 +24,7 @@ public class DataSync {
 
                 String name = result.getString("lab_name");
                 Coordinates coordinates = new Coordinates(result.getLong("x_coord"), result.getLong("y_coord"));
-                Date creationDate = result.getDate("creation_date");
+                Date creationDate = new Date(result.getTimestamp("creation_date").getTime());
                 long minimalPoint = result.getLong("minimal_point");
                 long tunedInWorks = result.getLong("tuned_in_works");
                 Difficulty difficulty = Difficulty.valueOf(result.getString("difficulty"));

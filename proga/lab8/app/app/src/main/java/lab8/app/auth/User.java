@@ -2,6 +2,7 @@ package lab8.app.auth;
 
 import java.io.Serializable;
 
+import lab8.app.labwork.Language;
 import lab8.app.labwork.Person;
 
 public class User implements Serializable{
@@ -13,6 +14,16 @@ public class User implements Serializable{
     private String password;
 
     private Person profile;
+
+    private Language language;
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
 
     public User(String username, String password) {
         this.username = username;
@@ -55,6 +66,11 @@ public class User implements Serializable{
 
     public void setProfile(Person profile) {
         this.profile = profile;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return ((User)obj).getId() == this.getId();
     }
 
 }

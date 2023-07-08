@@ -1,12 +1,12 @@
 package lab8.app.commands;
 
 import java.util.Comparator;
+import java.util.ResourceBundle;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.stream.Collectors;
 
 import lab8.app.labwork.LabWork;
 import lab8.app.signals.ServerSignal;
-import lab8.app.signals.Signal;
 
 /** Класс команды реализующей отображение поля TunedInWorks у всех элементов коллекции в порядке убывания.
  * 
@@ -14,15 +14,14 @@ import lab8.app.signals.Signal;
 public class CommandPrintTunedInWorks extends Command {
 
     public CommandPrintTunedInWorks() {
-        this.description = "Команда Show TunedInWorks отображает поля TunedInWorks у всех элементов в порядке убывания.";
     }
 
     @Override
-    public ServerSignal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue) {
+    public ServerSignal execute( PriorityBlockingQueue<LabWork> priorityBlockingQueue, ResourceBundle bundle) {
         ServerSignal resultSignal = new ServerSignal();
 
         if (priorityBlockingQueue.size() == 0) {
-            resultSignal.setMessage("Коллекция пуста.");
+            resultSignal.setMessage(bundle.getString("colempty"));
             resultSignal.setSucces(true);
             return resultSignal;
         }

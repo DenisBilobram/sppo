@@ -1,16 +1,10 @@
 package lab8.client.gui;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.PriorityBlockingQueue;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -28,12 +22,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import lab8.app.commands.Command;
 import lab8.app.commands.CommandAdd;
 import lab8.app.commands.CommandClear;
 import lab8.app.commands.CommandCountLessAuthor;
 import lab8.app.commands.CommandExecute;
 import lab8.app.commands.CommandHead;
 import lab8.app.commands.CommandInfo;
+import lab8.app.commands.CommandLook;
 import lab8.app.commands.CommandMaxByName;
 import lab8.app.commands.CommandPrintTunedInWorks;
 import lab8.app.commands.CommandRemoveById;
@@ -64,7 +60,7 @@ public class GuiFabric {
     }
 
     public static Button generateBackButton() {
-        Button backButton = new Button("Назад");
+        Button backButton = new Button(ClientApp.getBundle().getString("backbut"));
         backButton.getStyleClass().clear();
         backButton.getStyleClass().add("auth-button");
         backButton.setPrefSize(350, 30);
@@ -97,16 +93,16 @@ public class GuiFabric {
 
     public static HBox generateTopMenu(Scene vizual, Scene collect, Scene commands, Scene profile) {
 
-        Button vizualButton = new Button("Визуализация");
+        Button vizualButton = new Button(ClientApp.getBundle().getString("vizaulbut"));
         HBox.setMargin(vizualButton, new Insets(20, 20, 20, 0));
         vizualButton.getStyleClass().add("menu-button");
-        Button collectioButton = new Button("Коллекция");
+        Button collectioButton = new Button(ClientApp.getBundle().getString("collbut"));
         HBox.setMargin(collectioButton, new Insets(20, 20, 20, 0));
         collectioButton.getStyleClass().add("menu-button");
-        Button commandsButton = new Button("Команды");
+        Button commandsButton = new Button(ClientApp.getBundle().getString("commbut"));
         HBox.setMargin(commandsButton, new Insets(20, 20, 20, 0));
         commandsButton.getStyleClass().add("menu-button");
-        Button profileButton = new Button("Профиль");
+        Button profileButton = new Button(ClientApp.getBundle().getString("profbut"));
         HBox.setMargin(profileButton, new Insets(20, 0, 20, 0));
         profileButton.getStyleClass().add("menu-button");
         
@@ -143,11 +139,11 @@ public class GuiFabric {
 
         Canvas labWorkIcon = new Canvas(64, 64);
         labWorkIcon.setId(labWork.getId().toString());
-        labWorkIcon.setLayoutX(labWork.getCoordinates().getX());
-        labWorkIcon.setLayoutY(labWork.getCoordinates().getY());
+        labWorkIcon.setTranslateX(labWork.getCoordinates().getX());
+        labWorkIcon.setTranslateY(labWork.getCoordinates().getY());
         GraphicsContext gc = labWorkIcon.getGraphicsContext2D();
 
-        gc.setStroke(Color.BLACK);
+        gc.setStroke(UniqueColorGenerator.generateColor(Long.valueOf(labWork.getOwner().getId()).toString()));
         gc.setFill(Color.WHITE);
 
         gc.fillRect(0, 0, 64, 64);
@@ -170,19 +166,35 @@ public class GuiFabric {
 
         ContextMenu contextMenu = new ContextMenu();
 
-        MenuItem interactMenuLook = new MenuItem("Посмотреть");
+        MenuItem interactMenuLook = new MenuItem(ClientApp.getBundle().getString("menulook"));
         interactMenuLook.setOnAction(event -> {
-            System.out.println("Вы выбрали 'Взаимодействовать с LabWork'");
+            Command command = new CommandLook();
+            command.setUser(ClientApp.getUser());
+            command.setId(Long.valueOf(labWork.getId()).toString());
+            ClientApp.createCommandStage(command, true);
         });
 
-        MenuItem interactMenuEdit = new MenuItem("Редактировать");
+        MenuItem interactMenuEdit = new MenuItem(ClientApp.getBundle().getString("menuedit"));
+        if (!labWork.getOwner().equals(ClientApp.getUser())) {
+            interactMenuEdit.setDisable(true);
+        }
         interactMenuEdit.setOnAction(event -> {
-            System.out.println("Вы выбрали 'Редактировать LabWork'");
+            Command command = new CommandUpdate();
+            command.setUser(ClientApp.getUser());
+            command.setId(Long.valueOf(labWork.getId()).toString());
+            command.setLabWorkNew(labWork);
+            ClientApp.createCommandStage(command, true);
         });
 
-        MenuItem interactMenuDelete = new MenuItem("Удалить");
+        MenuItem interactMenuDelete = new MenuItem(ClientApp.getBundle().getString("menudelete"));
+        if (!labWork.getOwner().equals(ClientApp.getUser())) {
+            interactMenuDelete.setDisable(true);
+        }
         interactMenuDelete.setOnAction(event -> {
-            System.out.println("Вы выбрали 'Удалить LabWork'");
+            Command command = new CommandRemoveById();
+            command.setUser(ClientApp.getUser());
+            command.setId(Long.valueOf(labWork.getId()).toString());
+            ClientApp.createCommandStage(command, true);
         });
 
         contextMenu.getItems().addAll(interactMenuLook, interactMenuEdit, interactMenuDelete);
@@ -213,84 +225,84 @@ public class GuiFabric {
         addButton.getStyleClass().add("command-button");
 
         addButton.setOnAction(event -> {
-            ClientApp.createCommandStage(new CommandAdd());
+            ClientApp.createCommandStage(new CommandAdd(), false);
         });
 
         Button updateButton = new Button("Update");
         updateButton.getStyleClass().add("command-button");
 
         updateButton.setOnAction(event -> {
-            ClientApp.createCommandStage(new CommandUpdate());
+            ClientApp.createCommandStage(new CommandUpdate(), false);
         });
 
         Button clearButton = new Button("Clear");
         clearButton.getStyleClass().add("command-button");
 
         clearButton.setOnAction(event -> {
-            ClientApp.createCommandStage(new CommandClear());
+            ClientApp.createCommandStage(new CommandClear(), false);
         });
 
         Button countLessAuthorButton = new Button("Count less auhtor");
         countLessAuthorButton.getStyleClass().add("command-button");
 
         countLessAuthorButton.setOnAction(event -> {
-            ClientApp.createCommandStage(new CommandCountLessAuthor());
+            ClientApp.createCommandStage(new CommandCountLessAuthor(), false);
         });
 
         Button executeScriptButton = new Button("Execute script");
         executeScriptButton.getStyleClass().add("command-button");
 
         executeScriptButton.setOnAction(event -> {
-            ClientApp.createCommandStage(new CommandExecute());
+            ClientApp.createCommandStage(new CommandExecute(), false);
         });
 
         Button headButton = new Button("Head");
         headButton.getStyleClass().add("command-button");
 
         headButton.setOnAction(event -> {
-            ClientApp.createCommandStage(new CommandHead());
+            ClientApp.createCommandStage(new CommandHead(), false);
         });
 
         Button infoButton = new Button("Info");
         infoButton.getStyleClass().add("command-button");
 
         infoButton.setOnAction(event -> {
-            ClientApp.createCommandStage(new CommandInfo());
+            ClientApp.createCommandStage(new CommandInfo(), false);
         });
 
         Button maxByNameButton = new Button("Max by name");
         maxByNameButton.getStyleClass().add("command-button");
 
         maxByNameButton.setOnAction(event -> {
-            ClientApp.createCommandStage(new CommandMaxByName());
+            ClientApp.createCommandStage(new CommandMaxByName(), false);
         });
 
         Button tunedInWorksButton = new Button("Show TunedInWorks");
         tunedInWorksButton.getStyleClass().add("command-button");
 
         tunedInWorksButton.setOnAction(event -> {
-            ClientApp.createCommandStage(new CommandPrintTunedInWorks());
+            ClientApp.createCommandStage(new CommandPrintTunedInWorks(), false);
         });
 
         Button removeById = new Button("Remove by ID");
         removeById.getStyleClass().add("command-button");
 
         removeById.setOnAction(event -> {
-            ClientApp.createCommandStage(new CommandRemoveById());
+            ClientApp.createCommandStage(new CommandRemoveById(), false);
         });
 
         Button removeHead = new Button("Remove head");
         removeHead.getStyleClass().add("command-button");
 
         removeHead.setOnAction(event -> {
-            ClientApp.createCommandStage(new CommandRemoveHead());
+            ClientApp.createCommandStage(new CommandRemoveHead(), false);
         });
 
         Button removeLower = new Button("Remove lower");
         removeLower.getStyleClass().add("command-button");
 
         removeLower.setOnAction(event -> {
-            ClientApp.createCommandStage(new CommandRemoveLower());
+            ClientApp.createCommandStage(new CommandRemoveLower(), false);
         });
 
         buttons.add(addButton);
