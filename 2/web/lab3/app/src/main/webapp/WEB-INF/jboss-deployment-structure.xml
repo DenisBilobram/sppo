@@ -1,0 +1,7 @@
+<jboss-deployment-structure>
+    <deployment>
+        <dependencies>
+            <module name="jakarta.faces"/>
+        </dependencies>
+    </deployment>
+</jboss-deployment-structure>
