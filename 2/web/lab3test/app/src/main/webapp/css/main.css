@@ -141,7 +141,7 @@ tr > td {
 #coordinates {
     background-color: rgba(226, 226, 226, 0.381);
     padding: 10px;
-    border-radius: 3.5px;
+    border-radius: 3.45px;
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.35);
 }
 #ajax-result {

@@ -1,0 +1,98 @@
+<table class="main">
+  <tr>
+      <td class="coordinates-container">
+          <div id="canvasContainer">
+              <canvas #coordinates  id="coordinates" width="300px" height="300px"></canvas>
+              <canvas #region id="region" width="300px" height="300px"></canvas>
+              <canvas #dots (click)="createRequestByClick($event)" id="dots" width="300px" height="300px"></canvas>
+          </div>
+      </td>
+  </tr>
+  <tr>
+      <td class="form-container">
+        <form [formGroup]="requestForm" (ngSubmit)="onCreateRequest()" class="request-form">
+              <table class="dataform">
+                  <tr>
+                      <td class="td-form">
+                        <div class="p-field">
+                          <label for="x">X Coordinate</label>
+                          <p-selectButton [options]="xrOptions" formControlName="x" class="buttons-container"></p-selectButton>
+                        </div>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td class="td-form">
+                        <div class="p-field">
+                          <label for="y">Y Coordinate</label>
+                          <input id="y" pInputText type="number" formControlName="y" class="text-input" placeholder="{-5...3}"/>
+                        </div>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td class="td-form">
+                        <div class="p-field" #radius>
+                          <label for="r">Radius</label>
+                          <p-selectButton [options]="xrOptions" formControlName="r" (onChange)="drowRegion($event)" class="buttons-container"></p-selectButton>
+                        </div>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td class="td-form"> 
+                        <button type="submit" pButton label="Submit" [disabled]="!requestForm.valid" class="main-button">Create Request</button>
+                      </td>
+                  </tr>
+              </table>
+            </form>
+          <div class="form-errors">
+            <div *ngIf="errorMessages" class="p-error">{{ errorMessages }}</div>
+          </div>
+          <div id="ajax-result"></div>
+      </td>
+  </tr>
+  <tr>
+      <td id="result-container">
+        <mat-table [dataSource]="requestsHistoryData" class="mat-elevation-z8">
+          <ng-container matColumnDef="x">
+            <mat-header-cell *matHeaderCellDef> X </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.x | number:'1.5-5'}} </mat-cell>
+          </ng-container>
+        
+          <ng-container matColumnDef="y">
+            <mat-header-cell *matHeaderCellDef> Y </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.y | number:'1.5-5'}} </mat-cell>
+          </ng-container>
+        
+          <ng-container matColumnDef="r">
+            <mat-header-cell *matHeaderCellDef> R </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.r | number:'1.5-5'}} </mat-cell>
+          </ng-container>
+        
+          <ng-container matColumnDef="result">
+            <mat-header-cell *matHeaderCellDef> Result </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.result}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="owner">
+            <mat-header-cell *matHeaderCellDef> Owner </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.owner.username}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="timestamp">
+            <mat-header-cell *matHeaderCellDef> Time </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.timestamp | date:'dd.MM.yyyy HH:mm'}} </mat-cell>
+          </ng-container>
+        
+          <mat-header-row *matHeaderRowDef="requestFields"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: requestFields;"></mat-row>
+        </mat-table>
+        <button (click)="clearRequestsHistory()" class="main-button clear-button">Clear My Requests</button>
+      </td>
+  </tr>
+  <tr>
+      <td class="footer">
+        <form method="GET" action="/auth/logout">
+          <input type="submit" class="main-button" value="Logout"/>
+        </form>
+      </td>
+  </tr>
+</table>

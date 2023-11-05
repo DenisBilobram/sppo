@@ -1,0 +1,197 @@
+
+
+.main {
+    margin: 0 auto;
+    width: 70%;
+
+    input {
+        background-color: white;
+    }
+
+    #canvasContainer {
+        position: relative;
+        height: 320px;
+        width: 100%;
+    }
+
+    .coordinates-container {
+        text-align: center;
+        display: block;
+        margin-top: 40px;
+
+        #coordinates {
+            margin: 0 auto;
+            background-color: rgba(226, 226, 226, 0.381);
+            padding: 10px;
+            border-radius: 3.45px;
+            box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.35);
+        }
+
+        #coordinates, #region, #dots {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    tr > td {
+        border: 1px solid white;
+        border-radius: 3px;
+        padding: 10px; 
+        text-align: center;
+        background-color: rgba(226, 226, 226, 0.381);
+        background-clip: padding-box;
+        box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.35);
+    
+    }   
+
+    .form-container {
+        text-align: center;
+        display: block;
+        margin: 40px 0 auto auto;
+
+        .request-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dataform {
+            width: 90%;
+            margin: 0 auto;
+            max-width: 430px;
+        }
+
+        .td-form {
+            padding: 10px 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+
+            .p-field {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                
+                .buttons-container {
+                    width: 95%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: row;
+
+                    div {
+                        width: 100%;
+
+                        .p-button {
+                            width:15%;
+                            max-width: 30px;
+                            margin: 0 5px;
+                            padding: 2px 0;
+                            border: 1px;
+                            background-color: rgba(226, 226, 226, 0.381);
+                            border-radius: 1px;
+                            box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.35);
+                            transition: 0.1s;
+
+                            &:hover {
+                                background-color: rgb(146, 146, 146);
+                            }
+
+                            &:active {
+                                background-color: rgb(100, 100, 100);
+                            }
+                        }
+                        
+                        .p-highlight {
+                            background-color: rgb(146, 146, 146);
+                        }
+                    }
+                }
+
+                .text-input {
+                    text-align: center;
+                    font-size: 16px;
+                    line-height: 22px;
+                    width: 85%;
+                }
+            }
+        }
+
+        .form-errors {
+            display: flex;
+            justify-content: center;
+            .p-error {
+                margin-top: 15px;
+                margin-bottom: 5px;
+                width: 50%;
+                padding: 10px;
+                background-color: rgba(255, 0, 30, 0.332);
+                border-radius: 5px;
+                border-color: red;
+                box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.35);
+            }
+            
+        }
+    }
+
+    
+    #result-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 40px;
+        padding: 10px;
+
+        .clear-button {
+            margin-top: 15px;
+        }
+    }
+
+    
+    .main-button {
+        margin: 5px 0;
+        padding: 10px;
+        width: 30%;
+        background-color: rgb(255, 255, 255);
+        border-radius: 3px;
+        border: none;
+        box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.35);
+        transition: 0.1s;
+        font-weight: bold;
+
+        &:hover {
+            background-color: rgb(146, 146, 146);
+        }
+
+        &:active {
+            background-color: rgb(100, 100, 100);
+        }
+
+    }
+
+    .footer {
+        display: flex;
+        margin-top: 35px;
+        justify-content: center;
+
+        form {
+            width: 100%;
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
