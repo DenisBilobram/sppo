@@ -1,0 +1,114 @@
+.menu-button {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 0%, rgba(4, 0, 255, 0.6) 0%, rgba(2, 139, 251, 0.774) 100%);
+    -fx-text-fill: white;
+    -fx-border-radius: 6px;
+    -fx-padding: 6px 8px;
+    -fx-font-family: Arial, Helvetica, sans-serif;
+    -fx-font-size: 16;
+    -fx-alignment: center;
+    -fx-transition: effect 1s;
+    -fx-min-width: 175px;
+    -fx-min-height: 40px;
+}
+
+.menu-button:hover {
+    -fx-effect: dropshadow( gaussian , rgba(94, 0, 234, 0.703) , 10,0,0,1 );
+}
+
+.menu-container {
+    -fx-background-color: rgb(238, 237, 237);
+    -fx-padding: 5px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
+}
+
+.command-button {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 0%, rgba(255, 25, 0, 0.774) 0%, rgba(251, 77, 2, 0.774) 100%);
+    -fx-text-fill: white;
+    -fx-border-radius: 6px;
+    -fx-padding: 6px 8px;
+    -fx-font-family: Arial, Helvetica, sans-serif;
+    -fx-font-size: 16;
+    -fx-alignment: center;
+    -fx-transition: effect 1s;
+    -fx-min-width: 175px;
+    -fx-min-height: 40px;
+}
+
+.command-button:hover {
+    -fx-effect: dropshadow( gaussian , rgba(234, 82, 0, 0.951) , 10,0,0,1 );
+}
+
+.command-header-label {
+    -fx-font-size: 18px;
+    -fx-font-family: Arial, Helvetica, sans-serif;
+    -fx-font-weight: 700;
+
+}
+
+.command-descr-label {
+    -fx-font-size: 16px;
+    -fx-font-family: Arial, Helvetica, sans-serif;
+    -fx-font-weight: 500;
+}
+
+.command-field {
+    -fx-font-family: Arial, Helvetica, sans-serif;
+    -fx-font-size: 16;
+    -fx-padding: 7px;
+}
+
+.errors-box Label {
+    -fx-font-family: Arial, Helvetica, sans-serif;
+    -fx-font-size: 14;
+    -fx-text-fill: red;
+}
+
+.command-tablebutton {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 0%, rgba(255, 25, 0, 0.774) 0%, rgba(251, 77, 2, 0.774) 100%);
+    -fx-text-fill: white;
+    -fx-border-radius: 6px;
+    -fx-padding: 6px 8px;
+    -fx-font-family: Arial, Helvetica, sans-serif;
+    -fx-font-size: 12;
+    -fx-alignment: center;
+    -fx-transition: effect 1s;
+    -fx-min-width: 100px;
+    -fx-min-height: 20px;
+}
+
+.button-disable {
+
+}
+
+.profile-info-container {
+    -fx-background-color: rgb(238, 237, 237);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.621), 10, 0, 0, 0);
+    -fx-border-width: 3px;
+    -fx-border-radius: 3px;
+    -fx-max-width: 500px;
+    -fx-max-height: 500px;
+    -fx-padding: 30px;
+}
+
+.profile-header {
+    -fx-font-size: 18px;
+    -fx-font-family: Arial, Helvetica, sans-serif;
+    -fx-font-weight: 600;
+    -fx-background-color: rgb(20, 20, 20);
+    -fx-border-radius: 4px;
+    -fx-text-fill: white;
+    -fx-max-height: 35px;
+    -fx-max-width: 175px;
+    -fx-padding: 8px;
+    -fx-border-width: 1px;
+}
+
+.profile-field {
+    -fx-font-family: Arial, Helvetica, sans-serif;
+    -fx-font-size: 18px;
+    -fx-font-weight: 600;
+    -fx-background-color: white;
+    -fx-border-radius: 4px;
+    -fx-min-width: 500px;
+    
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab2</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <table class="main">
+        <tr>
+            <td>
+                <table class="header">
+                    <tr>
+                        <td><span>P3219 Билобрам Денис Андреевич</span></td>
+                    </tr>
+                    <tr>
+                        <td><span>Вариант №29782</span></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="coordinates-container">
+                <div id="canvasContainer">
+                    <canvas id="coordinates" width="300px" height="300px"></canvas>
+                    <canvas id="region" width="300px" height="300px"></canvas>
+                    <canvas id="dots" width="300px" height="300px"></canvas>
+                    <script src="js/coordinates.js"></script>
+                    <script src="js/form.js"></script>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-container">
+                <form action="" method="get">
+                    <table class="dataform">
+                        <tr>
+                            <td class="td-form">
+                                <label for="xcoord">X: </label>
+                                <input type="text" name="xcoord" placeholder="{-3...3}" required="true" maxlength="17" id="xInput"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-form">
+                                <label for="ycoord" class="ylabel">Y: </label>
+                                <select name="ycoord" required="true" id="yInput">
+                                    <option value="-2">-2</option>
+                                    <option value="-1.5">-1.5</option>
+                                    <option value="-1">-1</option>
+                                    <option value="-0.5">-0.5</option>
+                                    <option value="0">0</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="1">1</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="2">2</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="r-buttons-td">
+                                <label for="rval">R: </label>
+                                <input type="button" value="1" onclick="highlightButton(1)" />
+                                <input type="button" value="1.5" onclick="highlightButton(1.5)" />
+                                <input type="button" value="2" onclick="highlightButton(2)" />
+                                <input type="button" value="2.5" onclick="highlightButton(2.5)" />
+                                <input type="button" value="3" onclick="highlightButton(3)" />
+                                <input type="hidden" name="rval" id="rval"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class=""><input type="submit" id="submitBut"/></td>
+                        </tr>
+                    </table>
+                </form>
+                <div id="form-errors">
+                    <div id="xErrors"></div>
+                </div>
+                <div id="global-errors" class="hiddenerror">Не удалось отправить запрос, неверные значения X, Y, R.</div>
+                <div id="ajax-result"></div>
+                <script src="js/valid.js"></script>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-container">
+                <form action="results" method="get">
+                    <input type="submit" class="results-button" value="Results"></submit>
+                </form>
+
+            </td>
+        </tr>
+        
+    </table>
+    
+</body>
+</html>
