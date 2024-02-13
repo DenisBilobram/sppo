@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "unistd.h": "c",
+        "mman.h": "c",
+        "2.h": "c",
+        "inttypes.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "enabled",
+    "C_Cpp.default.compilerPath": "/usr/bin/gcc-11"
+}
