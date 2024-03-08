@@ -4,7 +4,7 @@ import { MainService } from '../main.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
 import { HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, catchError, throwError } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { RouteConfigLoadEnd, Router } from '@angular/router';
 
@@ -78,15 +78,32 @@ export class MainRequestsComponent implements AfterViewInit, OnInit {
 
     this.drowCoordinates();
 
-    
-    
-
   }
 
 
   ngOnInit(): void {
 
-    this.authService.status().subscribe(response => {
+    this.authService.status().pipe(
+      catchError((error) => {
+        
+        if (error.status == 401) {
+          // if (localStorage['refresh_token']) {
+
+          // }
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('refresh_token');
+          console.log(error)
+          if (error.error) {
+            window.location = error.error.redirectUrl;
+          } else {
+            this.router.navigateByUrl("/main")
+          }
+
+        }
+
+        return throwError(() => new Error('Ошибка при выполнении запроса статуса'));
+      })
+    ).subscribe(response => {
 
       this.mainService.getRequestsHistory().subscribe(data => {
         this.requestsHistoryData.data = data.reverse();
@@ -165,6 +182,7 @@ export class MainRequestsComponent implements AfterViewInit, OnInit {
   drowCoordinates() {
 
     const canvas = this.coordinates.nativeElement as HTMLCanvasElement;
+
     this.coordinatesCtx.beginPath();
 
     this.coordinatesCtx.moveTo(0, canvas.height / 2);

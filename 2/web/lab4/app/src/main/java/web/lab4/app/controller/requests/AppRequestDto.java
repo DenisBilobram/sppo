@@ -30,7 +30,7 @@ public class AppRequestDto {
     private Double r;
     private Boolean result;
     private Timestamp timestamp;
-    private AppUserDto owner;
+    private String owner;
 
 
     public AppRequestDto(AppRequest appRequest) {
@@ -39,7 +39,7 @@ public class AppRequestDto {
         this.r = appRequest.getR();
         this.timestamp = appRequest.getTime();
         this.result = appRequest.getResult();
-        this.owner = new AppUserDto(appRequest.getOwner());
+        this.owner = appRequest.getOwner();
     }
 
 }

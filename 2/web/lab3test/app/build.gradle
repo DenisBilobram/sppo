@@ -12,6 +12,16 @@ plugins {
     id 'war'
 }
 
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut"
+        outputs.upToDateWhen { false }
+        showStandardStreams = true
+    }
+}
+
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
@@ -29,6 +39,20 @@ dependencies {
     implementation 'org.hibernate:hibernate-core:5.6.0.Final'
     implementation 'org.postgresql:postgresql:42.3.1'
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
+
+    // JUnit Jupiter API и Engine
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+
+    // Testcontainers
+    testImplementation 'org.testcontainers:junit-jupiter:1.16.3'
+    testImplementation 'org.testcontainers:postgresql:1.16.3'
+    implementation 'org.testcontainers:postgresql:1.16.3'
+
+    // Драйвер JDBC для PostgreSQL
+    testImplementation 'org.postgresql:postgresql:42.2.23'
+
 
     // https://mvnrepository.com/artifact/javax.validation/validation-api
     implementation 'javax.validation:validation-api:2.0.1.Final'

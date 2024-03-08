@@ -1,0 +1,9 @@
+-- init.sql
+CREATE TABLE requestbean (
+    id SERIAL PRIMARY KEY,
+    r DOUBLE PRECISION,
+    x DOUBLE PRECISION,
+    y DOUBLE PRECISION,
+    result BOOLEAN,
+    time TIMESTAMP WITHOUT TIME ZONE
+);

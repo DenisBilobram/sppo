@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,14 +29,18 @@ public class MainController {
     AppRequestService appRequestService;
 
     @GetMapping("requests")
-    public ResponseEntity<List<AppRequestDto>> requestsHistoryData(@AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<List<AppRequestDto>> requestsHistoryData(@AuthenticationPrincipal Jwt jwt) {
 
-        return new ResponseEntity<>(appRequestService.getAppRequestsForUser(userDetails).stream().map(request -> new AppRequestDto(request)).toList(), HttpStatus.OK);
+        String username = jwt.getClaimAsString("preferred_username");
+
+        return new ResponseEntity<>(appRequestService.getAppRequestsForUser(username).stream().map(request -> new AppRequestDto(request)).toList(), HttpStatus.OK);
 
     }
 
     @PostMapping("requests")
-    public ResponseEntity<?> createRequest(@Valid @RequestBody AppRequestDto requestDto, BindingResult bindingResult, @AuthenticationPrincipal UserDetails userDetails) throws ValidationException {
+    public ResponseEntity<AppRequestDto> createRequest(@Valid @RequestBody AppRequestDto requestDto, BindingResult bindingResult, @AuthenticationPrincipal Jwt jwt) throws ValidationException {
+
+        String username = jwt.getClaimAsString("preferred_username");
 
         if (bindingResult.hasErrors()) {
             throw new ValidationException(bindingResult.getFieldError().getDefaultMessage());
@@ -44,15 +48,17 @@ public class MainController {
 
         requestDto.setResult(calcResult(requestDto));
 
-        AppRequest appRequest = appRequestService.saveRequest(userDetails, requestDto.getX(), requestDto.getY(), requestDto.getR(), requestDto.getResult());
+        AppRequest appRequest = appRequestService.saveRequest(requestDto.getX(), requestDto.getY(), requestDto.getR(), requestDto.getResult(), username);
         return new ResponseEntity<>(new AppRequestDto(appRequest), HttpStatus.CREATED);
 
     }
 
     @DeleteMapping("requests")
-    public ResponseEntity<?> clearRequests(@AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<?> clearRequests(@AuthenticationPrincipal Jwt jwt) {
 
-        appRequestService.clearRequests(userDetails);
+        String username = jwt.getClaimAsString("preferred_username");
+
+        appRequestService.clearRequests(username);
         return ResponseEntity.ok().build();
 
     }

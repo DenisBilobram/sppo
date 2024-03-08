@@ -1,59 +1,61 @@
 package web.lab4.app.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
-import web.lab4.app.component.JwtUtil;
-import web.lab4.app.controller.exception.RegistrationFailException;
-import web.lab4.app.controller.requests.AuthenticationRequest;
-import web.lab4.app.controller.requests.AuthenticationResponse;
-import web.lab4.app.service.AppUserDetailsService;
 
 @RestController
 @RequestMapping("api/auth")
 public class AuthController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    @Value("${spring.security.oauth2.client.provider.keycloak.token-uri}")
+    private String accessTokenUri;
 
-    @Autowired
-    private AppUserDetailsService userDetailsService;
+    @Value("${spring.security.oauth2.client.registration.keycloak.client-id}")
+    private String clientId;
 
-    @Autowired
-    private JwtUtil jwtTokenUtil;
+    @Value("${spring.security.oauth2.client.registration.keycloak.client-secret}")
+    private String clientSecret;
 
-    @PostMapping("status")
+    @GetMapping("status")
     public ResponseEntity<?> status() {
-        return ResponseEntity.ok().build();
+        return null;
     }
 
-    @PostMapping("register")
-    public ResponseEntity<?> registerUser(@RequestBody AuthenticationRequest registrationRequest) throws RegistrationFailException {
+    @PostMapping("exchange-code")
+    public ResponseEntity<?> exchangeCodeForToken(@RequestParam("code") String code) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        UserDetails newUser = userDetailsService.registerUser(registrationRequest);
-        final String jwt = jwtTokenUtil.generateToken(newUser);
-        return ResponseEntity.ok(new AuthenticationResponse(jwt, newUser.getUsername()));
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("grant_type", "authorization_code");
+        params.add("code", code);
+        params.add("client_id", clientId);
+        params.add("client_secret", clientSecret);
+        params.add("redirect_uri", "http://localhost:29885/auth/token");
 
-    }
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+        ResponseEntity<String> response = restTemplate.postForEntity(accessTokenUri, request, String.class);
 
-    @PostMapping("/login")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws BadCredentialsException {
-
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
-        
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-        
-        final String jwt = jwtTokenUtil.generateToken(userDetails);
-
-        return ResponseEntity.ok(new AuthenticationResponse(jwt, userDetails.getUsername()));
+        if (response.getStatusCode().is2xxSuccessful()) {
+            String token = response.getBody();
+            return ResponseEntity.ok(token);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error retrieving the access token");
+        }
     }
 
 }

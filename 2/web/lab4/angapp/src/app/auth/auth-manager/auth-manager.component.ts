@@ -28,23 +28,6 @@ export class AuthManagerComponent {
     });
   }
 
-  onLogin() {
-    if (this.loginForm.valid) {
-      const username = this.loginForm.get('username')?.value ?? '';
-      const password = this.loginForm.get('password')?.value ?? '';
-      this.authService.login(username, password).subscribe(
-        response => {
-          localStorage['id_token'] = response.jwt;
-          localStorage['username'] = response.username;
-          this.router.navigate(["/main"]);
-        },
-        error => {
-          this.errorMessage = error.error;
-        }
-      );
-    }
-  }
-
   onRegister() {
     if (this.registerForm.valid) {
       const username = this.registerForm.get('username')?.value ?? '';

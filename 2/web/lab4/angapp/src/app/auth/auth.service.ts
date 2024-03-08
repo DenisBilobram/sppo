@@ -13,13 +13,21 @@ export class AuthService {
 
 
   constructor(private http: HttpClient, private router: Router) {
-    if (localStorage['id_token']) {
-      router.navigate(['/main']);
-    } 
   }
 
   status(): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/api/auth/status`, {});
+    return this.http.get<any>(`${this.baseUrl}/api/auth/status`, {});
+  }
+
+  exchangeToken(code: string): Observable<any>{
+    const body = new URLSearchParams();
+    body.set('code', code);
+  
+    const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+
+    console.log("send request exchange")
+
+    return this.http.post<any>(`${this.baseUrl}/api/auth/exchange-code`, body.toString(), { headers });
   }
 
   login(username: string, password: string): Observable<any> {
@@ -30,13 +38,8 @@ export class AuthService {
     return this.http.post<any>(`${this.baseUrl}/api/auth/register`, {username, password});
   }
 
-  logout(): Promise<void> {
-    return new Promise((resolve) => {
-      localStorage.removeItem('id_token');
-      localStorage.removeItem('username');
-      this.router.navigate(['/auth'])
-      resolve();
-    });
+  logout(): Observable<any> {
+    return this.http.post<any>('', {});
   }
 }
 

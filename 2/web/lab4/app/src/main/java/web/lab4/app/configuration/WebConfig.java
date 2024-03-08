@@ -16,7 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**")  // или просто "/**" для всех путей
+        registry.addMapping("/**")  // или просто "/**" для всех путей
             .allowedOrigins("http://localhost:4200")  // URL вашего Angular-приложения
             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS").allowedHeaders("*")
             .allowCredentials(true);
@@ -33,7 +33,9 @@ public class WebConfig implements WebMvcConfigurer {
         configuration.setAllowedHeaders(Arrays.asList("*"));
         
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/api/**", configuration);
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 }
+
+
