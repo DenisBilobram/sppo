@@ -52,14 +52,14 @@ int main()
         pair<int, int> tmp_pair;
         for (auto border : borders)
         {
-            if (find(neighbors[diag.first].begin(), neighbors[diag.first].end(), border.first) != neighbors[diag.first].end() &&
-                find(neighbors[diag.second].begin(), neighbors[diag.second].end(), border.second) != neighbors[diag.second].end())
+            if (find(neighbours[diag.first].begin(), neighbours[diag.first].end(), border.first) != neighbours[diag.first].end() &&
+                find(neighbours[diag.second].begin(), neighbours[diag.second].end(), border.second) != neighbours[diag.second].end())
             {
                 tmp_pair = {border.first, border.second};
                 break;
             }
-            else if (find(neighbors[diag.first].begin(), neighbors[diag.first].end(), border.second) != neighbors[diag.first].end() &&
-                     find(neighbors[diag.second].begin(), neighbors[diag.second].end(), border.first) != neighbors[diag.second].end())
+            else if (find(neighbours[diag.first].begin(), neighbours[diag.first].end(), border.second) != neighbours[diag.first].end() &&
+                     find(neighbours[diag.second].begin(), neighbours[diag.second].end(), border.first) != neighbours[diag.second].end())
             {
                 tmp_pair = {border.second, border.first};
                 break;
