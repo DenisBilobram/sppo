@@ -1,0 +1,160 @@
+body {
+    font-family: sans-serif;
+    font-size: 16px;
+    color: black;
+}
+.main {
+    margin: 0 auto;
+    width: 70%;
+}
+.header {
+    margin: 0 auto;
+    text-align: center; 
+}
+
+.coordinates-container {
+    text-align: center;
+    display: block;
+    margin-top: 40px;
+}
+
+#coordinates {
+    margin: 0 auto;
+}
+
+.form-container {
+    text-align: center;
+    display: block;
+    margin: 40px 0 auto auto;
+}
+.dataform {
+    width: 60%;
+}
+.td-form {
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+.r-buttons-td {
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.r-buttons-td input {
+    width:15%;
+    margin: 0 5px;
+    padding: 2px 0;
+    border: 1px;
+    border-color: rgb(194, 194, 194);
+    border-radius: 1px;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.35);
+    transition: 0.1s;
+}
+
+input {
+    background-color: white;
+}
+.form-input {
+    width: 95%;
+    padding: 5px 2px;
+    border-radius: 3px;
+    border: 1px;
+    border-color: rgb(75, 75, 75);
+}
+
+.xcoord-radio-table tbody {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.selected {
+    background-color: rgb(219, 219, 219);
+}
+
+.dataform {
+    margin: 0 auto;
+    max-width: 430px;
+}
+
+.results-table {
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+tr > td {
+    border: 1px solid white;
+    border-radius: 3px;
+    padding: 10px; 
+    text-align: center;
+    background-color: rgba(226, 226, 226, 0.381);
+    background-clip: padding-box;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.35);
+
+}   
+.succes {
+    background-color: rgba(40, 255, 7, 0.788);
+}
+.fail {
+    background-color: rgba(255, 7, 7, 0.822)
+}
+.clear-button, .results-button, .back-button, .submitBut {
+    margin: 5px 0;
+    padding: 10px;
+    width: 30%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 3px;
+    border: none;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.35);
+    transition: 0.1s;
+}
+
+.clear-button:hover, .results-button:hover, .back-button:hover, .submitBut:hover {
+    background-color: rgb(180, 180, 180);
+}
+.clear-button:active, .results-button:active, .back-button:active, .submitBut:active {
+    background-color: rgb(92, 94, 100);
+}
+#global-errors {
+    margin: 15px 5px 0px 0px
+}
+.hiddenerror {
+    display: none;
+}
+.delete-form, .back-form {
+    padding-top: 10px;
+}
+#canvasContainer {
+    position: relative;
+    height: 320px;
+    width: 100%;
+}
+#coordinates, #region, #dots {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+#coordinates {
+    background-color: rgba(226, 226, 226, 0.381);
+    padding: 10px;
+    border-radius: 3.45px;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.35);
+}
+#ajax-result {
+    margin-top: 10px;
+}
+#result-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 40px;
+    padding: 10px;
+}
+.xcoord-radio-table td {
+    padding: 5px;
+}

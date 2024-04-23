@@ -7,19 +7,7 @@
  */
 
 plugins {
-    // Apply the application plugin to add support for building a CLI application in Java.
-    id 'application'
-    id 'war'
-}
-
-test {
-    useJUnitPlatform()
-
-    testLogging {
-        events "passed", "skipped", "failed", "standardOut"
-        outputs.upToDateWhen { false }
-        showStandardStreams = true
-    }
+    id 'java'
 }
 
 repositories {
@@ -53,7 +41,6 @@ dependencies {
     // Драйвер JDBC для PostgreSQL
     testImplementation 'org.postgresql:postgresql:42.2.23'
 
-
     // https://mvnrepository.com/artifact/javax.validation/validation-api
     implementation 'javax.validation:validation-api:2.0.1.Final'
 
@@ -63,12 +50,48 @@ dependencies {
 
 }
 
-application {
-    // Define the main class for the application.
-    mainClass = 'lab3test.App'
+def javacExecutable = project.javacExecutable
+
+task compileJava {
+    // Создание директории для скомпилированных классов, если она еще не существует
+    doFirst {
+        file("${buildDir}/classes").mkdirs()
+    }
+    
+    // Компиляция исходных кодов
+    doLast {
+        // Определение каталога исходных кодов и каталога назначения для скомпилированных классов
+        def srcDir = file('src/main/java')
+        def classesDir = file("${buildDir}/classes")
+        
+        // Создание списка исходных файлов для компиляции
+        def files = srcDir.listFiles().findAll { it.name.endsWith('.java') }.collect { it.absolutePath }
+        
+        // Формирование команды для выполнения
+        def command = [
+            javacExecutable,
+            '-d', classesDir.absolutePath,
+            '-sourcepath', srcDir.absolutePath,
+            '-classpath', configurations.compileClasspath.asPath
+        ] + files
+        
+        // Запуск процесса компиляции
+        def proc = command.execute()
+        proc.in.eachLine { line -> println line }
+        proc.err.eachLine { line -> println "ERROR: $line" }
+        proc.waitFor()
+        
+        // Проверка кода возврата процесса для определения статуса компиляции
+        if (proc.exitValue() != 0) {
+            throw new GradleException("Compilation failed with exit value: ${proc.exitValue()}")
+        }
+        
+        println 'Компиляция завершена.'
+    }
 }
 
-tasks.named('test') {
-    // Use JUnit Platform for unit tests.
-    useJUnitPlatform()
+task clean(type: Delete) {
+    delete buildDir
 }
+
+compileJava.dependsOn clean

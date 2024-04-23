@@ -1,61 +1,61 @@
-#include <iostream>
-#include <string>
-#include <vector>
+    #include <iostream>
+    #include <string>
+    #include <vector>
 
-using namespace std;
+    using namespace std;
 
-int main()
-{
-    int n, k;
-    cin >> n >> k;
-
-    vector<int> seats(n);
-
-    for (int i = 0; i < n; i++)
+    int main()
     {
-        cin >> seats[i];
-    }
+        int n, k;
+        cin >> n >> k;
 
-    int left = 1;
-    int right = seats[n - 1] - seats[0];
-    int mid;
-    int min;
+        vector<int> seats(n);
 
-    while (left <= right)
-    {
+        for (int i = 0; i < n; i++)
+        {
+            cin >> seats[i];
+        }
 
-        mid = (left + right) / 2;
+        int left = 1;
+        int right = seats[n - 1] - seats[0];
+        int mid;
+        int min;
 
-        int dist = 0;
-        int c = 1;
-        for (int i = 0; i < n - 1; i++)
+        while (left <= right)
         {
 
-            if (dist == 0)
-            {
-                dist = seats[i + 1] - seats[i];
-            }
+            mid = (left + right) / 2;
 
-            if (dist < mid)
+            int dist = 0;
+            int c = 1;
+            for (int i = 0; i < n - 1; i++)
             {
-                dist += seats[i + 2] - seats[i + 1];
+
+                if (dist == 0)
+                {
+                    dist = seats[i + 1] - seats[i];
+                }
+
+                if (dist < mid)
+                {
+                    dist += seats[i + 2] - seats[i + 1];
+                }
+                else
+                {
+                    dist = 0;
+                    c += 1;
+                }
+            }
+            if (c >= k)
+            {
+                left = mid + 1;
+                min = mid;
             }
             else
             {
-                dist = 0;
-                c += 1;
+                right = mid - 1;
             }
         }
-        if (c >= k)
-        {
-            left = mid + 1;
-            min = mid;
-        }
-        else
-        {
-            right = mid - 1;
-        }
-    }
 
-    cout << min;
-}
+        cout << min;
+    }

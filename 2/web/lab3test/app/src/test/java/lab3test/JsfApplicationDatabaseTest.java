@@ -2,10 +2,8 @@ package lab3test;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

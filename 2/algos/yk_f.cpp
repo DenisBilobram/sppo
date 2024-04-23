@@ -1,23 +1,29 @@
 #include <iostream>
-#include <string>
 #include <vector>
+#include <string>
 #include <algorithm>
 
 using namespace std;
+
+bool is_better(const string &a, const string &b)
+{
+    return a + b > b + a;
+}
 
 int main()
 {
     vector<string> vec;
     string str;
-    while (true) {
-        getline(std::cin, str);
-        if (str.empty()) {
-            break;
-        }
+
+    while (cin >> str)
+    {
         vec.push_back(str);
     }
-    sort(vec.rbegin(), vec.rend());
-    for(string el : vec) {
+
+    sort(vec.begin(), vec.end(), is_better);
+
+    for (const string &el : vec)
+    {
         cout << el;
     }
 }
