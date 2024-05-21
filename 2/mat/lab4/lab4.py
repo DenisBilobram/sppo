@@ -1,5 +1,5 @@
 import numpy as np
-from numpy import exp, log
+from numpy import exp
 import matplotlib.pyplot as plt
 import math
 
@@ -131,13 +131,6 @@ def main():
 
     results.append(f"Наилучшая аппроксимация: {best_approximation}")
 
-    plt.scatter(x_i, y_i, color='red', label='Исходные данные')
-    plt.legend()
-    plt.xlabel('Ось X')  
-    plt.ylabel('Ось Y')  
-    plt.grid(True)  
-    plt.show()
-
     mean_x = sum(x_i) / len(x_i)
     mean_y = sum(y_i) / len(y_i)
     top_corr = sum((x - mean_x) * (y - mean_y) for x, y in zip(x_i, y_i))
@@ -168,6 +161,13 @@ def main():
             print(line)
     else:
         write_results_to_file(output_filename, results)
+
+    plt.scatter(x_i, y_i, color='red', label='Исходные данные')
+    plt.legend()
+    plt.xlabel('Ось X')  
+    plt.ylabel('Ось Y')  
+    plt.grid(True)  
+    plt.show()
 
 if __name__ == "__main__":
     ezp = exp
