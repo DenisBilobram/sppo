@@ -1,136 +1,124 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from scipy import stats
+from scipy.stats import norm, kstest, chi2
 
-# Данные
-data = np.array([
-    8, 10, 11, 17, 15, 12, 15, 14, 16, 18,
-    15, 18, 13, 14, 16, 17, 8, 11, 14, 10,
-    16, 14, 18, 11, 11, 15, 15, 10, 12, 14,
-    17, 12, 14, 14, 9, 12, 9, 13, 14, 10,
-    12, 10, 11, 13, 11, 13, 14, 14, 12, 13,
-    12, 14, 14, 12, 16, 15, 13, 13, 15, 12,
-    13, 10, 12, 14, 15, 15, 19, 11, 14, 11,
-    11, 11, 12, 14, 15, 13, 11, 17, 18, 13,
-    12, 12, 12, 9, 10, 13, 9, 16, 14, 13,
-    16, 13, 15, 12, 12, 17, 13, 15, 16, 14
-])
+# Данные о расходе воды (100 значений)
+data = [8, 10, 11, 17, 15, 12, 15, 14, 16, 18,
+        15, 18, 13, 14, 16, 17, 8, 11, 14, 10,
+        16, 14, 18, 11, 11, 15, 15, 10, 12, 14,
+        17, 12, 14, 14, 9, 12, 9, 13, 14, 10,
+        12, 10, 11, 13, 11, 13, 14, 14, 12, 13,
+        12, 14, 14, 12, 16, 15, 13, 13, 13, 15,
+        13, 10, 12, 11, 11, 14, 15, 15, 19, 11,
+        11, 13, 11, 12, 14, 15, 13, 11, 17, 18,
+        12, 12, 12, 9, 10, 13, 9, 16, 14, 13,
+        16, 13, 15, 12, 12, 17, 13, 15, 16, 14]
 
-# Шаг 1: Размах варьирования
-R = np.max(data) - np.min(data)
+R = np.ptp(data)
+print("Range of variation (R):", R)
 
-# Шаг 2: Частоты
-values, frequencies = np.unique(data, return_counts=True)
+# 2. Create a statistical series of frequencies
+frequencies = pd.Series(data).value_counts().sort_index()
+print("Statistical series of frequencies:\n", frequencies)
 
-freq_series = pd.Series(frequencies, index=values)
+# 3. Create an interval statistical series of frequencies and relative frequencies
+bins = np.histogram_bin_edges(data, bins='auto')
+hist, bin_edges = np.histogram(data, bins=bins)
+relative_frequencies = hist / len(data)
 
-# Шаг 3: Интервальные ряды
-intervals = np.histogram_bin_edges(data, bins='sturges')
-freq_intervals, _ = np.histogram(data, bins=intervals)
-relative_freq_intervals = freq_intervals / len(data)
+interval_series = pd.DataFrame({
+    'Interval': pd.IntervalIndex.from_arrays(bin_edges[:-1], bin_edges[1:]),
+    'Frequency': hist,
+    'Relative Frequency': relative_frequencies
+})
+print("Interval statistical series:\n", interval_series)
 
-print(intervals, freq_intervals, relative_freq_intervals)
+# Display the interval series
+print(interval_series)
 
-# Шаг 4: Полигон и гистограмма относительных частот
-plt.figure(figsize=(10, 6))
-plt.hist(data, bins=intervals, density=True, alpha=0.6, color='g', edgecolor='black')
-plt.title('Гистограмма относительных частот')
-plt.xlabel('Интервалы')
-plt.ylabel('Относительная частота')
-plt.grid(True)
-plt.savefig('histogram.png')
+# 4. Plot polygon and histogram of relative frequencies
+plt.figure(figsize=(12, 6))
+plt.subplot(1, 2, 1)
+plt.plot(bin_edges[:-1], relative_frequencies, marker='o')
+plt.title('Polygon of Relative Frequencies')
+plt.xlabel('Value')
+plt.ylabel('Relative Frequency')
+
+plt.subplot(1, 2, 2)
+plt.hist(data, bins=bins, density=True, alpha=0.6, color='g')
+plt.title('Histogram of Relative Frequencies')
+plt.xlabel('Value')
+plt.ylabel('Relative Frequency')
+
+plt.tight_layout()
 plt.show()
 
-# Полигон
-plt.figure(figsize=(10, 6))
-plt.plot(intervals[:-1], relative_freq_intervals, marker='o', linestyle='-', color='b')
-plt.title('Полигон относительных частот')
-plt.xlabel('Интервалы')
-plt.ylabel('Относительная частота')
+# 5. Find empirical distribution function and plot its graph
+ecdf = np.arange(1, len(data)+1) / len(data)
+sorted_data = np.sort(data)
+plt.step(sorted_data, ecdf, where="post")
+plt.title('Empirical Distribution Function')
+plt.xlabel('Value')
+plt.ylabel('F(x)')
 plt.grid(True)
-plt.savefig('polygon.png')
 plt.show()
 
-# Шаг 5: Эмпирическая функция распределения
-ecdf = stats.cumfreq(data, numbins=len(values))
+# 6. Calculate sample values of numerical characteristics
+mean = np.mean(data)
+variance = np.var(data, ddof=1)
+std_dev = np.std(data, ddof=1)
 
-plt.figure(figsize=(10, 6))
-plt.step(ecdf.lowerlimit + np.linspace(0, ecdf.binsize * ecdf.cumcount.size, ecdf.cumcount.size), ecdf.cumcount / len(data), where='mid', color='r')
-plt.title('Эмпирическая функция распределения')
-plt.xlabel('Значения')
-plt.ylabel('ЭФР')
-plt.grid(True)
-plt.savefig('ecdf.png')
+print(f"Mathematical expectation (M): {mean}")
+print(f"Variance (D): {variance}")
+print(f"Standard deviation (σ): {std_dev}")
+
+# 7. Determine the distribution law (assuming normal distribution here)
+mu, std = norm.fit(data)
+xmin, xmax = min(data), max(data)
+x = np.linspace(xmin, xmax, 100)
+p = norm.pdf(x, mu, std)
+
+plt.hist(data, bins=bins, density=True, alpha=0.6, color='g')
+plt.plot(x, p, 'k', linewidth=2)
+title = "Fit results: mu = %.2f,  std = %.2f" % (mu, std)
+plt.title(title)
 plt.show()
 
-# Шаг 6: Математическое ожидание, дисперсия, СКО
-mean_X = np.mean(data)
-var_X = np.var(data, ddof=1)
-std_X = np.std(data, ddof=1)
+# 8. Verify the agreement using the Chi-square test
+observed_freq, bins = np.histogram(data, bins='auto')
+expected_freq = len(data) * np.diff(norm.cdf(bins, loc=mu, scale=std))
+chi2_stat = np.sum((observed_freq - expected_freq)**2 / expected_freq)
+p_val_chi2 = chi2.sf(chi2_stat, len(observed_freq) - 1)
+print(f"Chi-square statistic: {chi2_stat}, p-value: {p_val_chi2}")
 
-# Подготовим данные для вставки в Word
-result = f"""
-Размах варьирования R: {R}
+# 9. Interval estimates and hypothesis testing for normal distribution
+confidence_level = 0.95
+degrees_freedom = len(data) - 1
+sample_mean = np.mean(data)
+sample_std = np.std(data, ddof=1)
+confidence_interval = norm.interval(confidence_level, loc=sample_mean, scale=sample_std / np.sqrt(len(data)))
 
-Статистический ряд распределения частот:
-{freq_series.to_string()}
+print(f"{confidence_level*100}% confidence interval for the mean: {confidence_interval}")
 
-Интервальные статистические ряды частот и относительных частот:
-Интервалы: {intervals}
-Частоты: {freq_intervals}
-Относительные частоты: {relative_freq_intervals}
+# Hypothesis testing
+alpha = 0.1  # Уровень значимости по варианту 11
+hypothesized_mean = 13  # example value
+t_stat = (sample_mean - hypothesized_mean) / (sample_std / np.sqrt(len(data)))
+p_value = 2 * (1 - norm.cdf(abs(t_stat)))
 
-Математическое ожидание M(X): {mean_X}
-Дисперсия D(X): {var_X}
-Среднее квадратическое отклонение σ(X): {std_X}
-"""
+print(f"t-statistic: {t_stat}, p-value: {p_value}")
 
-mean_X = np.mean(data)
-var_X = np.var(data, ddof=1)
-std_X = np.std(data, ddof=1)
+# Выводы на русском языке
+print("\nВыводы:")
+if p_val_chi2 < alpha:
+    print(f"Гипотеза о нормальном распределении отвергается на уровне значимости {alpha}.")
+else:
+    print(f"Нет оснований отвергать гипотезу о нормальном распределении на уровне значимости {alpha}.")
 
-result += f"""
+if p_value < alpha:
+    print(f"Гипотеза о равенстве математического ожидания {hypothesized_mean} отвергается на уровне значимости {alpha}.")
+else:
+    print(f"Нет оснований отвергать гипотезу о равенстве математического ожидания {hypothesized_mean} на уровне значимости {alpha}.")
 
-Точечные оценки параметров нормального распределения:
-
-Математическое ожидание (оценка): \\[
-\\hat{{\\mu}} = \\frac{{1}}{{n}} \\sum_{{i=1}}^n X_i = {mean_X}
-\\]
-
-Дисперсия (оценка): \\[
-\\hat{{\\sigma^2}} = \\frac{{1}}{{n-1}} \\sum_{{i=1}}^n (X_i - \\hat{{\\mu}})^2 = {var_X}
-\\]
-
-Среднеквадратическое отклонение (оценка): \\[
-\\hat{{\\sigma}} = \\sqrt{{\\hat{{\\sigma^2}}}} = {std_X}
-\\]
-
-Функция распределения: \\[
-F(x) = \\frac{{1}}{{\\sqrt{{2\\pi\\sigma^2}}}} \\exp\\left(-\\frac{{(x - \\mu)^2}}{{2\\sigma^2}}\\right)
-\\]
-
-Плотность вероятности: \\[
-f(x) = \\frac{{1}}{{\\sigma\\sqrt{{2\\pi}}}} \\exp\\left(-\\frac{{(x - \\mu)^2}}{{2\\sigma^2}}\\right)
-\\]
-"""
-
-# Количество наблюдений
-n = len(data)
-
-# Выборочная дисперсия
-D_v_X = np.var(data, ddof=1)
-
-# Вычисление σδ
-sigma_delta = np.sqrt((n / (n - 1)) * D_v_X)
-sigma_delta
-
-# Добавление результата в текстовый файл
-result = f"\n\nВычисление σδ с использованием выборочной дисперсии:\n"
-result += f"σδ = √((n / (n - 1)) * D(X)) = √(({n} / ({n} - 1)) * {D_v_X}) = {sigma_delta}"
-
-# Сохранение результата в текстовый файл с кодировкой utf-8
-with open('result.txt', 'w', encoding='utf-8') as file:
-    file.write(result)
-
-
+print(f"Доверительный интервал для математического ожидания: {confidence_interval}")
