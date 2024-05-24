@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index</title>
+    <link rel="stylesheet" href="css/main.css" />
+</h:head>
+<h:body>
+    <table class="main">
+        <tr>
+            <td>
+                <table class="header">
+                    <tr>
+                        <td><span>P3219 Билобрам Денис Андреевич</span></td>
+                    </tr>
+                    <tr>
+                        <td><span>Вариант №2932</span></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h:form>
+                    <h:outputText id="clock" value="#{clockController.currentDateTime}" />
+                    <p:poll interval="7" listener="#{clockController.updateTime}" update="clock" />
+                </h:form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h:form method="get">
+                        <h:button value="Main Page" outcome="goToMain" class="back-button"/>
+                </h:form>
+            </td>
+        </tr>
+    </table>
+</h:body>
+</html>
