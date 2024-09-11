@@ -1,0 +1,13 @@
+{
+    "cmake.sourceDirectory": "/home/notttk/sppo/3/emb-systems/1lab/assignment-1-elf64-loader",
+    "files.associations": {
+        "stdint.h": "c",
+        "types.h": "c",
+        "errno.h": "c",
+        "fcntl.h": "c",
+        "features.h": "c",
+        "error_t.h": "c",
+        "mman.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}
