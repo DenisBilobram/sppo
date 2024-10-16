@@ -2,7 +2,7 @@ import re
 
 biome_dict = {
     'luga': 'луга',
-    'cherny_les': 'черный лес',
+    'cherny_les': 'черный_лес',
     'boloto': 'болото',
     'gory': 'горы',
     'pustosh': 'пустошь'
@@ -25,9 +25,9 @@ resource_dict = {
     'serebro': 'серебро',
     'med': 'медь',
     'olovo': 'олово',
-    'chernyj_metall': 'черный металл',
+    'chernyj_metall': 'черный_металл',
     'smola': 'смола',
-    'yadro_surtlinga': 'ядро сёртлинга'
+    'yadro_surtlinga': 'ядро_сёртлинга'
 }
 
 structure_dict = {
@@ -109,7 +109,7 @@ def parse_input(user_input):
             creature_russian = match.group(1)
             creature = russian_to_creature.get(creature_russian, creature_russian)
             params['creature'] = creature
-            
+
     elif 'биомы с существом' in user_input and 'и ресурсом' in user_input:
         params['query_type'] = 'biomes_with_creature_and_resource'
         creature_match = re.search(r'существом\s+([\wА-Яа-я_]+)', user_input)
