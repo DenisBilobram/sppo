@@ -150,7 +150,6 @@ print("\nВероятности:\n", probabilities)
 # Определение порогов
 thresholds = np.linspace(0, 1, 100)
 
-# Инициализация списков для ROC и PR
 tpr_list = []
 fpr_list = []
 precision_list = []
