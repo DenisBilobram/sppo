@@ -1,4 +1,4 @@
-package tpo.lab1;
+package tpo.task1;
 
 import static org.junit.Assert.assertEquals;
 

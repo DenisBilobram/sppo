@@ -1,4 +1,4 @@
-package tpo.lab1;
+package tpo.task1;
 
 public class SecantCalculator {
 
