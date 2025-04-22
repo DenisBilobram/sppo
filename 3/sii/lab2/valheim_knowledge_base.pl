@@ -1,9 +1,9 @@
 % Биомы
-biome(luga).          % Луга
-biome(cherny_les).    % Черный лес
-biome(boloto).        % Болото
-biome(gory).          % Горы
-biome(pustosh).       % Пустошь
+biome(luga).          
+biome(cherny_les).    
+biome(boloto).        
+biome(gory).          
+biome(pustosh).       
 
 % Существа
 creature(greydwarf).

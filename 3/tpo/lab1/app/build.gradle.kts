@@ -8,6 +8,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
+    jacoco
 }
 
 repositories {
@@ -16,11 +17,13 @@ repositories {
 }
 
 dependencies {
-    // Use JUnit test framework.
-    testImplementation(libs.junit)
 
-    // This dependency is used by the application.
+    // Добавляем зависимость для JUnit 5 (замените версию на актуальную, если нужно).
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+
+    // Эта зависимость используется приложением.
     implementation(libs.guava)
+
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -33,4 +36,12 @@ java {
 application {
     // Define the main class for the application.
     mainClass = "org.example.App"
+}
+
+tasks.test {
+    useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+}
+tasks.jacocoTestReport {
+    dependsOn(tasks.test) // tests are required to run before generating the report
 }

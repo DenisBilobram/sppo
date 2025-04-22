@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e17acb7e-c3e0-40f7-886c-23c1b9b243af" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../1/reports/proga/Reports" beforeDir="false" afterPath="$PROJECT_DIR$/../../../1/reports/proga/Reports" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../mat/lab6/123.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../mat/lab6/lab6.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../mat/lab6/lab6.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../mat/lab6/ВЫЧМАТ ЛР6 P3219 Билобрам.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../../mat/lab6/ВЫЧМАТ ЛР6 P3219 Билобрам.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../mat/lab6/ВЫЧМАТ ЛР6 P3219 Билобрам.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../../mat/lab6/ВЫЧМАТ ЛР6 P3219 Билобрам.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../opi/lab4/lab3test/app/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../opi/lab4/lab3test/app/src/main/resources/hibernate.cfg.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../stat/hm6-14.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../stat/hm6-14.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../stat/rgr/py.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../stat/rgr/py.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab2/app/bin/main/lab2/views/ControllerServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/../lab2/app/bin/main/lab2/views/ControllerServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/bin/main/lab3test/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/bin/main/lab3test/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/bin/main/lab3test/controllers/ClockController.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/bin/main/lab3test/controllers/ClockController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/bin/main/lab3test/controllers/RequestsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/bin/main/lab3test/controllers/RequestsController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/bin/main/lab3test/dao/HibernateUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/bin/main/lab3test/dao/HibernateUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/bin/main/lab3test/dao/RequestBeanDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/bin/main/lab3test/dao/RequestBeanDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/bin/main/lab3test/model/RequestBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/bin/main/lab3test/model/RequestBean.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/bin/test/lab3test/JsfApplicationDatabaseTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/bin/test/lab3test/JsfApplicationDatabaseTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../3/sii/lab2/valheim_knowledge_base.pl" beforeDir="false" afterPath="$PROJECT_DIR$/../../../3/sii/lab2/valheim_knowledge_base.pl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../3/sii/lab5/DATA.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../3/sii/СИИ P3319 Отчёт 1.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../../../3/sii/СИИ P3319 Отчёт 1.docx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProjectId" id="2oT8CDPuWEAPAFz2C7jgIro5mBV" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e17acb7e-c3e0-40f7-886c-23c1b9b243af" name="Changes" comment="" />
+      <created>1730882083448</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1730882083448</updated>
+      <workItem from="1730882088710" duration="10000" />
+      <workItem from="1730882217308" duration="83000" />
+      <workItem from="1730882330880" duration="54000" />
+      <workItem from="1743173026485" duration="4000" />
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

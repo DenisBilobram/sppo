@@ -7,12 +7,12 @@ alpha = 0.02
 
 # Вычисление среднего числа событий (λ)
 total_count = sum(frequencies)
-lambda_ = sum(x * f for x, f in zip(events, frequencies)) / total_count
+avg = sum(x * f for x, f in zip(events, frequencies)) / total_count
 
 # Вычисление ожидаемых частот
 expected_frequencies = []
 for x in events:
-    p = (lambda_ ** x * math.exp(-lambda_)) / math.factorial(x)
+    p = (avg ** x * math.exp(-avg)) / math.factorial(x)
     expected_frequencies.append(total_count * p)
 
 # Вычисление статистики хи-квадрат
@@ -23,7 +23,7 @@ degrees_of_freedom = len(events) - 1 - 1
 chi_squared_critical = 15.507  # Табличное значение для alpha=0.02 и df=6
 
 # Вывод результатов
-print(f"Среднее число событий (λ): {lambda_:.2f}")
+print(f"Среднее число событий (λ): {avg:.2f}")
 print(f"Наблюдаемое значение хи-квадрат: {chi_squared:.2f}")
 print(f"Критическое значение хи-квадрат: {chi_squared_critical:.2f}")
 

@@ -25,11 +25,11 @@ def euler_method(f, y0, x0, xn, h, epsilon):
         
     return np.array(x), np.array(y)
 
-def runge_kutta_fixed_steps(f, y0, x0, h):
+def runge_kutta_fixed_steps(f, y0, x0, h, steps=3):
     x = [x0]
     y = [y0]
     
-    for i in range(3):
+    for i in range(steps):
         x1 = x[-1]
         y1 = y[-1]
         
@@ -104,6 +104,7 @@ def milne_method(f, y0, x0, xn, h, epsilon):
 
     return np.array(x), np.array(y)
 
+
 def diff_eq_1(x, y):
     return x + y
 
@@ -114,8 +115,10 @@ def diff_eq_3(x, y):
     return x**2 - y
 
 def exact_solution_1(x, y0):
-    C = y0 + 1
-    return C * np.exp(x) - x - 1
+    def model(y, x):
+        return x + y
+    y = odeint(model, y0, x)
+    return y.flatten()
 
 def exact_solution_2(x, y0):
     return (x**3) / 3 + y0
@@ -197,11 +200,11 @@ class ODESolverApp(tk.Tk):
         equation = self.selected_equation.get()
 
         try:
-            y0 = self.y0.get()
-            x0 = self.x0.get()
-            xn = self.xn.get()
-            h = self.h.get()
-            epsilon = self.epsilon.get()
+            y0 = float(str(self.y0.get()).replace(",", '.'))
+            x0 = float(str(self.x0.get()).replace(",", '.'))
+            xn = float(str(self.xn.get()).replace(",", '.'))
+            h = float(str(self.h.get()).replace(",", '.'))
+            epsilon = float(str(self.epsilon.get()).replace(",", '.'))
         except tk.TclError:
             messagebox.showerror("Ошибка ввода", "Пожалуйста, введите числовые значения.")
             return
@@ -216,6 +219,10 @@ class ODESolverApp(tk.Tk):
 
         if xn <= x0:
             messagebox.showerror("Ошибка ввода", "Значение xn должно быть больше x0.")
+            return
+
+        if x0 + h > xn:
+            messagebox.showerror("Ошибка ввода", "Значение x0 + h должно быть меньше xn.")
             return
 
         if epsilon <= 0:
@@ -255,6 +262,12 @@ class ODESolverApp(tk.Tk):
                 y_exact = exact_solution(x, y0)
                 errors["Milne"] = np.max(np.abs(y_exact - y))
                 results["Milne"] = (x, y)
+
+        for method in results:
+            if method == "Milne":
+                x, y = results[method]
+                mask = x <= xn
+                results[method] = (x[mask], y[mask])
 
         plt.figure(figsize=(10, 6))
         plt.plot(exact_x, exact_y, label="Точное решение", color="red")
