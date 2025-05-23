@@ -14,6 +14,10 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     implementation 'org.apache.commons:commons-lang3:3.12.0'
 
+    implementation 'org.openjfx:javafx-controls:19:win'  // для Windows
+    implementation 'org.openjfx:javafx-fxml:19:win' // для Windows
+    implementation 'org.openjfx:javafx-graphics:19:win' // для Windows
+
     implementation project(':app')
 }
 
@@ -28,6 +32,8 @@ compileTestJava.options.encoding = 'UTF-8'
 tasks.jar {
     manifest.attributes["Main-Class"] = "lab8.client.ClientApp"
 }
+
+
 
 task fatJar(type: Jar) {
   manifest.from jar.manifest
@@ -44,6 +50,12 @@ task fatJar(type: Jar) {
 }
 
 
+application {
+    // Если используете Gradle 6.x или ранее, можно использовать mainClassName:
+    mainClassName = "lab8.client.ClientApp"
+    // Для Gradle 7.x и выше:
+    // mainClass.set("lab8.client.ClientApp")
+}
 
 artifacts {
     archives fatJar

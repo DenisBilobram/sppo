@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.Scanner;
+import java.io.File;
 
 import lab8.app.auth.User;
 import lab8.app.labwork.Color;
@@ -28,7 +30,7 @@ public class DataBase {
 
     static {
         // String url = "jdbc:postgresql://localhost:5432/studs";
-        String url = "jdbc:postgresql://localhost:5433/app";
+        String url = "jdbc:postgresql://localhost:5432/postgres";
         try {
 
             // Scanner scanner = new Scanner(new File("/home/studs/s367893/.pgpass"));
