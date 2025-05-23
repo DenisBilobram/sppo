@@ -5,11 +5,11 @@ public class BinomialHeap {
 
     // Внутренний класс, описывающий узел биномиального дерева
     private static class Node {
-        int key;          // Значение (ключ) узла
-        int degree;       // Степень узла (порядок биномиального дерева)
-        Node parent;      // Родительский узел
-        Node child;       // Указатель на первого потомка
-        Node sibling;     // Указатель на следующего соседа
+        int key;
+        int degree;
+        Node parent;
+        Node child;
+        Node sibling;
 
         public Node(int key) {
             this.key = key;
@@ -47,7 +47,7 @@ public class BinomialHeap {
             // Если степень текущего дерева не равна степени следующего,
             // или (следующий и следующий за ним имеют равные степени)
             if (curr.degree != next.degree ||
-                    (next.sibling != null && next.sibling.degree == curr.degree)) {
+                    (next.sibling != null)) {
                 prev = curr;
                 curr = next;
             } else {
@@ -59,11 +59,9 @@ public class BinomialHeap {
                 } else {
                     // Иначе, если предыдущий существует, он должен указывать на next,
                     // а текущий становится поддеревом next
-                    if (prev == null) {
-                        newHeap.head = next;
-                    } else {
-                        prev.sibling = next;
-                    }
+
+                    newHeap.head = next;
+
                     linkTrees(next, curr);
                     curr = next;
                 }
@@ -73,7 +71,7 @@ public class BinomialHeap {
         return newHeap;
     }
 
-    // Метод, объединяющий два списка корней, отсортированных по степени
+    // Метод, объединяющий два списка корней отсортированных по степени
     private static Node merge(Node h1, Node h2) {
         if (h1 == null) return h2;
         if (h2 == null) return h1;

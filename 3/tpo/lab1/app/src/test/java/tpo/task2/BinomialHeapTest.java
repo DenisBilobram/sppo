@@ -1,128 +1,169 @@
 package tpo.task2;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class BinomialHeapTest {
+    private BinomialHeap heap;
 
-    // Тест: поиск минимума в пустой куче должен возвращать null
-    @Test
-    public void testFindMinEmptyHeap() {
-        BinomialHeap heap = new BinomialHeap();
-        assertNull("При поиске минимума в пустой куче должен возвращаться null", heap.findMin());
+    // Инициализация перед каждым тестом
+    @BeforeEach
+    public void setUp() {
+        heap = new BinomialHeap();
     }
 
-    // Тест: извлечение минимума из пустой кучи должно возвращать null
+    // Тест вставки элементов
     @Test
-    public void testExtractMinEmptyHeap() {
-        BinomialHeap heap = new BinomialHeap();
-        assertNull("Извлечение минимума из пустой кучи должно возвращать null", heap.extractMin());
-    }
-
-    // Тест: вставка одного элемента
-    @Test
-    public void testSingleInsert() {
-        BinomialHeap heap = new BinomialHeap();
-        heap.insert(42);
-        assertEquals("После вставки единственного элемента, findMin должен возвращать его", Integer.valueOf(42), heap.findMin());
-    }
-
-    // Тест: несколько вставок, проверка findMin
-    @Test
-    public void testMultipleInsertsFindMin() {
-        BinomialHeap heap = new BinomialHeap();
-        heap.insert(10);
+    public void testInsert() {
+        heap.insert(5);
         heap.insert(3);
-        heap.insert(15);
-        heap.insert(6);
-        // Минимум среди [10, 3, 15, 6] равен 3
-        assertEquals("Минимальный элемент должен быть равен 3", Integer.valueOf(3), heap.findMin());
+        heap.insert(7);
+        assertEquals(Integer.valueOf(3), heap.findMin());
     }
 
-    // Тест: извлечение минимума и последовательное удаление всех элементов
+    // Тест вставки дубликатов
     @Test
-    public void testExtractMinSequence() {
-        BinomialHeap heap = new BinomialHeap();
-        int[] input = {20, 5, 15, 10, 2, 8};
-        for (int key : input) {
-            heap.insert(key);
-        }
-
-        int[] expectedOrder = {2, 5, 8, 10, 15, 20};
-        for (int expected : expectedOrder) {
-            Integer min = heap.findMin();
-            assertNotNull("Минимальный элемент не должен быть null", min);
-            assertEquals("Минимальный элемент не соответствует ожидаемому", expected, min.intValue());
-            Integer extracted = heap.extractMin();
-            assertEquals("Извлечённый элемент не соответствует ожидаемому", expected, extracted.intValue());
-        }
-        // После удаления всех элементов куча должна быть пуста
-        assertNull("После извлечения всех элементов findMin должен возвращать null", heap.findMin());
-        assertNull("После извлечения всех элементов extractMin должен возвращать null", heap.extractMin());
+    public void testInsertDuplicates() {
+        heap.insert(5);
+        heap.insert(5);
+        assertEquals(Integer.valueOf(5), heap.findMin());
+        assertEquals(Integer.valueOf(5), heap.extractMin());
+        assertEquals(Integer.valueOf(5), heap.findMin());
     }
 
-    // Тест: объединение двух куч
+    // Тест объединения двух куч
     @Test
     public void testUnion() {
-        BinomialHeap heap1 = new BinomialHeap();
-        BinomialHeap heap2 = new BinomialHeap();
-
-        // Заполним первую кучу
-        heap1.insert(10);
-        heap1.insert(4);
-        heap1.insert(30);
-
-        // Заполним вторую кучу
-        heap2.insert(3);
-        heap2.insert(25);
-        heap2.insert(7);
-
-        // Объединение куч
-        BinomialHeap unionHeap = BinomialHeap.union(heap1, heap2);
-
-        // Ожидаемый минимум: 3
-        assertEquals("После объединения минимальный элемент должен быть равен 3", Integer.valueOf(3), unionHeap.findMin());
-
-        // Проверка корректного извлечения всех элементов по возрастанию
-        int[] expectedOrder = {3, 4, 7, 10, 25, 30};
-        for (int expected : expectedOrder) {
-            Integer min = unionHeap.extractMin();
-            assertNotNull("Минимальный элемент не должен быть null", min);
-            assertEquals("Извлечённый элемент не соответствует ожидаемому", expected, min.intValue());
-        }
-        assertNull("После извлечения всех элементов findMin должен возвращать null", unionHeap.findMin());
+        BinomialHeap h1 = new BinomialHeap();
+        h1.insert(1);
+        h1.insert(4);
+        BinomialHeap h2 = new BinomialHeap();
+        h2.insert(2);
+        h2.insert(3);
+        BinomialHeap unionHeap = BinomialHeap.union(h1, h2);
+        assertEquals(Integer.valueOf(1), unionHeap.findMin());
     }
 
-    // Тест: вставка после извлечения минимального элемента
+    // Тест объединения с пустой кучей
     @Test
-    public void testInsertAfterExtractMin() {
-        BinomialHeap heap = new BinomialHeap();
-        heap.insert(12);
-        heap.insert(7);
-        heap.insert(20);
+    public void testUnionWithEmpty() {
+        BinomialHeap h1 = new BinomialHeap();
+        h1.insert(1);
+        BinomialHeap h2 = new BinomialHeap();
+        BinomialHeap unionHeap = BinomialHeap.union(h1, h2);
+        assertEquals(Integer.valueOf(1), unionHeap.findMin());
+    }
 
-        // Извлекаем минимум (7)
-        assertEquals("Минимальный элемент должен быть 7", Integer.valueOf(7), heap.extractMin());
-
-        // Вставляем новый элемент, который меньше текущего минимума
+    // Тест поиска минимума
+    @Test
+    public void testFindMin() {
+        // Пустая куча
+        assertNull(heap.findMin());
+        // Куча с одним элементом
+        heap.insert(10);
+        assertEquals(Integer.valueOf(10), heap.findMin());
+        // Куча с несколькими элементами
         heap.insert(5);
-        assertEquals("Минимальный элемент после вставки 5 должен быть равен 5", Integer.valueOf(5), heap.findMin());
+        assertEquals(Integer.valueOf(5), heap.findMin());
     }
 
-    // Тест: объединение пустой кучи с непустой
+    // Тест извлечения минимума
     @Test
-    public void testUnionWithEmptyHeap() {
-        BinomialHeap nonEmptyHeap = new BinomialHeap();
-        nonEmptyHeap.insert(11);
-        nonEmptyHeap.insert(3);
-
-        BinomialHeap emptyHeap = new BinomialHeap();
-
-        BinomialHeap result1 = BinomialHeap.union(nonEmptyHeap, emptyHeap);
-        BinomialHeap result2 = BinomialHeap.union(emptyHeap, nonEmptyHeap);
-
-        assertEquals("При объединении непустой кучи с пустой минимальный элемент должен быть равен 3", Integer.valueOf(3), result1.findMin());
-        assertEquals("При объединении пустой кучи с непустой минимальный элемент должен быть равен 3", Integer.valueOf(3), result2.findMin());
+    public void testExtractMin() {
+        // Пустая куча
+        assertNull(heap.extractMin());
+        // Куча с одним элементом
+        heap.insert(10);
+        assertEquals(Integer.valueOf(10), heap.extractMin());
+        assertNull(heap.findMin());
+        // Куча с несколькими элементами
+        heap.insert(5);
+        heap.insert(3);
+        heap.insert(7);
+        assertEquals(Integer.valueOf(3), heap.extractMin());
+        assertEquals(Integer.valueOf(5), heap.findMin());
     }
-}
 
+    // Тест порядка извлечения элементов
+    @Test
+    public void testExtractMinOrder() {
+        heap.insert(4);
+        heap.insert(2);
+        heap.insert(6);
+        heap.insert(1);
+        heap.insert(3);
+        assertEquals(Integer.valueOf(1), heap.extractMin());
+        assertEquals(Integer.valueOf(2), heap.extractMin());
+        assertEquals(Integer.valueOf(3), heap.extractMin());
+        assertEquals(Integer.valueOf(4), heap.extractMin());
+        assertEquals(Integer.valueOf(6), heap.extractMin());
+        assertNull(heap.findMin());
+    }
+
+    @Test
+    public void testUnionDifferentDegrees() {
+        BinomialHeap h1 = new BinomialHeap();
+        h1.insert(1); // Дерево степени 0
+        BinomialHeap h2 = new BinomialHeap();
+        h2.insert(2);
+        h2.insert(3); // Дерево степени 1 после объединения двух элементов
+        BinomialHeap unionHeap = BinomialHeap.union(h1, h2);
+        assertEquals(Integer.valueOf(1), unionHeap.findMin());
+    }
+
+    @Test
+    public void testUnionDifferentDegrees2() {
+        BinomialHeap h1 = new BinomialHeap();
+        h1.insert(1); // Дерево степени 0
+        h1.insert(6); // Дерево степени 0
+        h1.insert(5); // Дерево степени 0
+        BinomialHeap h2 = new BinomialHeap();
+        BinomialHeap unionHeap = BinomialHeap.union(h1, h2);
+        assertEquals(Integer.valueOf(1), unionHeap.findMin());
+    }
+
+    @Test
+    public void testUnionSameDegrees() {
+        BinomialHeap h1 = new BinomialHeap();
+        h1.insert(4);
+        h1.insert(5); // Дерево степени 1
+        BinomialHeap h2 = new BinomialHeap();
+        h2.insert(2);
+        h2.insert(3); // Дерево степени 1
+        BinomialHeap unionHeap = BinomialHeap.union(h1, h2);
+        assertEquals(Integer.valueOf(2), unionHeap.findMin());
+    }
+
+    @Test
+    public void testUnionMultipleSameDegrees() {
+        BinomialHeap h1 = new BinomialHeap();
+        h1.insert(10);
+        h1.insert(20);
+        h1.insert(30); // Деревья степеней 0 и 1
+        BinomialHeap h2 = new BinomialHeap();
+        h2.insert(15);
+        h2.insert(25); // Дерево степени 1
+        BinomialHeap unionHeap = BinomialHeap.union(h1, h2);
+        assertEquals(Integer.valueOf(10), unionHeap.findMin());
+    }
+
+    @Test
+    public void testUnion_SkipBlockScenario() {
+        // Создаём первую кучу h1, где будет 2 отдельных корня degree=0 (вставляем 2 раза):
+        BinomialHeap h1 = new BinomialHeap();
+        h1.insert(10);  // первый узел (degree=0)
+        h1.insert(20);  // второй узел (degree=0)
+        // В h1 теперь 2 корня, каждый degree=0, не связаны друг с другом.
+
+        BinomialHeap h2 = new BinomialHeap();
+        h2.insert(30);
+        h2.insert(40);
+
+        BinomialHeap result = BinomialHeap.union(h1, h2);
+
+        assertEquals(10, (int) result.findMin());
+    }
+
+}

@@ -1,14 +1,24 @@
 package tpo.task3;
 
-// Абстрактный класс для живых существ и персонажей
-public abstract class Character extends Entity {
+// Абстрактный класс для персонажей
+public abstract class Character {
+    protected String name;
+    protected CharacterState state;
+
     public Character(String name) {
-        super(name);
+        this.name = name;
+        this.state = CharacterState.STUNNED;
     }
 
-    // Каждый персонаж может выполнять действия
-    public abstract void performAction(Action action);
+    public String getName() {
+        return name;
+    }
 
-    // Каждый персонаж может воспринимать сенсорные стимулы (запах, звук, визуальные образы и т.д.)
-    public abstract void perceive(SensoryInput input);
+    public CharacterState getState() {
+        return state;
+    }
+
+    public void setState(CharacterState state) {
+        this.state = state;
+    }
 }

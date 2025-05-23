@@ -1,13 +1,18 @@
 package tpo.task3;
 
-// Тень как физический объект (может быть анимирована как визуальный образ)
-public class Shadow extends PhysicalObject {
-    public Shadow(String name) {
-        super(name);
+// Описывает объект «тень»
+public class Shadow {
+    private ShadowState state;
+
+    public Shadow() {
+        this.state = ShadowState.MOVING;
     }
 
-    @Override
-    public void interact() {
-        System.out.println("Тень мелькает и движется.");
+    public ShadowState getState() {
+        return state;
+    }
+
+    public void setState(ShadowState state) {
+        this.state = state;
     }
 }

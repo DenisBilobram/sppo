@@ -1,48 +1,34 @@
 package tpo.task1;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
+import java.util.stream.Stream;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class SecantCalculatorTest {
 
-    @Test
-    public void testSecAtZero() {
-        double x = 0.0;
-        double expected = 1.0;
-        double actual = SecantCalculator.sec(x);
-        assertEquals(expected, actual, 0.01);
+    static Stream<Arguments> data() {
+        return Stream.of(
+
+                Arguments.of(0.0, 1.0),
+                Arguments.of(Math.PI / 6, 1 / Math.cos(Math.PI / 6)),
+                Arguments.of(-Math.PI / 6, 1 / Math.cos(Math.PI / 6)),
+                // Точки в отрицательной ветви
+                Arguments.of(Math.PI, 1 / Math.cos(Math.PI)),
+                Arguments.of(Math.PI * 5 / 6, 1 / Math.cos(Math.PI * 5 / 6)),
+                Arguments.of(Math.PI * 7 / 6, 1 / Math.cos(Math.PI * 7 / 6)),
+                // Отрицательное значение >= -π, которое должно нормироваться
+                Arguments.of(-Math.PI, -1)
+        );
     }
 
-    @Test
-    public void testSecAtPiOverSix() {
-        double x = Math.PI / 6;
-        double expected = 1 / Math.cos(x);
+    @ParameterizedTest(name = "Failed for x = {0}")
+    @MethodSource("data")
+    void testSec(double x, double expected) {
         double actual = SecantCalculator.sec(x);
-        assertEquals(expected, actual, 0.01);
-    }
-
-    @Test
-    public void testSecAtPiOverFour() {
-        double x = Math.PI / 4;
-        double expected = 1 / Math.cos(x);
-        double actual = SecantCalculator.sec(x);
-        assertEquals(expected, actual, 0.01);
-    }
-
-    @Test
-    public void testSecAtPiOverThree() {
-        double x = Math.PI / 3;
-        double expected = 1 / Math.cos(x);
-        double actual = SecantCalculator.sec(x);
-        assertEquals(expected, actual, 0.1);
-    }
-
-    @Test
-    public void testSecAtNegativePiOverSix() {
-        double x = -Math.PI / 6;
-        double expected = 1 / Math.cos(x);
-        double actual = SecantCalculator.sec(x);
-        assertEquals(expected, actual, 0.01);
+        assertEquals(expected, actual, 0.01, "Failed for x = " + x);
     }
 }
