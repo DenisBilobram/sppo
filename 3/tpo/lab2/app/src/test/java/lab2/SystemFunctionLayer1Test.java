@@ -22,6 +22,7 @@ class SystemFunctionLayer1Test {
 
         when(cosMock.apply(anyDouble()))
         .thenAnswer(inv -> TestPoint.forX(inv.getArgument(0)).cos);
+        Math.cos(tp.cos);
 
         UnaryFunction sin = new SinFunction(cosMock);
         UnaryFunction tan = new TanFunction(sin, cosMock);
