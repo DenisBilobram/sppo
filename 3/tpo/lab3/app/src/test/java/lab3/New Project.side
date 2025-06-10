@@ -1,0 +1,1058 @@
+{
+  "id": "54fa2347-84fd-495e-9734-09246ac334d1",
+  "version": "3.0",
+  "name": "New Project",
+  "url": "http://www.google.com",
+  "tests": [{
+    "id": "ca1b26bd-d6b6-4677-8665-942acbc460ba",
+    "name": "SearchAviaTickets",
+    "commands": [{
+      "id": "116e5df8-5b7b-479a-9165-3d03e4bd2c01",
+      "comment": "",
+      "command": "open",
+      "target": "https://www.tbank.ru/travel/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7ef81b1d-5f5c-46c3-90c6-f336f2cc2421",
+      "comment": "",
+      "command": "click",
+      "target": "//div[1]/div/div/div[7]/div/div/form/div[1]/div[1]/div/div/div[1]/div[1]/div/div/div/div/div[1]/div[2]/div/div[2]/div/input",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6c5249d5-a173-4381-bc4c-5738317a9151",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "//div[1]/div/div/div[7]/div/div/form/div[1]/div[1]/div/div/div[1]/div[1]/div/div/div/div/div[1]/div[2]/div/div[2]/div/input",
+      "targets": [],
+      "value": "${KEY_CONTROL}a${KEY_DELETE}"
+    }, {
+      "id": "e5ad4d73-907b-4878-94be-43b31d5a2180",
+      "comment": "",
+      "command": "type",
+      "target": "//div[1]/div/div/div[7]/div/div/form/div[1]/div[1]/div/div/div[1]/div[1]/div/div/div/div/div[1]/div[2]/div/div[2]/div/input",
+      "targets": [],
+      "value": "Москва"
+    }, {
+      "id": "0a4cbc28-35c8-4935-b554-eba013343c3e",
+      "comment": "",
+      "command": "pause",
+      "target": "1000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a511e838-94d4-460e-9e7c-c89e947b65b8",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "//div[1]/div/div/div[7]/div/div/form/div[1]/div[1]/div/div/div[1]/div[1]/div/div/div/div/div[1]/div[2]/div/div[2]/div/input",
+      "targets": [],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "91c4025b-735f-41fd-8ecc-7ec4eac164c7",
+      "comment": "",
+      "command": "type",
+      "target": "//div[1]/div/div/div[7]/div/div/form/div[1]/div[1]/div/div/div[2]/div/div/div/div/div/div[1]/div[2]/div/div[2]/div/input",
+      "targets": [],
+      "value": "Санкт-Петербург"
+    }, {
+      "id": "08f56097-f219-47ca-855c-e536c5702c72",
+      "comment": "",
+      "command": "pause",
+      "target": "1000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0cae8e07-e8aa-40b2-8ccd-faafbc8a765c",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "//div[1]/div/div/div[7]/div/div/form/div[1]/div[1]/div/div/div[2]/div/div/div/div/div/div[1]/div[2]/div/div[2]/div/input",
+      "targets": [],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "b9dbd930-75bc-48ce-a8a0-0fe5ca6d68dc",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[3]/div/div/div/div/div[2]",
+      "targets": [
+        ["css=.travelsearchform__BOjrdh > .travelsearchform__wOjrdh > .travelsearchform__fOjrdh", "css:finder"],
+        ["xpath=//div[3]/div/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "03776fb0-d68c-4bb7-a57b-9b543824a358",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//button[2]",
+      "targets": [
+        ["css=.travelsearchform__dof4TE", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'В одну сторону')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f603361c-29a1-4993-bc6c-44f5583237b6",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//tr[4]/td[5]/span/div/div/div",
+      "targets": [
+        ["css=div:nth-child(1) > table tr:nth-child(4) > .travelsearchform__bw1R--8:nth-child(5) .travelsearchform__cUQjII > div:nth-child(1)", "css:finder"],
+        ["xpath=//tr[4]/td[5]/span/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cc8bc73e-4151-417a-833b-1fba6608f82c",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[6]/div/div/div",
+      "targets": [
+        ["css=.bbDPJYDSg", "css:finder"],
+        ["xpath=//div[6]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cb1591dc-fd9e-439d-9db8-3f25883924ea",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[2]/label/span/span/input",
+      "targets": [
+        ["css=.travelsearchform__qgzscU .travelsearchform__dBgHRz", "css:finder"],
+        ["xpath=(//input[@value=''])[2]", "xpath:attributes"],
+        ["xpath=//div[2]/label/span/span/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c6f52282-1beb-40fb-88c3-5702999f166e",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[2]/div[2]/button/span/span",
+      "targets": [
+        ["css=.travelsearchform__dCnYdD", "css:finder"],
+        ["xpath=//div[2]/div[2]/button/span/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ff3a1248-81cc-4af7-9c2b-9eb23e8899e0",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "xpath=//div[4]/div/div[2]/div/div/div/div/div[2]/div/div/div/div/div/div/div",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "a4f47b0b-c828-4e9d-85c5-d9084886a7bf",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//div[4]/div/div[2]/div/div/div/div/div[2]/div/div/div/div/div/div/div",
+      "targets": [
+        ["css=.VirtualList__item_qgnAF:nth-child(1) .FlightCardLayout__layout_l5MlD", "css:finder"],
+        ["xpath=//div[4]/div/div[2]/div/div/div/div/div[2]/div/div/div/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "233cf7c6-2246-4e0e-af70-74dae149ba18",
+    "name": "BuyAviaTicket",
+    "commands": [{
+      "id": "8fe9045e-0c71-412e-b18d-4003eb066cf1",
+      "comment": "",
+      "command": "open",
+      "target": "https://www.tbank.ru/travel/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f39883fc-0865-4631-9038-2e4b1a73087a",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//span[text()=\"Откуда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3c3d0062-7e61-48b8-9d32-43776ac6872e",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//span[text()=\"Откуда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": "${KEY_CONTROL}a${KEY_DELETE}"
+    }, {
+      "id": "d09fbeb0-a5cb-4ce7-b77a-34ca0b03fb18",
+      "comment": "",
+      "command": "type",
+      "target": "xpath=//span[text()=\"Откуда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": "Москва"
+    }, {
+      "id": "2cfe31fa-a5fd-4164-b0b3-733d7ad9fd7f",
+      "comment": "",
+      "command": "pause",
+      "target": "1000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d5f1dc99-675e-462e-b7a6-7f3f46e1bff0",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//span[text()=\"Откуда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "2f2586a0-1a3a-43d6-a8b2-f75b1f54b304",
+      "comment": "",
+      "command": "type",
+      "target": "xpath=//span[text()=\"Куда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": "Санкт-Петербург"
+    }, {
+      "id": "c20e71de-a06e-4fa4-a94a-22402b3e863e",
+      "comment": "",
+      "command": "pause",
+      "target": "1000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "de4470dd-fc81-498d-b94a-393fa44d4277",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//span[text()=\"Куда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "4392cc12-88fb-411c-9214-0c7048619df0",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[3]/div/div/div/div/div[2]",
+      "targets": [
+        ["css=.travelsearchform__BOjrdh > .travelsearchform__wOjrdh > .travelsearchform__fOjrdh", "css:finder"],
+        ["xpath=//div[3]/div/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ee253464-52e6-43fb-b4b4-55c69ee3a391",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//button[2]",
+      "targets": [
+        ["css=.travelsearchform__dof4TE", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'В одну сторону')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "751dc61f-03db-4287-a377-05b9b6e79f73",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//tr[4]/td[5]/span/div/div/div",
+      "targets": [
+        ["css=div:nth-child(1) > table tr:nth-child(4) > .travelsearchform__bw1R--8:nth-child(5) .travelsearchform__cUQjII > div:nth-child(1)", "css:finder"],
+        ["xpath=//tr[4]/td[5]/span/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2b53ba06-c2ac-4d2b-824f-5b1b70d3d6e1",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[6]/div/div/div",
+      "targets": [
+        ["css=.bbDPJYDSg", "css:finder"],
+        ["xpath=//div[6]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4166a7f2-e7e1-43d3-be01-1d3ef976c858",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[2]/label/span/span/input",
+      "targets": [
+        ["css=.travelsearchform__qgzscU .travelsearchform__dBgHRz", "css:finder"],
+        ["xpath=(//input[@value=''])[2]", "xpath:attributes"],
+        ["xpath=//div[2]/label/span/span/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "739ded91-4112-4156-baa9-8b3d6bedcff1",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[2]/div[2]/button/span/span",
+      "targets": [
+        ["css=.travelsearchform__dCnYdD", "css:finder"],
+        ["xpath=//div[2]/div[2]/button/span/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "da5a62c3-5eab-4421-94e7-a8a5f8c146a3",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "xpath=//div[4]/div/div[2]/div/div/div/div/div[2]/div/div/div/div/div/div/div",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "bdda8817-9504-40b6-b659-0504db31d195",
+      "comment": "",
+      "command": "pause",
+      "target": "1000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c4a26c57-765f-41d5-9c10-6ed1462ad7ba",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[4]/div/div[2]/div/div/div/div/div[2]/div/div/div/div/div/div/div",
+      "targets": [
+        ["css=.VirtualList__item_qgnAF:nth-child(1) .FlightCardLayout__layout_l5MlD", "css:finder"],
+        ["xpath=//div[4]/div/div[2]/div/div/div/div/div[2]/div/div/div/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3a2db333-25e5-467e-8072-726b43c31921",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[2]/div/div[2]/div[2]/button/span/span/span/span",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "79408b12-92c7-4778-8d18-9479139ae59f",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "xpath=//div[1]/div/div/div[4]/div/div[2]/div/div[2]/div[1]/div/div[2]/div/div/div/div[1]/div[3]/div[2]/div/span",
+      "targets": [
+        ["css=.IslandCardContainer__root_checked_WTnID .IslandCardPriceWrapper__priceWrapper_JKOLq span", "css:finder"],
+        ["xpath=//div[2]/div/span", "xpath:position"],
+        ["xpath=//span[contains(.,'5 524,32 ₽')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "478f2be9-ec09-4988-8792-fb13a49c419d",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//div[1]/div/div/div[4]/div/div[2]/div/div[2]/div[1]/div/div[2]/div/div/div/div[1]/div[3]/div[2]/div/span",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "9243c2c7-c88d-44c7-8356-c151b7f193d2",
+    "name": "InspectAviaTicket",
+    "commands": [{
+      "id": "3ee49533-b81f-41dc-937b-e310d3dbe45e",
+      "comment": "",
+      "command": "open",
+      "target": "https://www.tbank.ru/travel/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d5a41e97-4e9e-4e28-9fb0-bd931c78ae16",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//span[text()=\"Откуда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8272af75-c954-4e66-b0c6-25c5f4642d81",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//span[text()=\"Откуда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": "${KEY_CONTROL}a${KEY_DELETE}"
+    }, {
+      "id": "31e254c2-29c7-4cbb-8f09-4716acccbda4",
+      "comment": "",
+      "command": "type",
+      "target": "xpath=//span[text()=\"Откуда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": "Москва"
+    }, {
+      "id": "acec1a82-fe48-47c4-b34e-286febae9a57",
+      "comment": "",
+      "command": "pause",
+      "target": "1000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1b40d70b-129f-454f-a40c-8f70723100b0",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//span[text()=\"Откуда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "1678fc1f-43d8-40e0-95d3-3cee0e4d4871",
+      "comment": "",
+      "command": "type",
+      "target": "xpath=//span[text()=\"Куда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": "Санкт-Петербург"
+    }, {
+      "id": "229e0b89-db55-48af-9361-f4eef46776be",
+      "comment": "",
+      "command": "pause",
+      "target": "1000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "56c5033c-4261-4306-b6f9-71acf1ae0813",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//span[text()=\"Куда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "64e74837-92b4-4e1f-820f-2ee67df19a09",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[3]/div/div/div/div/div[2]",
+      "targets": [
+        ["css=.travelsearchform__BOjrdh > .travelsearchform__wOjrdh > .travelsearchform__fOjrdh", "css:finder"],
+        ["xpath=//div[3]/div/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a5260453-8a07-4ec2-ab19-36a3b6ac6817",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//button[2]",
+      "targets": [
+        ["css=.travelsearchform__dof4TE", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'В одну сторону')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1cdd8249-18d6-42ae-b0a6-4f8c217dd7a9",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//tr[4]/td[5]/span/div/div/div",
+      "targets": [
+        ["css=div:nth-child(1) > table tr:nth-child(4) > .travelsearchform__bw1R--8:nth-child(5) .travelsearchform__cUQjII > div:nth-child(1)", "css:finder"],
+        ["xpath=//tr[4]/td[5]/span/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cd2862a3-b874-44f0-9a9a-a8d56a4c88eb",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[6]/div/div/div",
+      "targets": [
+        ["css=.bbDPJYDSg", "css:finder"],
+        ["xpath=//div[6]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9666a648-342a-447a-a85a-e925d887f698",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[2]/label/span/span/input",
+      "targets": [
+        ["css=.travelsearchform__qgzscU .travelsearchform__dBgHRz", "css:finder"],
+        ["xpath=(//input[@value=''])[2]", "xpath:attributes"],
+        ["xpath=//div[2]/label/span/span/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "090fc6cf-770a-458a-8b56-51c15a23ccb2",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[2]/div[2]/button/span/span",
+      "targets": [
+        ["css=.travelsearchform__dCnYdD", "css:finder"],
+        ["xpath=//div[2]/div[2]/button/span/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e4cd9e15-341c-44f6-bd05-9667d80dc6f0",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "xpath=//div[4]/div/div[2]/div/div/div/div/div[2]/div/div/div/div/div/div/div",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "a118b1e4-014a-4cae-b993-852a15c3438c",
+      "comment": "",
+      "command": "pause",
+      "target": "1000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3c8d0172-e7af-4a3a-9e13-84dd7cefc0f0",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[4]/div/div[2]/div/div/div/div/div[2]/div/div/div/div/div/div/div",
+      "targets": [
+        ["css=.VirtualList__item_qgnAF:nth-child(1) .FlightCardLayout__layout_l5MlD", "css:finder"],
+        ["xpath=//div[4]/div/div[2]/div/div/div/div/div[2]/div/div/div/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e9a22bff-8439-4a8c-bebb-c8b064aad003",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "xpath=//div[2]/div/div/div/div[2]/h2",
+      "targets": [
+        ["css=.FlightsPanel__routeTitle_JIy0T .RouteTitle__title_LS_kp", "css:finder"],
+        ["xpath=//div[2]/div/div/div/div[2]/h2", "xpath:position"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "fb5c4f31-350b-4a29-a604-bee525717650",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//div[2]/div/div/div/div[2]/h2",
+      "targets": [
+        ["css=.FlightsPanel__routeTitle_JIy0T .RouteTitle__title_LS_kp", "css:finder"],
+        ["xpath=//div[2]/div/div/div/div[2]/h2", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "61a0f145-fdab-418b-ba78-9c988e67d846",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=/html/body/div[6]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[2]/div[1]/div[2]/div/div[1]/div[1]/div[2]/h2",
+      "targets": [
+        ["css=.FlightsPanel__routeTitle_JIy0T .RouteTitle__date_jwkJ8", "css:finder"],
+        ["xpath=//div[2]/div/div/div/div[2]/p", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "faa6ecb1-a130-40f6-9429-2f87d2d2ce7f",
+    "name": "SearchAviaTicketsWihBadDate",
+    "commands": [{
+      "id": "b9892ab5-80a4-42bb-ad6b-ff01ce5fec11",
+      "comment": "",
+      "command": "open",
+      "target": "https://www.tbank.ru/travel/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "44f93409-48e8-4f4a-b835-dd001ebf1045",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//span[text()=\"Откуда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a9bc910f-9449-4609-b60f-b18ac1200877",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//span[text()=\"Откуда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": "${KEY_CONTROL}a${KEY_DELETE}"
+    }, {
+      "id": "bc4ebc1f-9062-4256-b2f2-cc1eebaf795f",
+      "comment": "",
+      "command": "type",
+      "target": "xpath=//span[text()=\"Откуда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": "Москва"
+    }, {
+      "id": "e1af30f3-ff1c-49d0-bf25-d9cd0b031105",
+      "comment": "",
+      "command": "pause",
+      "target": "1000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9dc9d2b5-59a2-484a-a63e-de543b67a9e2",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//span[text()=\"Откуда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "41f299d8-2e6f-4eed-9af5-e573e48ee016",
+      "comment": "",
+      "command": "type",
+      "target": "xpath=//span[text()=\"Куда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": "Санкт-Петербург"
+    }, {
+      "id": "710c10e8-45a7-43fc-9415-218ec8dbe961",
+      "comment": "",
+      "command": "pause",
+      "target": "1000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1a63282a-a7a8-4391-b55b-abced97eba21",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//span[text()=\"Куда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "60eaea17-4412-4020-9267-05cba28183ff",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[3]/div/div/div/div/div[2]",
+      "targets": [
+        ["css=.travelsearchform__BOjrdh > .travelsearchform__wOjrdh > .travelsearchform__fOjrdh", "css:finder"],
+        ["xpath=//div[3]/div/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a23e334a-eb1a-4c15-8daf-f6eb0cdd65f8",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//button[2]",
+      "targets": [
+        ["css=.travelsearchform__dof4TE", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'В одну сторону')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7db286b5-7d1b-47e5-8d9d-6f10a1f81b00",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[2]/div/div/div/div/div/div/div[2]/div/input",
+      "targets": [
+        ["css=.travelsearchform__cM5MTT .travelsearchform__ciOEE5", "css:finder"],
+        ["xpath=//input[@value='']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/div/div/div/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4b083b13-8b28-49f1-9c79-4ae96e9a25d3",
+      "comment": "",
+      "command": "type",
+      "target": "xpath=//div[2]/div/div/div/div/div/div/div[2]/div/input",
+      "targets": [
+        ["css=.travelsearchform__fOjrdh:nth-child(1) .travelsearchform__ciOEE5", "css:finder"],
+        ["xpath=//input[@value='01.06.2025']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/div/div/div/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": "01.06.2025"
+    }, {
+      "id": "46f59638-4f77-4e9e-a4dc-8d76e6229ea8",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//div[2]/div/div/div/div/div/div/div[2]/div/input",
+      "targets": [
+        ["css=.travelsearchform__fOjrdh:nth-child(1) .travelsearchform__ciOEE5", "css:finder"],
+        ["xpath=//input[@value='01.06.2025']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/div/div/div/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "5b558a91-3088-41d2-9acf-bb925ff3f10f",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[6]/div/div/div",
+      "targets": [
+        ["css=.bbDPJYDSg", "css:finder"],
+        ["xpath=//div[6]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1faa8fdb-4a1f-48eb-8b3c-63ed3f7bf5a5",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[2]/label/span/span/input",
+      "targets": [
+        ["css=.travelsearchform__qgzscU .travelsearchform__dBgHRz", "css:finder"],
+        ["xpath=(//input[@value=''])[2]", "xpath:attributes"],
+        ["xpath=//div[2]/label/span/span/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0c695cff-aec9-41bc-a619-346666ff1bd3",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[2]/div[2]/button/span/span",
+      "targets": [
+        ["css=.travelsearchform__dCnYdD", "css:finder"],
+        ["xpath=//div[2]/div[2]/button/span/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "74d0320d-4fbd-4893-9c60-5fffce0b3e63",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[6]/div/div/div/div/div",
+      "targets": [
+        ["css=.LinearCards__scrollContainer_Q2YmU", "css:finder"],
+        ["xpath=//div[6]/div/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "c1ab090f-e630-4165-a985-a9f6201b8b42",
+    "name": "SearchAviaTicketsWithoutDirection",
+    "commands": [{
+      "id": "529ed08a-3aee-443b-8f90-808e63efe0ba",
+      "comment": "",
+      "command": "open",
+      "target": "https://www.tbank.ru/travel/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4120daba-040a-4073-b265-30aaa8d82ccc",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[3]/div/div/div/div/div[2]",
+      "targets": [
+        ["css=.travelsearchform__BOjrdh > .travelsearchform__wOjrdh > .travelsearchform__fOjrdh", "css:finder"],
+        ["xpath=//div[3]/div/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6e055fb2-7bbf-4305-a2b0-63543e5a83d9",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//button[2]",
+      "targets": [
+        ["css=.travelsearchform__dof4TE", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'В одну сторону')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5dba4d8d-0749-4dfe-aa8d-3b4fe75845d6",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//tr[4]/td[5]/span/div/div/div",
+      "targets": [
+        ["css=div:nth-child(1) > table tr:nth-child(4) > .travelsearchform__bw1R--8:nth-child(5) .travelsearchform__cUQjII > div:nth-child(1)", "css:finder"],
+        ["xpath=//tr[4]/td[5]/span/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0c6add32-221e-4329-894a-d484d2db4e0c",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[6]/div/div/div",
+      "targets": [
+        ["css=.bbDPJYDSg", "css:finder"],
+        ["xpath=//div[6]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d7730011-4e05-4327-8ea8-0fcd98b2ee0c",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[2]/label/span/span/input",
+      "targets": [
+        ["css=.travelsearchform__qgzscU .travelsearchform__dBgHRz", "css:finder"],
+        ["xpath=(//input[@value=''])[2]", "xpath:attributes"],
+        ["xpath=//div[2]/label/span/span/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "050f8fdc-fd4f-4a44-b59b-ca9de52212f8",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[2]/div[2]/button/span/span",
+      "targets": [
+        ["css=.travelsearchform__dCnYdD", "css:finder"],
+        ["xpath=//div[2]/div[2]/button/span/span", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "1ee398eb-22e8-4b3b-9ad4-ded1a218c975",
+    "name": "SearchAviaTicketsOnlyStraight",
+    "commands": [{
+      "id": "21892949-ef97-4cde-a153-29356ff31271",
+      "comment": "",
+      "command": "open",
+      "target": "https://www.tbank.ru/travel/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "790fb039-13e2-4625-b401-fa4d5d8bd570",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//span[text()=\"Откуда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "22371624-f7e4-4274-8020-2ad8341a43a6",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//span[text()=\"Откуда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": "${KEY_CONTROL}a${KEY_DELETE}"
+    }, {
+      "id": "6b9d7353-4baa-4066-a83f-d6dacfc7b850",
+      "comment": "",
+      "command": "type",
+      "target": "xpath=//span[text()=\"Откуда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": "Москва"
+    }, {
+      "id": "923ba33a-2e79-411d-b58f-ca78360a0fc8",
+      "comment": "",
+      "command": "pause",
+      "target": "1000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9fb609b8-25d4-4418-a243-ee6b252e89f0",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//span[text()=\"Откуда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "dc47263e-24b8-40a8-90fb-fadd1645f9a1",
+      "comment": "",
+      "command": "type",
+      "target": "xpath=//span[text()=\"Куда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": "Санкт-Петербург"
+    }, {
+      "id": "643625ad-3b51-48ea-8ac9-80277b126941",
+      "comment": "",
+      "command": "pause",
+      "target": "1000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "312c6f4e-3bc2-48ad-b504-18bd6eb0fc66",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//span[text()=\"Куда\"]/ancestor::div[contains(@data-qa-file,'StatelessInput')]//input",
+      "targets": [],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "5723ca2a-f2ad-4fee-aebb-45f668e67596",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[3]/div/div/div/div/div[2]",
+      "targets": [
+        ["css=.travelsearchform__BOjrdh > .travelsearchform__wOjrdh > .travelsearchform__fOjrdh", "css:finder"],
+        ["xpath=//div[3]/div/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "13c2544b-8777-4bb8-98cd-64fd2023e5fb",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//button[2]",
+      "targets": [
+        ["css=.travelsearchform__dof4TE", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'В одну сторону')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5ad65036-b72e-45d1-b071-3755e9767806",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//tr[4]/td[5]/span/div/div/div",
+      "targets": [
+        ["css=div:nth-child(1) > table tr:nth-child(4) > .travelsearchform__bw1R--8:nth-child(5) .travelsearchform__cUQjII > div:nth-child(1)", "css:finder"],
+        ["xpath=//tr[4]/td[5]/span/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fb783fdb-3156-4620-bbaa-1cfbc94464a0",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[6]/div/div/div",
+      "targets": [
+        ["css=.bbDPJYDSg", "css:finder"],
+        ["xpath=//div[6]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e7f5c400-cc84-46dd-9014-ee4661d89f7d",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[2]/label/span/span/input",
+      "targets": [
+        ["css=.travelsearchform__qgzscU .travelsearchform__dBgHRz", "css:finder"],
+        ["xpath=(//input[@value=''])[2]", "xpath:attributes"],
+        ["xpath=//div[2]/label/span/span/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2bddea6a-c8cf-4329-ab0c-378f9e775ac9",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[2]/div[2]/button/span/span",
+      "targets": [
+        ["css=.travelsearchform__dCnYdD", "css:finder"],
+        ["xpath=//div[2]/div[2]/button/span/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f278191b-6816-4730-a744-5aec48e64628",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "xpath=//label[contains(.,'Фильтры')]",
+      "targets": [
+        ["css=.QuickFilters__button_uW4Jj:nth-child(5) > .FilterButton-module__root_q6HPk", "css:finder"],
+        ["xpath=//div[5]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Фильтры')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "8737bb7c-544e-483b-ae5b-8c653f2b5a5d",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//label[contains(.,'Фильтры')]",
+      "targets": [
+        ["css=.QuickFilters__button_uW4Jj:nth-child(5) > .FilterButton-module__root_q6HPk", "css:finder"],
+        ["xpath=//div[5]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Фильтры')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2924eccf-8e10-4799-87eb-23872f4425d5",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[5]/label/span[2]/div",
+      "targets": [
+        ["css=.QuickFilters__button_uW4Jj:nth-child(5) .QuickFilters__buttonContent_UAyjL", "css:finder"],
+        ["xpath=//div[5]/label/span[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "db70b3dd-849e-4c41-86f5-624d099cf99a",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=(//input[@type='checkbox'])[8]",
+      "targets": [
+        ["css=.TransfersFilter__checkbox_eSdVg:nth-child(2) .Checkbox-module__input_dphrl", "css:finder"],
+        ["xpath=(//input[@type='checkbox'])[8]", "xpath:attributes"],
+        ["xpath=//div[2]/label/span/span/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9cbea481-307f-469e-8420-04f767d35641",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=(//input[@type='checkbox'])[9]",
+      "targets": [
+        ["css=.TransfersFilter__checkbox_eSdVg:nth-child(3) .Checkbox-module__input_dphrl", "css:finder"],
+        ["xpath=(//input[@type='checkbox'])[9]", "xpath:attributes"],
+        ["xpath=//div[3]/label/span/span/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "19a1f9db-7c71-4af7-a49d-0ab504c2ddc0",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div/div/div/div/button/span/span/span/span",
+      "targets": [
+        ["css=.Button-module__content_P0k_v > span > span", "css:finder"],
+        ["xpath=//div/div/div/div/button/span/span/span/span", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "7c33d30c-1529-4b0c-9a04-bc5826bb71be",
+    "name": "SearchJDTickets",
+    "commands": [{
+      "id": "ec8f3e74-8615-4ced-b358-0caea3577a01",
+      "comment": "",
+      "command": "open",
+      "target": "https://www.tbank.ru/travel/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0efe52f2-1467-48f8-a145-5093d8ce7b2e",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//li[4]/a/div/div/img",
+      "targets": [
+        ["css=.ib0AMrGG-- .bbbVy7SCG", "css:finder"],
+        ["xpath=//img[contains(@src,'https://cdn.tbank.ru/static/pages/files/f4f2a1a1-ea12-43f8-bad3-e56baf6fae3d.svg')]", "xpath:img"],
+        ["xpath=//li[4]/a/div/div/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "851a4f3e-126e-43f6-a688-dd7f15dfcb36",
+      "comment": "",
+      "command": "selectFrame",
+      "target": "index=2",
+      "targets": [
+        ["index=2"]
+      ],
+      "value": ""
+    }, {
+      "id": "6cf1ce7b-67f5-4193-9707-7a7984158611",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "//div/div[2]/div/div[2]/div/div/div/div[1]/div/div/form/div[2]/div/div/label/input",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "51c9b22c-9bfc-4ded-bf80-25edba4187ad",
+      "comment": "",
+      "command": "click",
+      "target": "//div/div[2]/div/div[2]/div/div/div/div[1]/div/div/form/div[2]/div/div/label/input",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1466990e-fafd-468c-949a-fe44dfe2e36d",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//span[2]",
+      "targets": [
+        ["css=.ott-autocomplete-next-deprecated-OptionRenderer-OptionRenderer__option:nth-child(1) .ott-autocomplete-next-deprecated-OptionRenderer-OptionRenderer__country", "css:finder"],
+        ["xpath=//span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'Россия')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "518cbc85-590f-47ba-8b45-1da7c5299af6",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[2]/div/div/span",
+      "targets": [
+        ["css=.ott-autocomplete-next-deprecated-OptionRenderer-OptionRenderer__option:nth-child(1) .ott-autocomplete-next-deprecated-OptionRenderer-OptionRenderer__name", "css:finder"],
+        ["xpath=//div[2]/div/div/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Санкт-Петербург, ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8ff368bd-9fcc-4082-b08c-e6c3a46530c1",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[5]/div[5]/div/span",
+      "targets": [
+        ["css=.ott-railways-search-form-ott-datepicker-DatesContainer-Day-Day__Day--isHovered .ott-railways-search-form-ott-datepicker-DatesContainer-Day-Day__dayNumber", "css:finder"],
+        ["xpath=//form[@id='RailwaysSearchForm']/div[4]/div/div/div/div/div[2]/div[2]/div[2]/div/div/div[5]/div[5]/div/span", "xpath:idRelative"],
+        ["xpath=//div[5]/div[5]/div/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "19610107-474d-459b-88ad-a62c9188bc57",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[3]/button/div",
+      "targets": [
+        ["css=.ott-travellers-ott-button-Button__children", "css:finder"],
+        ["xpath=//form[@id='RailwaysSearchForm']/div[5]/div/div/div/div/div/div[3]/button/div", "xpath:idRelative"],
+        ["xpath=//div[3]/button/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8a8a8ff2-1def-4661-8b3a-becd370b8887",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[6]/button/div",
+      "targets": [
+        ["css=.ott-railways-search-form-ott-button-Button__children", "css:finder"],
+        ["xpath=//form[@id='RailwaysSearchForm']/div[6]/button/div", "xpath:idRelative"],
+        ["xpath=//div[6]/button/div", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "85e21288-16be-47df-b436-d7099bbf155e",
+    "name": "New Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 30000,
+    "tests": ["ca1b26bd-d6b6-4677-8665-942acbc460ba"]
+  }],
+  "urls": ["http://www.google.com/"],
+  "plugins": []
+}
